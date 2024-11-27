@@ -1,0 +1,312 @@
+/* ////////////////////////////////////////////////
+
+RESET STYLES
+
+//////////////////////////////////////////////////*/
+
+:root {
+  --clr-skeleton: hsl(0, 0%, 92%);
+  --clr-text: hsl(0, 0%, 24%);
+  --clr-text-secondary: hsl(0, 0%, 48%);
+  --clr-line: hsl(0, 0%, 80%);
+  --clr-line-active: hsl(0, 0%, 60%);
+
+  --space-xxs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-xs-sm: 0.65rem;
+  --space-sm: 0.75rem;
+  --space-base: 1rem;
+  --space-2base: 1.15rem;
+
+  --text-xs: clamp(0.75rem, 0.6071rem + 0.2976vw, 0.875rem);
+  --text-sm: clamp(0.875rem, 0.7321rem + 0.2976vw, 1rem);
+  --text-xl: clamp(1.5rem, 0.6429rem + 1.7857vw, 2.25rem);
+  --text-2xl: clamp(2.625rem, 1.7679rem + 1.7857vw, 3.375rem);
+  --text-3xl: clamp(3rem, 1.8571rem + 2.381vw, 4rem);
+
+  --header-gap: 0.75rem;
+  --base-border: 1px solid var(--clr-line);
+  --base-border-active: 1px solid var(--clr-line-active);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  height: 100vh;
+  background-color: whitesmoke;
+  padding: var(--space-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  font-family: inherit;
+  color: inherit;
+}
+
+ul,
+li {
+  list-style: none;
+}
+
+input[type='text'] {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-family: inherit;
+  color: inherit;
+}
+
+/* ////////////////////////////////////////////////
+
+GLOBAL STYLES
+
+//////////////////////////////////////////////////*/
+
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  gap: var(--space-base);
+}
+
+.header,
+.content {
+  width: 100%;
+  display: flex;
+  border-radius: 2rem;
+  border: var(--base-border);
+  padding: var(--space-base);
+}
+
+.header {
+  justify-content: space-between;
+}
+
+.content {
+  flex: 15;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  & > * {
+    flex: 1;
+    border-radius: 1rem;
+    color: var(--clr-text-secondary);
+  }
+
+  & > * > * {
+    padding: var(--space-base);
+    background-color: var(--clr-skeleton);
+    border-radius: 1rem;
+  }
+}
+
+/* ////////////////////////////////////////////////
+
+HEADER STYLES
+
+//////////////////////////////////////////////////*/
+
+.nav,
+.actions {
+  display: inline-flex;
+  list-style-type: none;
+  gap: var(--header-gap);
+}
+
+.nav-item {
+  font-size: 0.9rem;
+  color: var(--clr-text-secondary);
+  display: inline-flex;
+  border: var(--base-border);
+  padding: 0.65rem 1.15rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+
+  &:hover {
+    background-color: hsl(0, 0%, 95%);
+  }
+
+  &.active {
+    border: var(--base-border-active);
+  }
+}
+
+.actions > * {
+  aspect-ratio: 1 / 1;
+  border: var(--base-border);
+  border-radius: 50%;
+
+  &:hover {
+    background-color: hsl(0, 0%, 95%);
+  }
+}
+
+.user-avatar {
+  height: 100%;
+}
+
+/* ////////////////////////////////////////////////
+
+PAGE LAYOUT STYLES
+
+//////////////////////////////////////////////////*/
+
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.orders {
+  --header-height: 7rem;
+  --sidebar-width: min(28rem, 28%);
+
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  grid-template-rows: var(--header-height) 1fr;
+  gap: 1rem;
+}
+
+.products,
+.warehouses,
+.suppliers {
+  display: grid;
+  grid-template-rows: 7rem 5rem 1fr;
+  gap: 1rem;
+}
+
+/* ////////////////////////////////////////////////
+
+DASHBOARD STYLES
+
+//////////////////////////////////////////////////*/
+
+.dashboard > * {
+  display: grid;
+  grid-template-rows: 1fr auto auto;
+  gap: var(--space-xs);
+}
+
+.dashboard h1 {
+  font-size: var(--text-3xl);
+  color: var(--clr-text);
+}
+
+.dashboard p {
+  font-size: var(--text-xs);
+  opacity: 0.6;
+}
+
+.dashboard > .dashboard-card-3 {
+  grid-column-start: 1;
+  grid-row-start: 2;
+}
+
+.dashboard > .dashboard-card-4 {
+  grid-column-start: 2;
+  grid-row-start: 2;
+}
+
+.dashboard > .dashboard-card-5 {
+  grid-column: span 2 / span 2;
+  grid-column-start: 1;
+  grid-row-start: 3;
+}
+
+.dashboard > .dashboard-card-6 {
+  grid-row: span 2 / span 2;
+  grid-column-start: 3;
+  grid-row-start: 1;
+}
+
+.dashboard > .dashboard-card-7 {
+  grid-column-start: 3;
+  grid-row-start: 3;
+}
+
+/* ////////////////////////////////////////////////
+
+ORDERS STYLES
+
+//////////////////////////////////////////////////*/
+
+.orders h1 {
+  /* font-size: var(--text-2xl); */
+}
+
+.orders-header {
+  grid-column: span 2 / span 2;
+  display: flex;
+  align-items: center;
+  gap: var(--space-base);
+  background-color: transparent;
+}
+
+.orders-title {
+  width: var(--sidebar-width);
+}
+
+.orders-title p {
+  font-size: var(--text-sm);
+}
+
+.orders-actions {
+  flex: 1;
+  display: flex;
+  gap: var(--space-sm);
+
+  .searchbar {
+    flex: 1;
+  }
+
+  .view-modes {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  & > button {
+    margin-left: 1rem;
+  }
+}
+
+.orders-sidebar {
+  grid-row-start: 2;
+}
+
+.orders-list {
+  grid-row-start: 2;
+}
+
+/* ////////////////////////////////////////////////
+
+PRODUCTS STYLES
+
+//////////////////////////////////////////////////*/
+
+/* ////////////////////////////////////////////////
+
+WAREHOUSES STYLES
+
+//////////////////////////////////////////////////*/
+
+/* ////////////////////////////////////////////////
+
+SUPPLIERS STYLES
+
+//////////////////////////////////////////////////*/

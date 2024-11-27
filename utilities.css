@@ -1,0 +1,80 @@
+/* ////////////////////////////////////////////////
+
+BUTTON STYLES
+
+//////////////////////////////////////////////////*/
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  padding-block: var(--space-xxs);
+  padding-inline: var(--space-base);
+  border: var(--base-border);
+  border-radius: 1rem;
+}
+
+.btn-primary {
+  border-color: transparent;
+  background-color: var(--clr-text);
+  color: var(--clr-skeleton);
+  transition: all 0.2s ease;
+
+  &:hover {
+    opacity: 0.95;
+  }
+}
+
+.btn-icon {
+  --dimension: 20px;
+
+  aspect-ratio: 1/ 1;
+  padding: var(--space-xs);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  & svg {
+    height: var(--dimension);
+    width: var(--dimension);
+    color: var(--clr-text-secondary);
+  }
+}
+
+.btn-icon.border {
+  border: var(--base-border);
+  border-radius: 0.75rem;
+}
+
+.btn-icon.round {
+  border-radius: 50%;
+}
+
+.btn-icon.border.active {
+  border: var(--base-border-active);
+
+  & svg {
+    color: var(--clr-text);
+  }
+}
+
+/* ////////////////////////////////////////////////
+
+INPUT TEXT STYLES
+
+//////////////////////////////////////////////////*/
+
+.searchbar {
+  border: var(--base-border);
+  border-radius: 1rem;
+  padding-block: var(--space-xxs);
+  padding-inline: var(--space-xs);
+  display: flex;
+  align-items: center;
+}
+
+.searchbar input {
+  flex: 1;
+  height: 100%;
+}
