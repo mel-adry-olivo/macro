@@ -1,10 +1,40 @@
 /* ////////////////////////////////////////////////
 
+LAYOUT STYLES
+
+//////////////////////////////////////////////////*/
+
+.flow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: 0;
+}
+
+.row {
+  display: inline-flex;
+  gap: var(--space-sm);
+}
+
+.row.flex-1 > * {
+  flex: 1;
+}
+
+.row.items-center {
+  align-items: center;
+}
+
+/* ////////////////////////////////////////////////
+
 BUTTON STYLES
 
 //////////////////////////////////////////////////*/
 
 .btn {
+  --icon-size: 18px;
+  --icon-gap: var(--space-xs);
+
+  max-height: 3rem;
   display: inline-flex;
   align-items: center;
   white-space: nowrap;
@@ -12,6 +42,12 @@ BUTTON STYLES
   padding-inline: var(--space-base);
   border: var(--base-border);
   border-radius: 1rem;
+  gap: var(--icon-gap);
+
+  & svg {
+    height: var(--icon-size);
+    width: var(--icon-size);
+  }
 }
 
 .btn-primary {
@@ -66,6 +102,7 @@ INPUT TEXT STYLES
 //////////////////////////////////////////////////*/
 
 .searchbar {
+  max-height: 3rem;
   border: var(--base-border);
   border-radius: 1rem;
   padding-block: var(--space-xxs);
@@ -77,4 +114,289 @@ INPUT TEXT STYLES
 .searchbar input {
   flex: 1;
   height: 100%;
+}
+
+/* ////////////////////////////////////////////////
+
+TABLE STYLES
+
+//////////////////////////////////////////////////*/
+
+.table {
+  font-size: var(--text-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.table-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.table-header,
+.table-row {
+  display: flex;
+  padding: var(--space-base);
+}
+
+.table-header {
+  background-color: var(--clr-skeleton);
+  border-radius: 0.5rem;
+}
+
+.table-row {
+  background-color: transparent;
+  border: var(--base-border);
+  border-radius: 1rem;
+}
+
+.table-header-item,
+.table-row-item {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+}
+
+.table-header-item[primary-item],
+.table-row-item[primary-item] {
+  flex: 2;
+  gap: var(--space-xs);
+}
+
+.table-header-item[actions],
+.table-row-item[actions] {
+  flex: 0 0 8rem;
+}
+
+.table-header-item[checkbox],
+.table-row-item[checkbox] {
+  flex: 0 0 3rem;
+  white-space: nowrap;
+  margin-right: var(--space-base);
+  justify-content: center;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+.table-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xxs);
+
+  & > * {
+    --dimension: 16px;
+  }
+}
+
+.table img {
+  --image-dimension: 50px;
+
+  height: var(--image-dimension);
+  width: var(--image-dimension);
+  border-radius: 0.25rem;
+}
+
+/* ////////////////////////////////////////////////
+
+CHECKBOX STYLES
+
+//////////////////////////////////////////////////*/
+
+input[type='checkbox'] {
+  --dimension: 18px;
+
+  position: relative;
+  -webkit-appearance: none;
+  appearance: none;
+  padding: var(--space-xs);
+  width: var(--dimension);
+  height: var(--dimension);
+  background-color: var(--clr-skeleton);
+  border: var(--base-border);
+  border-radius: 0.25rem;
+  cursor: pointer;
+
+  &::after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    inset: 2px;
+    border-radius: 0.15rem;
+  }
+
+  &:checked::after {
+    background-color: var(--clr-text-secondary);
+  }
+}
+
+/* ////////////////////////////////////////////////
+
+FORM STYLES
+
+//////////////////////////////////////////////////*/
+
+.modal-form {
+  color: var(--clr-text-secondary);
+  opacity: 0;
+  visibility: hidden;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  z-index: 999;
+  gap: var(--space-sm);
+
+  & .row {
+    padding: 0;
+  }
+
+  .btn {
+    height: 2.75rem;
+  }
+
+  .button-row {
+    margin-top: 1rem;
+    align-self: flex-end;
+    display: flex;
+  }
+}
+
+.modal-form.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-form-title {
+  padding: 0;
+  margin-bottom: var(--space-sm);
+}
+
+.image-container {
+  display: none;
+
+  & img {
+    --image-dimension: 120px;
+    height: var(--image-dimension);
+    width: var(--image-dimension);
+    border-radius: 0.25rem;
+  }
+}
+
+.file-chooser {
+  display: flex;
+  height: fit-content;
+  gap: 1rem;
+  padding-inline: 0;
+}
+
+.file-chooser label {
+  border: var(--base-border);
+  border-radius: 1rem;
+  padding-block: var(--space-sm);
+  padding-inline: 0.75rem;
+  cursor: pointer;
+  text-align: center;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+
+  & svg {
+    --dimension: 16px;
+
+    height: var(--dimension);
+    width: var(--dimension);
+    color: var(--clr-text-secondary);
+  }
+}
+
+.file-chooser input[type='file'] {
+  display: none;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0;
+}
+
+.field-group label {
+  font-size: 0.9rem;
+}
+
+.field-group select,
+.field-group input {
+  font-family: inherit;
+  color: inherit;
+  border: var(--base-border);
+  border-radius: 0.5rem;
+  padding-inline: 0.35rem;
+  background-color: transparent;
+}
+
+.field-group select:focus,
+.field-group input:focus {
+  outline: none;
+}
+
+.field-group select {
+  padding-block: 0.5rem;
+  width: 100%;
+  cursor: pointer;
+}
+
+.field-group input {
+  padding-block: 0.5rem;
+}
+
+/* ////////////////////////////////////////////////
+
+INPUT STYLES
+
+//////////////////////////////////////////////////*/
+
+.dropdown-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.dropdown-label {
+  font-size: var(--text-sm);
+}
+
+.dropdown {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  border: var(--base-border);
+  border-radius: 0.5rem;
+  height: 100%;
+
+  & select {
+    height: 100%;
+    width: 100%;
+    display: inline-flex;
+    appearance: none;
+    padding-inline: var(--space-sm);
+    cursor: pointer;
+  }
+
+  & svg {
+    position: absolute;
+    right: 1rem;
+    pointer-events: none;
+  }
+}
+
+.dropdown:focus {
+  outline: none;
 }

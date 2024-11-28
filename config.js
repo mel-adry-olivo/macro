@@ -1,5 +1,5 @@
 const config = {
-  defaultContent: 'orders',
+  defaultContent: 'dashboard',
   contentApiUrl: './api/content.php?content=',
 };
 

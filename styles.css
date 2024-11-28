@@ -27,6 +27,9 @@ RESET STYLES
   --header-gap: 0.75rem;
   --base-border: 1px solid var(--clr-line);
   --base-border-active: 1px solid var(--clr-line-active);
+
+  --tailwind-transition: all 150ms var(--tailwind-easing);
+  --tailwind-easing: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 * {
@@ -66,11 +69,37 @@ input[type='text'] {
   color: inherit;
 }
 
+select {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-family: inherit;
+  color: inherit;
+}
+
 /* ////////////////////////////////////////////////
 
 GLOBAL STYLES
 
 //////////////////////////////////////////////////*/
+
+.page-overlay {
+  position: fixed;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 99;
+  background-color: hsla(0, 0%, 0%, 0.2);
+  backdrop-filter: blur(1px);
+  visibility: hidden;
+  opacity: 0;
+  transition: var(--tailwind-transition);
+}
+
+.page-overlay.show {
+  visibility: visible;
+  opacity: 1;
+}
 
 .container {
   flex: 1;
@@ -134,7 +163,7 @@ HEADER STYLES
   padding: 0.65rem 1.15rem;
   border-radius: 1rem;
   cursor: pointer;
-  transition: border-color 0.2s ease;
+  transition: var(--tailwind-transition);
 
   &:hover {
     background-color: hsl(0, 0%, 95%);
@@ -173,7 +202,7 @@ PAGE LAYOUT STYLES
 }
 
 .orders {
-  --header-height: 7rem;
+  --header-height: 5rem;
   --sidebar-width: min(28rem, 28%);
 
   display: grid;
@@ -186,7 +215,7 @@ PAGE LAYOUT STYLES
 .warehouses,
 .suppliers {
   display: grid;
-  grid-template-rows: 7rem 5rem 1fr;
+  grid-template-rows: 5rem 5rem 1fr;
   gap: 1rem;
 }
 
@@ -237,6 +266,35 @@ DASHBOARD STYLES
 .dashboard > .dashboard-card-7 {
   grid-column-start: 3;
   grid-row-start: 3;
+  grid-template-rows: auto 1fr;
+}
+
+.near-threshold-card {
+  border: var(--base-border);
+  border-radius: 0.5rem;
+  padding: var(--space-sm);
+
+  .text-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-xxs);
+  }
+
+  .product-name {
+    font-weight: 500;
+    font-size: var(--text-base);
+    color: var(--clr-text);
+  }
+
+  .product-id {
+    font-size: var(--text-xs);
+    opacity: 0.6;
+  }
+
+  .units {
+    font-size: var(--text-xs);
+  }
 }
 
 /* ////////////////////////////////////////////////
@@ -244,10 +302,6 @@ DASHBOARD STYLES
 ORDERS STYLES
 
 //////////////////////////////////////////////////*/
-
-.orders h1 {
-  /* font-size: var(--text-2xl); */
-}
 
 .orders-header {
   grid-column: span 2 / span 2;
@@ -273,16 +327,6 @@ ORDERS STYLES
   .searchbar {
     flex: 1;
   }
-
-  .view-modes {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-xs);
-  }
-
-  & > button {
-    margin-left: 1rem;
-  }
 }
 
 .orders-sidebar {
@@ -298,6 +342,55 @@ ORDERS STYLES
 PRODUCTS STYLES
 
 //////////////////////////////////////////////////*/
+
+.products-header {
+  display: flex;
+  justify-content: space-between;
+  background-color: transparent;
+}
+
+.products-title {
+  display: flex;
+  align-items: center;
+}
+
+.products-toolbar {
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: space-between;
+  background-color: transparent;
+
+  .searchbar {
+    width: min(40%, 30rem);
+  }
+}
+
+.dropdown-filter {
+  width: 8rem;
+}
+
+.products-list {
+  background-color: transparent;
+  padding-block: 0;
+}
+
+.products-list .name {
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--clr-text);
+}
+
+.products-list .author {
+  font-size: var(--text-xs);
+  color: var(--clr-text-secondary);
+}
+
+.product__add-form {
+  padding: 2rem;
+  border-radius: 1rem;
+  background-color: var(--clr-skeleton);
+  color: var(--clr-gray-200);
+}
 
 /* ////////////////////////////////////////////////
 
