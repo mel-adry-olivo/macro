@@ -34,7 +34,7 @@
         </div>
     </div>
     <div class="row button-row">
-        <button class="btn btn-cancel" type="button">Cancel</button>
+        <button class="btn btn-no-border btn-cancel" type="button">Cancel</button>
         <button class="btn btn-primary" type="submit">Add Product</button>
     </div>
     <input type="hidden" name="action" value="create">

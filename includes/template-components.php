@@ -36,14 +36,15 @@ function createSearchbar($placeholder = "Search") {
     HTML;
 }
 
-function createButton($text, $icon = "", $filled = false) {
+function createButton($text, $icon = "", $filled = false, $noborder = false) {
     $iconHtml = $icon ? "<i data-lucide='$icon'></i>" : "";
     $filled = $filled ? "btn-primary" : "";
+    $noborder = $noborder ? "btn-no-border" : "";
     $class = strtolower(str_replace(" ", "-", $text)) . "-btn";
 
     echo
     <<<HTML
-    <button class="btn $filled $class">
+    <button class="btn $noborder $filled $class">
         $iconHtml
         $text
     </button>
@@ -93,6 +94,7 @@ function createDropdownOptions($options) {
 
 function createProductTableRow($product) {
 
+    $id = $product["id"];
     $image = $product["image"];
     $name = $product["name"];
     $author = $product["author"];
@@ -102,7 +104,7 @@ function createProductTableRow($product) {
 
     echo
     <<<HTML
-    <div class="table-row">
+    <div class="table-row product-card" data-id="$id">
         <div class="table-row-item" primary-item>
             <img src="$image">
             <div class="flow">
@@ -132,23 +134,24 @@ function createProductTableRow($product) {
 
 function createWarehouseTableRow($warehouse) {
 
+    $id = $warehouse["id"];
     $name = $warehouse["name"];
     $address = $warehouse["address"];
 
     echo
     <<<HTML
-    <div class="table-row">
+    <div class="table-row warehouse-card" data-id="$id">
         <div class="table-row-item" primary-item>$name</div>
         <div class="table-row-item">$address</div>
         <div class="table-row-item" actions>
             <div class="table-actions">
-                <button class="btn-icon border" aria-label="view">
+                <button class="btn-icon border warehouse-expand" aria-label="view">
                     <i data-lucide="expand"></i>
                 </button>
-                <button class="btn-icon border" aria-label="edit">
+                <button class="btn-icon border warehouse-edit" aria-label="edit">
                     <i data-lucide="edit"></i>
                 </button>
-                <button class="btn-icon border" aria-label="delete">
+                <button class="btn-icon border warehouse-delete" aria-label="delete">
                     <i data-lucide="trash-2"></i>
                 </button>
             </div>

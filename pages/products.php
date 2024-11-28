@@ -13,6 +13,9 @@ $books = $result->fetch_all(MYSQLI_ASSOC);
 
 
 <div class="products">
+    <div class="warehouse-breadcrumb">
+        <?php createButton("Products", "", false, true); ?>
+    </div>
     <div class="products-header">
         <div class="products-title">
             <h1>Products</h1>
@@ -42,4 +45,4 @@ $books = $result->fetch_all(MYSQLI_ASSOC);
     </div>
 </div>
 <div class="page-overlay add-overlay"></div>
-<?php require '../includes/product-add-form.php'; ?>
+<?php require '../includes/products/product-add-form.php'; ?>

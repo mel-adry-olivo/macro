@@ -30,4 +30,4 @@ function initProductsPage() {
   });
 }
 
-export default initProductsPage;
+export { initProductsPage };

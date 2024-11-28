@@ -7,6 +7,7 @@ if(!isset($_GET['content'])) {
 
 $content = $_GET['content'];
 
+
 switch($content) {
     case 'dashboard':
         require '../pages/dashboard.php';

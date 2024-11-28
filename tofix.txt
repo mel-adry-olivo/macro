@@ -1,0 +1,10 @@
+-- pagination or scroll on lists
+-- search product on link product form
+
+
+
+to add:
+
+-- login
+-- customer sales
+-- 

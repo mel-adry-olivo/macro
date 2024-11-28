@@ -16,7 +16,11 @@ export function hideForm(form, overlay) {
   form.reset();
 
   const imageContainer = form.querySelector('.image-container');
-  const imgElement = imageContainer.querySelector('img');
+  let imgElement = undefined;
+
+  if (imageContainer) {
+    imgElement = imageContainer.querySelector('img');
+  }
 
   if (imgElement) {
     imgElement.remove();
