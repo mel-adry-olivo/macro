@@ -39,7 +39,7 @@ $thresholdBooks = $thresholdResult->fetch_all(MYSQLI_ASSOC);
     </div>
     <div class="dashboard-card-3">
         <h2>Total Stock Value</h2>
-        <h1>$<?php echo $totalStockValue ?></h1>
+        <h1>₱<?php echo number_format($totalStockValue, 0, '.', ',') ?></h1>
         <p>+2% since last month</p>
     </div>
     <div class="dashboard-card-4">

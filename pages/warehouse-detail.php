@@ -6,10 +6,14 @@ $sql = "SELECT * FROM warehouses WHERE id = $warehouseId";
 $result = $conn->query($sql);
 $warehouse = $result->fetch_assoc();
 
-$racks = [];
+$racksSql = "SELECT * FROM racks WHERE warehouse_id = " . $warehouse['id'];
+$racksResult = $conn->query($racksSql);
+$racks = $racksResult->fetch_all(MYSQLI_ASSOC);
+
+
 ?>
 
-<div class="warehouses warehouses-detail">
+<div class="warehouses warehouses-detail" data-id="<?php echo $warehouse['id'] ?>">
     <div class="warehouse-breadcrumb">
            <?php createButton("Back", "move-left", false, true); ?>
     </div>
@@ -24,27 +28,24 @@ $racks = [];
     </div>
     <div class="warehouses-toolbar">
         <?php createSearchbar("Search products in warehouse")?>
-        <?php if(!empty($racks)) : ?>
-            <?php createDropdown($racks, "rack"); ?>
-        <?php endif; ?>
+        <div class="row">
+            <?php createButton("Transfer Stock", "arrow-left-right", false, false)?>   
+            <?php createButton("Pending Transfers", "clock", false, false)?>
+        </div>
     </div>
      <div class="warehouses-list">
-        <div class="table">
+        <div class="table warehouse-table">
             <div class="table-header">
-                <div class="table-header-item" primary-item>Name</div>
-                <div class="table-header-item">Rack #</div>
-                <div class="table-header-item">Stock Level</div>
+                <div class="table-header-item" primary-item>Rack Name</div>
+                <div class="table-header-item">Max Capacity (units)</div>
+                <div class="table-header-item">Capacity Used</div>
+                <div class="table-header-item">Last Updated</div>
                 <div class="table-header-item" actions>Actions</div>
             </div>
             <div class="table-body">
-                No products in this warehouse
+                <?php foreach($racks as $rack) createRackTableRow($rack, $warehouseId);?>
             </div>
         </div>
      </div>
-
-     <!-- sidebar
-            transfer stocks      
-            pending transfers
-     -->
 </div>
 <?php require '../includes/warehouse/rack-add-form.php';?>

@@ -15,6 +15,15 @@ CREATE TABLE warehouses (
     address VARCHAR(255) NOT NULL 
 );
 
+CREATE TABLE racks (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    warehouse_id INT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    max_unit_capacity INT NOT NULL,
+    last_updated DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (warehouse_id) REFERENCES warehouses(id) ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
 CREATE TABLE notifications (
     id INT AUTO_INCREMENT PRIMARY KEY,
     message VARCHAR(255) NOT NULL,
@@ -50,3 +59,11 @@ VALUES
     ("Low stock: To Kill a Mockingbird (Stock: 10)", "low_stock"),
     ("Low stock: 1984 (Stock: 15)", "low_stock"),
     ("New order #10245", "new_order");
+
+INSERT INTO racks (warehouse_id, name, max_unit_capacity)
+VALUES 
+    (1, 'Rack 1', 100),
+    (1, 'Rack 2', 150),
+    (2, 'Rack 3', 200),
+    (3, 'Rack 4', 250),
+    (3, 'Rack 5', 300);

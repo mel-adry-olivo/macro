@@ -250,7 +250,10 @@ FORM STYLES
   border-radius: 1rem;
   background-color: var(--clr-skeleton);
   color: var(--clr-gray-200);
-  width: 25%;
+
+  & h1 {
+    white-space: nowrap;
+  }
 }
 
 /* ////////////////////////////////////////////////
@@ -466,13 +469,6 @@ WAREHOUSES STYLES
 .warehouses-list .author {
   font-size: var(--text-xs);
   color: var(--clr-text-secondary);
-}
-
-.warehouses__add-form {
-  padding: 2rem;
-  border-radius: 1rem;
-  background-color: var(--clr-skeleton);
-  color: var(--clr-gray-200);
 }
 
 .warehouse-breadcrumb {

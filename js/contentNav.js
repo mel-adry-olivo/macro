@@ -1,6 +1,6 @@
 import config from '../config.js';
 import { initProductsPage } from './products.js';
-import { initWarehousesPage, initWarehouseDetailPage } from './warehouse.js';
+import { initRackDetailPage, initWarehousesPage, initWarehouseDetailPage } from './warehouse.js';
 
 const navItems = document.querySelectorAll('.nav-item');
 export const contentArea = document.querySelector('.content');
@@ -47,6 +47,9 @@ export function loadResources($content) {
       break;
     case 'warehouse-detail':
       initWarehouseDetailPage();
+      break;
+    case 'rack-detail':
+      initRackDetailPage();
       break;
   }
 }

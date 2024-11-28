@@ -114,7 +114,7 @@ function createProductTableRow($product) {
         </div>
         <div class="table-row-item">$category</div>
         <div class="table-row-item">$stock</div>
-        <div class="table-row-item">$$price</div>
+        <div class="table-row-item">₱$price</div>
         <div class="table-row-item" actions>
             <div class="table-actions">
                 <button class="btn-icon border" aria-label="view">
@@ -158,5 +158,37 @@ function createWarehouseTableRow($warehouse) {
         </div>
     </div>
     HTML;
+}
 
+
+function createRackTableRow($rack) {
+
+    $id = $rack["id"];
+    $name = $rack["name"];
+    $maxCapacity = $rack["max_unit_capacity"];
+    $capacityUsed = '0%';
+    $lastUpdated = date_format(new DateTime($rack["last_updated"]), "d-m-Y");
+
+    echo
+    <<<HTML
+    <div class="table-row rack-card" data-id="$id">
+        <div class="table-row-item" primary-item>$name</div>
+        <div class="table-row-item">$maxCapacity</div>
+        <div class="table-row-item">$capacityUsed</div>
+        <div class="table-row-item">$lastUpdated</div>
+        <div class="table-row-item" actions>
+            <div class="table-actions">
+                <button class="btn-icon border rack-expand" aria-label="view">
+                    <i data-lucide="expand"></i>
+                </button>
+                <button class="btn-icon border rack-edit" aria-label="edit">
+                    <i data-lucide="edit"></i>
+                </button>
+                <button class="btn-icon border rack-delete" aria-label="delete">
+                    <i data-lucide="trash-2"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    HTML;
 }

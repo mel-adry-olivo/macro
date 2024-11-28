@@ -127,7 +127,7 @@ TABLE STYLES
 //////////////////////////////////////////////////*/
 
 .table {
-  font-size: var(--text-sm);
+  font-size: 0.85rem;
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);

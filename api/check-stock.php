@@ -9,7 +9,6 @@ $books = $result->fetch_all(MYSQLI_ASSOC);
 
 if(count($books) > 0) {
     foreach($books as $book) {
-
         $notifcationSql = "
             INSERT INTO notifications (message, type) 
             VALUES ('" . $book['name'] ."' , 'low_stock')";
@@ -18,3 +17,4 @@ if(count($books) > 0) {
 }
 
 echo json_encode($books);
+exit();
