@@ -129,3 +129,31 @@ function createProductTableRow($product) {
     </div>
     HTML;
 }
+
+function createWarehouseTableRow($warehouse) {
+
+    $name = $warehouse["name"];
+    $address = $warehouse["address"];
+
+    echo
+    <<<HTML
+    <div class="table-row">
+        <div class="table-row-item" primary-item>$name</div>
+        <div class="table-row-item">$address</div>
+        <div class="table-row-item" actions>
+            <div class="table-actions">
+                <button class="btn-icon border" aria-label="view">
+                    <i data-lucide="expand"></i>
+                </button>
+                <button class="btn-icon border" aria-label="edit">
+                    <i data-lucide="edit"></i>
+                </button>
+                <button class="btn-icon border" aria-label="delete">
+                    <i data-lucide="trash-2"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    HTML;
+
+}

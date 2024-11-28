@@ -1,4 +1,7 @@
 <header class="header">
+    <div class="logo">
+        <h1><span>M</span>acro.</h1>
+    </div>
     <ul class="nav">
         <li class="nav-item active" data-content="dashboard">Dashboard</li>
         <li class="nav-item" data-content="orders">Orders</li>
@@ -10,8 +13,8 @@
         <button class="btn-icon round">
             <i data-lucide="settings"></i>
         </button>
-        <button class="user-avatar">
-        
+        <button class="btn-icon round ">
+            <i data-lucide="user"></i>
         </button>
     </div>
 </header>

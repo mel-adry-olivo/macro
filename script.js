@@ -1,15 +1,12 @@
 import config from './config.js';
 import initProductsPage from './js/products.js';
-import { checkLowStock } from './js/notifications.js';
+import { initNotifications } from './js/notifications.js';
 
 const navItems = document.querySelectorAll('.nav-item');
 const contentArea = document.querySelector('.content');
 
 window.onload = () => {
-  checkLowStock();
-  setInterval(() => {
-    checkLowStock();
-  }, 20000);
+  // initNotifications();
 
   const defaultNavItem = Array.from(navItems).find(
     (item) => item.dataset.content == config.defaultContent,

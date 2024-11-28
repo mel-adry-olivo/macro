@@ -9,6 +9,12 @@ CREATE TABLE books (
     price DECIMAL(10, 2) NOT NULL
 );
 
+CREATE TABLE warehouses (
+    id INT AUTO_INCREMENT PRIMARY KEY,  
+    name VARCHAR(255) NOT NULL,         
+    address VARCHAR(255) NOT NULL 
+);
+
 CREATE TABLE notifications (
     id INT AUTO_INCREMENT PRIMARY KEY,
     message VARCHAR(255) NOT NULL,
@@ -17,8 +23,6 @@ CREATE TABLE notifications (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- Automatically set to the current time when created
 );
 
-
-
 INSERT INTO books (image, author, name, category, stock, stock_threshold, price)
 VALUES
     ("./assets/to-kill-a-mockingbird.jpg", "Harper Lee", "To Kill a Mockingbird", "Fiction", 50, 10, 18.99),
@@ -26,6 +30,19 @@ VALUES
     ("./assets/the-great-gatsby.jpg", "F. Scott Fitzgerald", "The Great Gatsby", "Classic", 30, 5, 10.99),
     ("./assets/pride-and-prejudice.png", "Jane Austen", "Pride and Prejudice", "Romance", 40, 8, 12.99),
     ("./assets/the-hobbit.jpg", "J.R.R. Tolkien", "The Hobbit", "Fantasy", 60, 12, 25.99);
+
+INSERT INTO warehouses (name, address) 
+VALUES
+    ('Main Warehouse', '123 Jaro St, Iloilo City, Iloilo'),
+    ('South Depot', '456 Molo St, Iloilo City, Iloilo'),
+    ('North East Storage', '789 La Paz St, Iloilo City, Iloilo'),
+    ('West Hub', '101 Arevalo St, Iloilo City, Iloilo'),
+    ('Central Warehouse', '12 Delgado St, Iloilo City, Iloilo'),
+    ('Riverside Depot', '56 Villa St, Iloilo City, Iloilo'),
+    ('Iloilo Heights', '789 East Baluarte St, Iloilo City'),
+    ('Panay Depot', '34 Balantang St, Iloilo City, Iloilo'),
+    ('Mandurriao Hub', '22 N. Alegre St, Iloilo City, Iloilo'),
+    ('City Center Storage', '200 Bonifacio St, Iloilo City, Iloilo');
 
 
 INSERT INTO notifications (message, type)
