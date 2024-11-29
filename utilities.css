@@ -24,6 +24,10 @@ LAYOUT STYLES
   align-items: center;
 }
 
+.space-between {
+  justify-content: space-between;
+}
+
 /* ////////////////////////////////////////////////
 
 BUTTON STYLES
@@ -164,6 +168,11 @@ TABLE STYLES
   align-items: center;
 }
 
+.table-header-item.unflex,
+.table-row-item.unflex {
+  flex: unset;
+}
+
 .table-header-item[primary-item],
 .table-row-item[primary-item] {
   flex: 2;
@@ -231,7 +240,7 @@ input[type='checkbox'] {
     display: inline-block;
     position: absolute;
     inset: 2px;
-    border-radius: 0.15rem;
+    border-radius: 0.25rem;
   }
 
   &:checked::after {
@@ -404,4 +413,19 @@ INPUT STYLES
 
 .dropdown:focus {
   outline: none;
+}
+
+.scrollable {
+  overflow-y: auto;
+  max-height: 350px;
+  scrollbar-width: thin;
+}
+
+.scrollable::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+  background: var(--clr-gray-100);
+  border-radius: 100px;
 }

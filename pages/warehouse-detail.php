@@ -1,5 +1,7 @@
 <?php 
 require '../includes/db-config.php';
+require '../includes/db-utils.php';
+
 require '../includes/template-components.php';
 
 $sql = "SELECT * FROM warehouses WHERE id = $warehouseId";
@@ -49,3 +51,4 @@ $racks = $racksResult->fetch_all(MYSQLI_ASSOC);
      </div>
 </div>
 <?php require '../includes/warehouse/rack-add-form.php';?>
+<?php require '../includes/warehouse/link-product-form.php';?>

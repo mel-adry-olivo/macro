@@ -24,6 +24,22 @@ export function initWarehouseDetailPage() {
   const createRackButton = document.querySelector('.create-rack-btn');
   const rackAddCancel = document.querySelector('.btn-cancel.rack');
 
+  const linkProductButton = document.querySelector('.link-product-btn');
+  const linkProductForm = document.querySelector('.link-product-form');
+  const linkProductOverlay = document.querySelector('.link-product-overlay');
+  const linkProductCancel = document.querySelector('.btn-cancel.link');
+  const selectAllCheckbox = document.querySelector('.select-all-checkbox');
+  const rowCheckboxes = document.querySelectorAll('.table-body input[type="checkbox"]');
+  const dropDown = document.querySelector('.link-product-form .dropdown-select');
+
+  linkProductButton.addEventListener('click', () => {
+    showForm(linkProductForm, linkProductOverlay);
+  });
+
+  linkProductCancel.addEventListener('click', () => {
+    hideForm(linkProductForm, linkProductOverlay);
+  });
+
   createRackButton.addEventListener('click', () => {
     showForm(rackAddForm, rackAddOverlay);
   });
@@ -34,6 +50,29 @@ export function initWarehouseDetailPage() {
 
   backButton.addEventListener('click', () => {
     selectContent('warehouses');
+  });
+
+  selectAllCheckbox.addEventListener('change', function () {
+    rowCheckboxes.forEach(function (checkbox) {
+      checkbox.checked = selectAllCheckbox.checked;
+    });
+  });
+
+  rowCheckboxes.forEach(function (checkbox) {
+    checkbox.addEventListener('change', function () {
+      const allChecked = Array.from(rowCheckboxes).every((checkbox) => checkbox.checked);
+      selectAllCheckbox.checked = allChecked;
+    });
+  });
+
+  dropDown.addEventListener('change', async () => {
+    const selectedValue = dropDown.value;
+    const response = await fetch(
+      config.linkedProductApiUrl + selectedValue + '&warehouse_id=' + getWarehouseId(),
+    );
+    const data = await response.text();
+    const container = linkProductForm.querySelector('.table-body');
+    container.innerHTML = data;
   });
 
   rackAddForm.addEventListener('submit', async (e) => {
@@ -51,6 +90,24 @@ export function initWarehouseDetailPage() {
     hideForm(rackAddForm, rackAddOverlay);
     lucide.createIcons();
   });
+
+  linkProductForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const checkedProducts = document.querySelectorAll('.table-body input[type="checkbox"]:checked');
+    const bookIds = Array.from(checkedProducts).map((checkbox) => checkbox.value);
+    const rackName = linkProductForm.querySelector('.dropdown-select').value;
+    const warehouse_id = document.querySelector('.warehouses-detail').dataset.id;
+    const response = await fetch(config.rackApiUrl + '?action=link', {
+      method: 'POST',
+      body: JSON.stringify({ bookIds, rackName, warehouse_id }),
+    });
+
+    const data = await response.json();
+    sessionStorage.setItem('warehouseId', getWarehouseId());
+    expandRack(data.rackId);
+    hideForm(linkProductForm, linkProductOverlay);
+  });
 }
 
 function initRack() {
@@ -58,8 +115,7 @@ function initRack() {
   rackCards.forEach((card) => {
     card.addEventListener('click', async (e) => {
       if (e.target.closest('.rack-expand')) {
-        const warehouse_id = document.querySelector('.warehouses-detail').dataset.id;
-        sessionStorage.setItem('warehouseId', warehouse_id);
+        sessionStorage.setItem('warehouseId', getWarehouseId());
         expandRack(card.dataset.id);
       }
 
@@ -75,6 +131,7 @@ function initRack() {
 
 export function initRackDetailPage() {
   const backButton = document.querySelector('.back-btn');
+
   backButton.addEventListener('click', () => {
     expandWarehouse(sessionStorage.getItem('warehouseId'));
     sessionStorage.removeItem('warehouseId');
@@ -93,4 +150,8 @@ export async function expandRack(rackId) {
   const data = await response.text();
   contentArea.innerHTML = data;
   loadResources('rack-detail');
+}
+
+function getWarehouseId() {
+  return document.querySelector('.warehouses-detail').dataset.id;
 }

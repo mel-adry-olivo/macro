@@ -75,7 +75,7 @@ function createDropdownWithLabel($label, $options, $class = "") {
     <div class="dropdown-wrapper dropdown-$class">
         <label class="dropdown-label">$label</label>
         <div class="dropdown">
-            <select>
+            <select class="dropdown-select">
                 $options
             </select>
             <i data-lucide="chevron-down"></i>
@@ -126,6 +126,32 @@ function createProductTableRow($product) {
                 <button class="btn-icon border" aria-label="delete">
                     <i data-lucide="trash-2"></i>
                 </button>
+            </div>
+        </div>
+    </div>
+    HTML;
+}
+
+function createSimpleProductRow($product) {
+
+    $id = $product["id"];
+    $image = $product["image"];
+    $name = $product["name"];
+    $author = $product["author"];
+
+    echo
+    <<<HTML
+    <div class="table-row product-card" data-id="$id">
+        <div class="table-row-item space-between" primary-item>
+            <div class="wrapper row">
+                <img src="$image">
+                <div class="flow">
+                    <span class="name">$name</span>
+                    <span class="author">$author</span>
+                </div>
+            </div>
+            <div class="row">
+                <input type="checkbox" data-id="$id" name="product-checkbox-$id" value="$id">
             </div>
         </div>
     </div>

@@ -32,7 +32,29 @@ if($action === 'delete') {
 
     echo $rackHtml;
     exit();
+} else if ($action === 'link') {
+
+    $data = file_get_contents('php://input');
+    $decodedData = json_decode($data, true);
+
+    $rackName = $decodedData['rackName'];
+    $rackSql = "SELECT * FROM racks WHERE name = '$rackName'";
+    $rackResult = $conn->query($rackSql);
+    $rack = $rackResult->fetch_assoc();
+    $rackId = $rack['id'];
+
+    $warehouseId = $decodedData['warehouse_id'];
+    $bookIds = $decodedData['bookIds'];
+
+
+    foreach ($bookIds as $bookId) {
+        $sql = "
+            INSERT INTO warehouse_book (book_id, warehouse_id, rack_id, quantity) 
+            VALUES ($bookId, $warehouseId, $rackId, 0)";
+        $conn->query($sql);
+    }
+
+    echo json_encode(['rackId' => $rackId]);
+    exit();
 }
-
-
 ?>

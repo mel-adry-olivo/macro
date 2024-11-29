@@ -245,7 +245,8 @@ FORM STYLES
 //////////////////////////////////////////////////*/
 
 .product__add-form,
-.warehouse-add-rack-form {
+.warehouse-add-rack-form,
+.link-product-form {
   padding: 2rem;
   border-radius: 1rem;
   background-color: var(--clr-skeleton);
@@ -254,6 +255,10 @@ FORM STYLES
   & h1 {
     white-space: nowrap;
   }
+}
+
+.link-product-form {
+  width: 40%;
 }
 
 /* ////////////////////////////////////////////////
@@ -475,6 +480,11 @@ WAREHOUSES STYLES
   height: auto;
   padding: var(--space-xs);
   background-color: transparent;
+}
+
+.link-product-form .table-header {
+  padding-inline: var(--space-base);
+  padding-left: 0;
 }
 
 /* ////////////////////////////////////////////////

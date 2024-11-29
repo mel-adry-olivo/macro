@@ -24,6 +24,17 @@ CREATE TABLE racks (
     FOREIGN KEY (warehouse_id) REFERENCES warehouses(id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
+CREATE TABLE warehouse_book (
+    book_id INT NOT NULL,
+    warehouse_id INT NOT NULL,
+    rack_id INT NULL,                     
+    quantity INT NOT NULL,              
+    PRIMARY KEY (book_id, warehouse_id),
+    FOREIGN KEY (book_id) REFERENCES books(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY (warehouse_id) REFERENCES warehouses(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY (rack_id) REFERENCES racks(id) ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
 CREATE TABLE notifications (
     id INT AUTO_INCREMENT PRIMARY KEY,
     message VARCHAR(255) NOT NULL,
