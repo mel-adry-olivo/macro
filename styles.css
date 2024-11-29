@@ -487,6 +487,11 @@ WAREHOUSES STYLES
   padding-left: 0;
 }
 
+.rack-stat {
+  width: 10rem;
+  border-radius: 0.5rem;
+}
+
 /* ////////////////////////////////////////////////
 SUPPLIERS STYLES
 //////////////////////////////////////////////////*/

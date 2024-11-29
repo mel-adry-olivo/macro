@@ -146,7 +146,9 @@ export async function expandWarehouse(warehouseId) {
 }
 
 export async function expandRack(rackId) {
-  const response = await fetch(config.rackDetailApiUrl + rackId);
+  const response = await fetch(
+    config.rackDetailApiUrl + rackId + '&warehouseId=' + getWarehouseId(),
+  );
   const data = await response.text();
   contentArea.innerHTML = data;
   loadResources('rack-detail');

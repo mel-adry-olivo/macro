@@ -177,6 +177,8 @@ TABLE STYLES
 .table-row-item[primary-item] {
   flex: 2;
   gap: var(--space-xs);
+  color: var(--clr-text);
+  font-weight: 500;
 }
 
 .table-header-item[actions],
