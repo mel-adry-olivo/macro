@@ -3,7 +3,7 @@ import { initContentNavigation, selectContent } from './js/contentNav.js';
 import { expandWarehouse } from './js/warehouse.js';
 
 window.addEventListener('load', () => {
-  initContentNavigation();
+  // initContentNavigation();
   const warehouseId = sessionStorage.getItem('warehouseId');
   if (warehouseId) {
     expandWarehouse(warehouseId);

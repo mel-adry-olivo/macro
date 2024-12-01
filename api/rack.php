@@ -1,6 +1,6 @@
 <?php
 
-require '../includes/db-config.php';
+require '../includes/config.php';
 require '../includes/template-components.php';
 
 $action = $_GET['action'] ?? '';

@@ -1,11 +1,12 @@
 <?php 
-require '../includes/db-config.php';
+require '../includes/config.php';
 require '../includes/db-utils.php';
 require '../includes/template-components.php';
 
 $sql = "SELECT * FROM racks WHERE id = $rackId";
 $result = $conn->query($sql);
 $rack = $result->fetch_assoc();
+$warehouseId = $_GET['warehouseId'];
 
 $products = getRackBooksById($warehouseId, $rack['id']);
 
@@ -37,27 +38,29 @@ $products = getRackBooksById($warehouseId, $rack['id']);
                 <div class="table-header-item" actions>Actions</div>
             </div>
             <div class="table-body">
-                <?php foreach($products as $product) { ?>
-                    <div class="table-body-item">
-                        <!-- <div class="table-body-item-primary">
-                            <div class="table-body-item-primary-name"><?php echo $product['name'] ?></div>
-                        </div>
-                        <div class="table-body-item-secondary">
-                            <div class="table-body-item-secondary-quantity"><?php echo $product['quantity'] ?></div>
-                        </div>
-                        <div class="table-body-item-actions">
-                            <div class="table-actions">
-                            <button class="btn-icon border" aria-label="view">
-                            <i data-lucide="expand"></i>
-                            </button>
-                            <button class="btn-icon border" aria-label="edit">
-                                <i data-lucide="edit"></i>
-                            </button>
-                            <button class="btn-icon border" aria-label="delete">
-                                <i data-lucide="trash-2"></i>
-                            </button>
+            <?php foreach($products as $product) { ?>
+                    <div class="table-row">
+                        <div class="table-row-item" primary-item>
+                            <img src="<?php echo $product['image'] ?>">
+                            <div class="flow">
+                                <span class="name"><?php echo $product['name'] ?></span>
+                                <span class="author"><?php echo $product['author'] ?></span>
                             </div>
-                        </div> -->
+                        </div>
+                        <div class="table-row-item"><?php echo $product['quantity'] ?></div>
+                        <div class="table-row-item" actions>
+                            <div class="table-actions">
+                                <button class="btn-icon border warehouse-expand" aria-label="view">
+                                    <i data-lucide="expand"></i>
+                                </button>
+                                <button class="btn-icon border warehouse-edit" aria-label="edit">
+                                    <i data-lucide="edit"></i>
+                                </button>
+                                <button class="btn-icon border warehouse-delete" aria-label="delete">
+                                    <i data-lucide="trash-2"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 <?php } ?>
             </div>

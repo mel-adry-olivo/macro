@@ -1,6 +1,6 @@
 <?php 
 
-require '../includes/db-config.php';
+require '../includes/config.php';
 
 $sql = "SELECT * FROM books WHERE stock < stock_threshold";
 $result = $conn->query($sql);

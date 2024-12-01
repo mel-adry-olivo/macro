@@ -1,5 +1,6 @@
 <?php 
 
+
 function createNearThresholdProduct($product) {
 
     $productName = $product["name"];
@@ -163,6 +164,7 @@ function createWarehouseTableRow($warehouse) {
     $id = $warehouse["id"];
     $name = $warehouse["name"];
     $address = $warehouse["address"];
+    $href = WAREHOUSE_DETAIL_URL . "?id=$id";
 
     echo
     <<<HTML
@@ -171,9 +173,9 @@ function createWarehouseTableRow($warehouse) {
         <div class="table-row-item">$address</div>
         <div class="table-row-item" actions>
             <div class="table-actions">
-                <button class="btn-icon border warehouse-expand" aria-label="view">
+                <a href="$href" class="btn-icon border warehouse-expand" aria-label="view">
                     <i data-lucide="expand"></i>
-                </button>
+                </a>
                 <button class="btn-icon border warehouse-edit" aria-label="edit">
                     <i data-lucide="edit"></i>
                 </button>
@@ -185,6 +187,7 @@ function createWarehouseTableRow($warehouse) {
     </div>
     HTML;
 }
+
 
 
 function createRackTableRow($rack) {

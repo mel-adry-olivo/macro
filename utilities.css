@@ -80,6 +80,7 @@ BUTTON STYLES
   height: 100%;
 
   & svg {
+    pointer-events: none;
     height: var(--dimension);
     width: var(--dimension);
     color: var(--clr-text-secondary);
@@ -399,11 +400,10 @@ INPUT STYLES
 
   & select {
     height: 100%;
-    width: 100%;
-    display: inline-flex;
     appearance: none;
     padding-inline: var(--space-sm);
     cursor: pointer;
+    width: 100%;
   }
 
   & svg {

@@ -58,6 +58,10 @@ button {
   color: inherit;
 }
 
+a {
+  text-decoration: none;
+}
+
 ul,
 li {
   list-style: none;
@@ -425,18 +429,10 @@ PRODUCTS STYLES
 WAREHOUSES STYLES
 //////////////////////////////////////////////////*/
 
-.warehouses-detail {
-  /* gap: 0.5rem; */
-}
-
 .warehouses-header {
   display: flex;
   justify-content: space-between;
   background-color: transparent;
-}
-
-.warehouse-header-detail {
-  /* padding-block: var(--space-sm); */
 }
 
 .warehouses-title {
