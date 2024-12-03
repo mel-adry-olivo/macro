@@ -1,17 +1,23 @@
 import { navigateTo } from './router.js';
-
-const config = {
-  contentApiUrl: '/macro/pages/',
-  warehousesApiUrl: '/macro/api/warehouses.php?wid=',
-  rackApiUrl: '/macro/api/rack.php',
-  rackDetailApiUrl: '/macro/api/rack-detail.php?rackId=',
-  linkedProductApiUrl: '/macro/api/linked-products.php?value=',
-};
+import { showForm, hideForm } from './utils.js';
+import { config } from './config.js';
 
 document.querySelector('.container').addEventListener('click', (e) => {
   if (e.target.matches('.nav-item')) {
     document.querySelector('.nav-item.active').classList.remove('active');
     e.target.classList.add('active');
+  }
+
+  if (e.target.matches('.add-product-btn')) {
+    const form = document.querySelector('.product__add-form');
+    const overlay = document.querySelector('.add-overlay');
+    showForm(form, overlay);
+  }
+
+  if (e.target.matches('.btn-cancel.product')) {
+    const form = document.querySelector('.product__add-form');
+    const overlay = document.querySelector('.add-overlay');
+    hideForm(form, overlay);
   }
 
   if (e.target.matches('.link-product-btn')) {
@@ -57,6 +63,21 @@ document.querySelector('.container').addEventListener('change', async (e) => {
     const data = await response.text();
     const container = e.target.closest('.link-product-form').querySelector('.table-body');
     container.innerHTML = data;
+  }
+
+  if (e.target.matches('.image-chooser')) {
+    const imageContainer = document.querySelector('.image-container');
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      const image = new Image();
+      image.src = reader.result;
+      imageContainer.innerHTML = '';
+      imageContainer.appendChild(image);
+      imageContainer.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
   }
 });
 
@@ -115,34 +136,3 @@ document.querySelector('.container').addEventListener('submit', async (e) => {
     lucide.createIcons();
   }
 });
-
-function toggleVisibility(element, show = true) {
-  element.classList.toggle('show', show);
-}
-function showForm(form, overlay) {
-  toggleVisibility(form);
-  toggleVisibility(overlay);
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay && form.classList.contains('show')) {
-      hideForm(form, overlay);
-    }
-  });
-}
-function hideForm(form, overlay) {
-  form.reset();
-
-  const imageContainer = form.querySelector('.image-container');
-  let imgElement = undefined;
-
-  if (imageContainer) {
-    imgElement = imageContainer.querySelector('img');
-  }
-
-  if (imgElement) {
-    imgElement.remove();
-    imageContainer.style.display = 'none';
-  }
-
-  toggleVisibility(form, false);
-  toggleVisibility(overlay, false);
-}

@@ -1,13 +1,5 @@
 import { initProductsPage } from './products.js';
-
-const config = {
-  defaultContent: 'dashboard',
-  contentApiUrl: '/macro/pages/',
-  warehousesApiUrl: './api/warehouses.php?wid=',
-  rackApiUrl: './api/rack.php',
-  rackDetailApiUrl: './api/rack-detail.php?rackId=',
-  linkedProductApiUrl: './api/linked-products.php?value=',
-};
+import { config } from './config.js';
 
 function initRouter() {
   window.addEventListener('popstate', handleRoute);
