@@ -1,0 +1,12 @@
+# Enable mod_rewrite
+
+RewriteEngine On
+
+# If the request is for an existing file or directory, allow it
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Redirect all other requests to the main file (e.g., index.html)
+
+RewriteRule ^ /macro/index.php [L]

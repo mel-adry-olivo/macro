@@ -18,7 +18,7 @@ function getRackBooksByName ($warehouseId, $rackName) {
 
 function getRackBooksById ($warehouseId, $rackId) {
     global $conn;
-    $sql = "SELECT books.*
+    $sql = "SELECT books.*, warehouse_book.*
     FROM warehouse_book 
     JOIN books ON warehouse_book.book_id = books.id
     JOIN racks ON warehouse_book.rack_id = racks.id
@@ -36,7 +36,7 @@ function getNotLinkedBooks($warehouseId) {
     global $conn;
     $sql = "SELECT b.* 
     FROM books b
-    LEFT JOIN warehouse_book wb ON b.id = wb.book_id AND wb.warehouse_id = 1
+    LEFT JOIN warehouse_book wb ON b.id = wb.book_id AND wb.warehouse_id = $warehouseId
     WHERE wb.book_id IS NULL"; 
 
     $result = $conn->query($sql);

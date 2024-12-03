@@ -1,5 +1,6 @@
 import config from '../config.js';
 import { selectContent, contentArea, loadResources } from './contentNav.js';
+import { navigateTo } from './router.js';
 import { showForm, hideForm } from './utils.js';
 
 export function initWarehousesPage() {
@@ -7,7 +8,7 @@ export function initWarehousesPage() {
   warehouseCards.forEach((card) => {
     card.addEventListener('click', (e) => {
       if (e.target.closest('.warehouse-expand')) {
-        expandWarehouse(card.dataset.id);
+        navigateTo(`/macro/warehouses/${card.dataset.id}`);
       }
     });
   });
@@ -49,7 +50,7 @@ export function initWarehouseDetailPage() {
   });
 
   backButton.addEventListener('click', () => {
-    selectContent('warehouses');
+    window.history.back();
   });
 
   selectAllCheckbox.addEventListener('change', function () {
@@ -115,8 +116,8 @@ function initRack() {
   rackCards.forEach((card) => {
     card.addEventListener('click', async (e) => {
       if (e.target.closest('.rack-expand')) {
-        sessionStorage.setItem('warehouseId', getWarehouseId());
-        expandRack(card.dataset.id);
+        console.log(window.location.pathname);
+        navigateTo(`/macro/warehouses/${getWarehouseId()}/${card.dataset.id}`);
       }
 
       if (e.target.closest('.rack-delete')) {
@@ -133,25 +134,8 @@ export function initRackDetailPage() {
   const backButton = document.querySelector('.back-btn');
 
   backButton.addEventListener('click', () => {
-    expandWarehouse(sessionStorage.getItem('warehouseId'));
-    sessionStorage.removeItem('warehouseId');
+    window.history.back();
   });
-}
-
-export async function expandWarehouse(warehouseId) {
-  const response = await fetch(config.warehousesApiUrl + warehouseId);
-  const data = await response.text();
-  contentArea.innerHTML = data;
-  loadResources('warehouse-detail');
-}
-
-export async function expandRack(rackId) {
-  const response = await fetch(
-    config.rackDetailApiUrl + rackId + '&warehouseId=' + getWarehouseId(),
-  );
-  const data = await response.text();
-  contentArea.innerHTML = data;
-  loadResources('rack-detail');
 }
 
 function getWarehouseId() {

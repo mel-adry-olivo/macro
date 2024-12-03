@@ -7,5 +7,4 @@
       <main class="content"><!-- content will go here--></main>
     </div>
   </body>
-
 </html>

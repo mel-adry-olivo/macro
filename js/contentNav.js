@@ -23,17 +23,16 @@ export function initContentNavigation() {
     });
   });
 }
+export function selectNavItem(item) {
+  navItems.forEach((it) => it.classList.remove('active'));
+  item.classList.add('active');
+}
 
 export async function selectContent(content) {
   const response = await fetch(config.contentApiUrl + content);
   const data = await response.text();
   contentArea.innerHTML = data;
   loadResources(content);
-}
-
-export function selectNavItem(item) {
-  navItems.forEach((it) => it.classList.remove('active'));
-  item.classList.add('active');
 }
 
 export function loadResources($content) {

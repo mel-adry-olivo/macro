@@ -4,14 +4,16 @@ require '../includes/db-utils.php';
 
 require '../includes/template-components.php';
 
+$warehouseId = $_GET['id'] ?? '';
+
 $sql = "SELECT * FROM warehouses WHERE id = $warehouseId";
 $result = $conn->query($sql);
 $warehouse = $result->fetch_assoc();
 
+
 $racksSql = "SELECT * FROM racks WHERE warehouse_id = " . $warehouse['id'];
 $racksResult = $conn->query($racksSql);
 $racks = $racksResult->fetch_all(MYSQLI_ASSOC);
-
 
 ?>
 
