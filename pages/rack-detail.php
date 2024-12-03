@@ -29,7 +29,7 @@ $products = getRackBooksById($warehouseId, $rackId);
     </div>
     <div class="warehouses-toolbar">
         <div class="rack-stat">
-            <h2>3 Products</h2>
+            <h2><?php echo count($products) ?> Products</h2>
         </div>
     </div>
      <div class="warehouses-list">
