@@ -29,17 +29,19 @@ $books = $result->fetch_all(MYSQLI_ASSOC);
         <?php createSearchbar("Search products")?>
         <?php createDropdown($categories, "filter") ?>
     </div>
-     <div class="products-list">
-        <div class="table">
-            <div class="table-header">
-                <div class="table-header-item" primary-item>Name</div>
-                <div class="table-header-item">Category</div>
-                <div class="table-header-item">Stock Level</div>
-                <div class="table-header-item">Price</div>
-                <div class="table-header-item" actions>Actions</div>
-            </div>
-            <div class="table-body">
-                <?php foreach($books as $book) { createProductTableRow($book); } ?>
+    <div class="list-scroll">
+        <div class="products-list">
+            <div class="table">
+                <div class="table-header">
+                    <div class="table-header-item" primary-item>Name</div>
+                    <div class="table-header-item">Category</div>
+                    <div class="table-header-item">Stock Level</div>
+                    <div class="table-header-item">Price</div>
+                    <div class="table-header-item" actions>Actions</div>
+                </div>
+                <div class="table-body">
+                    <?php foreach($books as $book) { createProductTableRow($book); } ?>
+                </div>
             </div>
         </div>
     </div>

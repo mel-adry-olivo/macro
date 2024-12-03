@@ -151,8 +151,9 @@ TABLE STYLES
 
 .table-header {
   background-color: var(--clr-skeleton);
-  border-radius: 0.75rem;
   padding: var(--space-xs) var(--space-sm);
+  position: sticky;
+  top: 0;
 }
 
 .table-row {
@@ -261,6 +262,7 @@ FORM STYLES
   opacity: 0;
   visibility: hidden;
   position: fixed;
+  height: fit-content;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);

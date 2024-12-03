@@ -27,16 +27,18 @@ $warehouses = $result->fetch_all(MYSQLI_ASSOC);
         <?php createSearchbar("Search warehouses")?>
         <?php createDropdown($categories, "filter") ?>
     </div>
-     <div class="warehouses-list">
-        <div class="table warehouse-table">
-            <div class="table-header">
-                <div class="table-header-item" primary-item>Name</div>
-                <div class="table-header-item">Address</div>
-                <div class="table-header-item" actions>Actions</div>
-            </div>
-            <div class="table-body">
-                <?php foreach($warehouses as $warehouse) { createWarehouseTableRow($warehouse); } ?>
+    <div class="list-scroll">
+        <div class="warehouses-list">
+            <div class="table warehouse-table">
+                <div class="table-header">
+                    <div class="table-header-item" primary-item>Name</div>
+                    <div class="table-header-item">Address</div>
+                    <div class="table-header-item" actions>Actions</div>
+                </div>
+                <div class="table-body">
+                    <?php foreach($warehouses as $warehouse) { createWarehouseTableRow($warehouse); } ?>
+                </div>
             </div>
         </div>
-     </div>
+    </div>
 </div>

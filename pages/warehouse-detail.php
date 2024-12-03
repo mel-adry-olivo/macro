@@ -27,7 +27,7 @@ $racks = $racksResult->fetch_all(MYSQLI_ASSOC);
         </div>
         <div class="row">
             <?php createButton("Create Rack", "box", false)?>   
-            <?php createButton("Link Product", "baggage-claim", true)?>
+            <?php createButton("Map Product", "map", true)?>
         </div>
     </div>
     <div class="warehouses-toolbar">
@@ -37,20 +37,22 @@ $racks = $racksResult->fetch_all(MYSQLI_ASSOC);
             <?php createButton("Pending Transfers", "clock", false, false)?>
         </div>
     </div>
-     <div class="warehouses-list">
-        <div class="table warehouse-table">
-            <div class="table-header">
-                <div class="table-header-item" primary-item>Rack Name</div>
-                <div class="table-header-item">Max Capacity (units)</div>
-                <div class="table-header-item">Capacity Used</div>
-                <div class="table-header-item">Last Updated</div>
-                <div class="table-header-item" actions>Actions</div>
-            </div>
-            <div class="table-body">
-                <?php foreach($racks as $rack) createRackTableRow($rack, $warehouseId);?>
+    <div class="list-scroll">
+        <div class="warehouses-list">
+            <div class="table warehouse-table">
+                <div class="table-header">
+                    <div class="table-header-item" primary-item>Rack Name</div>
+                    <div class="table-header-item">Max Capacity (units)</div>
+                    <div class="table-header-item">Capacity Used</div>
+                    <div class="table-header-item">Last Updated</div>
+                    <div class="table-header-item" actions>Actions</div>
+                </div>
+                <div class="table-body">
+                    <?php foreach($racks as $rack) createRackTableRow($rack, $warehouseId);?>
+                </div>
             </div>
         </div>
-     </div>
+    </div>
 </div>
 <?php require '../includes/warehouse/rack-add-form.php';?>
 <?php require '../includes/warehouse/link-product-form.php';?>

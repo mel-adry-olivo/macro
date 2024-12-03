@@ -7,7 +7,6 @@ $action = $_GET['action'] ?? '';
 
 if($action === 'delete') {
     $rackId = $_GET['rackId'] ?? '';
-    $warehouseId = $_GET['warehouseId'] ?? '';
     $sql = "DELETE FROM racks WHERE id = $rackId";
     $conn->query($sql);
 

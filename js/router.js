@@ -1,5 +1,4 @@
 import { initProductsPage } from './products.js';
-import { initWarehousesPage, initRackDetailPage, initWarehouseDetailPage } from './warehouse.js';
 
 const config = {
   defaultContent: 'dashboard',
@@ -10,21 +9,22 @@ const config = {
   linkedProductApiUrl: './api/linked-products.php?value=',
 };
 
-const routes = {
-  '/macro/dashboard': () => renderDashboard(),
-  '/macro/orders': () => renderOrders(),
-  '/macro/products': () => renderProducts(),
-  '/macro/warehouses': () => renderWarehouses(),
-  '/macro/warehouses/:id': (id) => renderWarehouse(id),
-  '/macro/warehouses/:id/:rack': (id, rack) => renderRack(id, rack),
-};
-
 function initRouter() {
   window.addEventListener('popstate', handleRoute);
   handleRoute();
 }
 
-// Handle routing based on URL
+const routes = {
+  '/macro/:page': (page) => loadPageContent(page),
+  '/macro/warehouses/:id': (id) => loadPageContent('warehouse-detail', { id }),
+  '/macro/warehouses/:id/:rack': (id, rack) => loadPageContent('rack-detail', { id, rack }),
+  '/macro/products': () => loadPageContent('products'),
+  '/macro/orders': () => loadPageContent('orders'),
+  '/macro/settings': () => loadPageContent('settings'),
+  '/macro/suppliers': () => loadPageContent('suppliers'),
+  '/macro/404': () => renderNotFound(),
+};
+
 function handleRoute() {
   const currentPath = window.location.pathname;
 
@@ -42,27 +42,26 @@ function handleRoute() {
   renderNotFound();
 }
 
-function renderDashboard() {
-  selectContent('dashboard');
-}
-function renderOrders() {
-  selectContent('orders');
-}
+async function loadPageContent(content, params = {}) {
+  const paramsString = Object.keys(params)
+    .map((key) => `${key}=${params[key]}`)
+    .join('&');
 
-function renderProducts() {
-  selectContent('products');
-}
+  const url = `${config.contentApiUrl}${content}.php?${paramsString}`;
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error('Failed to load content');
 
-function renderWarehouses() {
-  selectContent('warehouses');
-}
+    const data = await response.text();
+    document.querySelector('.content').innerHTML = '';
+    document.querySelector('.content').innerHTML = data;
 
-function renderWarehouse(id) {
-  selectContent('warehouse-detail', { id });
-}
-
-function renderRack(id, rack) {
-  selectContent('rack-detail', { id, rack });
+    loadResources(content);
+  } catch (error) {
+    console.log(error);
+    document.querySelector('.content').innerHTML =
+      '<div class="error">An error occurred. Please try again later.</div>';
+  }
 }
 
 function renderNotFound() {
@@ -74,54 +73,60 @@ export function navigateTo(path) {
   handleRoute();
 }
 
-async function selectContent(content, params = {}) {
-  const paramsString = Object.keys(params)
-    .map((key) => `${key}=${params[key]}`)
-    .join('&');
-
-  const url = `${config.contentApiUrl}${content}.php?${paramsString}`;
-  console.log(url);
-
-  const response = await fetch(url);
-  const data = await response.text();
-  document.querySelector('.content').innerHTML = data;
-  loadResources(content);
-}
-
-function loadResources($content) {
+function loadResources(content) {
   lucide.createIcons();
-  switch ($content) {
+  switch (content) {
     case 'products':
       initProductsPage();
       break;
     case 'warehouses':
-      initWarehousesPage();
+      // initWarehousesPage();
       break;
     case 'warehouse-detail':
-      initWarehouseDetailPage();
+      // initWarehouseDetailPage();
       break;
     case 'rack-detail':
-      initRackDetailPage();
+      // initRackDetailPage();
       break;
   }
 }
 
-document
-  .querySelector('.nav-item[data-content="dashboard"]')
-  .addEventListener('click', () => navigateTo('/macro/dashboard'));
-document
-  .querySelector('.nav-item[data-content="orders"]')
-  .addEventListener('click', () => navigateTo('/macro/orders'));
-document
-  .querySelector('.nav-item[data-content="products"]')
-  .addEventListener('click', () => navigateTo('/macro/products'));
-document
-  .querySelector('.nav-item[data-content="warehouses"]')
-  .addEventListener('click', () => navigateTo('/macro/warehouses'));
-document
-  .querySelector('.nav-item[data-content="suppliers"]')
-  .addEventListener('click', () => navigateTo('/macro/settings'));
+document.querySelector('.container').addEventListener('click', (e) => {
+  if (e.target.matches('.nav-item')) {
+    switch (e.target.dataset.content) {
+      case 'dashboard':
+        navigateTo('/macro/dashboard');
+        break;
+      case 'orders':
+        navigateTo('/macro/orders');
+        break;
+      case 'products':
+        navigateTo('/macro/products');
+        break;
+      case 'warehouses':
+        navigateTo('/macro/warehouses');
+        break;
+      case 'suppliers':
+        navigateTo('/macro/suppliers');
+        break;
+    }
+  }
+
+  if (e.target.matches('.warehouse-expand[aria-label="view"]')) {
+    const warehouseId = e.target.closest('.warehouse-card').dataset.id;
+    navigateTo(`/macro/warehouses/${warehouseId}`);
+  }
+
+  if (e.target.matches('.rack-expand[aria-label="view"]')) {
+    const warehouseId = e.target.closest('.warehouses-detail').dataset.id;
+    const rackId = e.target.closest('.rack-card').dataset.id;
+    navigateTo(`/macro/warehouses/${warehouseId}/${rackId}`);
+  }
+
+  if (e.target.matches('.back-btn')) {
+    window.history.back();
+  }
+});
 
 document.querySelector('.nav-item[data-content="dashboard"]').click();
-
 initRouter();

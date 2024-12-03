@@ -1,7 +1,3 @@
-import { initNotifications } from './js/notifications.js';
-import { initContentNavigation, selectContent } from './js/contentNav.js';
-import { expandWarehouse } from './js/warehouse.js';
-
 window.addEventListener('load', () => {
   // initContentNavigation();
   // const warehouseId = sessionStorage.getItem('warehouseId');
