@@ -36,15 +36,19 @@ function createSearchbar($placeholder = "Search") {
     HTML;
 }
 
-function createButton($text, $icon = "", $filled = false, $noborder = false) {
+function createButton($text, $icon = "", $filled = false, $noborder = false, $dataForm = '', $dataOverlay='', ) {
     $iconHtml = $icon ? "<i data-lucide='$icon'></i>" : "";
     $filled = $filled ? "btn-primary" : "";
     $noborder = $noborder ? "btn-no-border" : "";
     $class = strtolower(str_replace(" ", "-", $text)) . "-btn";
+    $formButton = '';
+    if(!empty($dataForm) && !empty($dataOverlay)) {
+        $formButton = 'form-button';
+    }
 
     echo
     <<<HTML
-    <button class="btn $noborder $filled $class">
+    <button class="btn $noborder $filled $class" data-form="$dataForm" data-overlay="$dataOverlay" $formButton>
         $iconHtml
         $text
     </button>
@@ -57,7 +61,7 @@ function createDropdown($options, $class = "") {
 
     echo
     <<<HTML
-    <div class="dropdown dropdown-$class">
+    <div class="dropdown dropdown-$class selected">
         <select>
             $options
         </select>
@@ -216,5 +220,38 @@ function createRackTableRow($rack) {
             </div>
         </div>
     </div>
+    HTML;
+}
+
+function createRadioGroup($array, $name, $legend, $first = true) {
+
+    $html = '';
+
+    foreach ($array as $key => $value) {
+
+        $keylc = str_replace(' ', '-', strtolower($key));
+        $checked = $first ? 'checked' : ''; 
+        $first = false; 
+
+
+        $html .= <<<HTML
+        <label for="$keylc">
+            <input type="radio" id="$keylc" name="$name" value="$keylc" $checked>
+            <div class="btn">
+                <i data-lucide="$value"></i>
+                $key
+            </div>
+        </label>
+        HTML;
+    }
+
+    echo
+    <<<HTML
+    <fieldset class="radio-group">
+        <p class="legend">$legend</p>
+        <div class="radio-group-container">
+            $html
+        </div>
+    </fieldset>
     HTML;
 }

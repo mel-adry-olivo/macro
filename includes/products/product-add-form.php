@@ -1,4 +1,4 @@
-<form action="#" method="POST" class="modal-form product__add-form">
+<form action="#" method="POST" class="modal-form product-add-form">
     <h1 class="modal-form-title">Add a product</h1>
     <div class="flow">
         <div class="image-container"></div>
@@ -34,9 +34,9 @@
         </div>
     </div>
     <div class="row button-row">
-        <button class="btn btn-no-border btn-cancel product" type="button">Cancel</button>
+        <button class="btn btn-no-border btn-cancel product" type="button" data-form=".product-add-form" data-overlay=".product-add-overlay">Cancel</button>
         <button class="btn btn-primary" type="submit">Add Product</button>
     </div>
     <input type="hidden" name="action" value="create">
 </form>
-<div class="page-overlay add-product-overlay"></div>
+<div class="page-overlay product-add-overlay"></div>

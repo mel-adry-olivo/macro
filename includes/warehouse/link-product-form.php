@@ -30,13 +30,17 @@ $initalBooks = getNotLinkedBooks( $warehouseId);
                     </div>
                 </div>
                 <div class="table-body">
-                    <?php foreach($initalBooks as $book) createSimpleProductRow($book);?>
+                    <?php if(!empty($initalBooks)) : ?>
+                        <?php foreach($initalBooks as $book) { createProductTableRow($book); } ?>
+                    <?php else : ?>
+                        <div class="table-body-item">All products already linked</div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
     </div>
     <div class="row button-row">
-        <button class="btn btn-no-border btn-cancel link" type="button">Cancel</button>
+        <button class="btn btn-no-border btn-cancel link" type="button" data-form=".link-product-form" data-overlay=".link-product-overlay">Cancel</button>
         <button class="btn btn-primary link" >Link products</button>
     </div>
     <input type="hidden" name="warehouse_id" value="<?php echo $warehouseId; ?>">

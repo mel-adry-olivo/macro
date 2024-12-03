@@ -9,7 +9,6 @@
       <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
       <link rel="stylesheet" href="/macro/styles.css">
       <link rel="stylesheet" href="/macro/utilities.css">
-      <!-- <script src="script.js" type="module" defer></script> -->  
       <script src="/macro/js/router.js" type="module" defer></script>
       <script src="/macro/js/events.js" type="module"></script>
       <script src="https://unpkg.com/lucide@latest"></script>
@@ -18,6 +17,7 @@
     <div class="container">
       <?php require './includes/header.php' ?>
       <main class="content"><!-- content will go here--></main>
+      <div class="snackbar-container"></div>
     </div>
   </body>
 </html>

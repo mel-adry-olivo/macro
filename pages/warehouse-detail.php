@@ -23,23 +23,20 @@ $racks = $racksResult->fetch_all(MYSQLI_ASSOC);
     </div>
     <div class="warehouses-header warehouse-header-detail">
         <div class="warehouses-title">
-            <h1><?php echo $warehouse['name'] ?></h1>
+            <h1><?php echo $warehouse['name'] ?> - Racks</h1>
         </div>
         <div class="row">
-            <?php createButton("Create Rack", "box", false)?>   
-            <?php createButton("Map Product", "map", true)?>
+            <?php createButton("Transfer Stock", "arrow-left-right", false, false, dataForm:".stock-transfer-form", dataOverlay:".stock-transfer-overlay"); ?> 
+            <?php createButton("Create Rack", "box", false, dataForm:".rack-add-form", dataOverlay:".rack-add-overlay")?>   
+            <?php createButton("Link Product", "map", true, dataForm:".link-product-form", dataOverlay:".link-product-overlay")?>
         </div>
     </div>
-    <div class="warehouses-toolbar">
-        <?php createSearchbar("Search products in warehouse")?>
-        <div class="row">
-            <?php createButton("Transfer Stock", "arrow-left-right", false, false)?>   
-            <?php createButton("Pending Transfers", "clock", false, false)?>
-        </div>
-    </div>
+    <!-- <div class="warehouses-toolbar">
+        <?php //createSearchbar("Search products in warehouse")?>
+    </div> -->
     <div class="list-scroll">
         <div class="warehouses-list">
-            <div class="table warehouse-table">
+            <div class="table warehouse-table"> 
                 <div class="table-header">
                     <div class="table-header-item" primary-item>Rack Name</div>
                     <div class="table-header-item">Max Capacity (units)</div>
@@ -56,3 +53,4 @@ $racks = $racksResult->fetch_all(MYSQLI_ASSOC);
 </div>
 <?php require '../includes/warehouse/rack-add-form.php';?>
 <?php require '../includes/warehouse/link-product-form.php';?>
+<?php require '../includes/warehouse/stock-transfer-form.php';?>

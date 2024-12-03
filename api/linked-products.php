@@ -15,5 +15,11 @@ foreach ($products as $product) {
     $productsHTML .= createSimpleProductRow($product);
 }
 
+if($productsHTML === "") {
+    echo "<p>All products already linked</p>";
+    exit();
+}
+
+
 echo $productsHTML;
 exit();

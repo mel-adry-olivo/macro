@@ -12,21 +12,23 @@ $warehouses = $result->fetch_all(MYSQLI_ASSOC);
 
 <div class="warehouses">
     <div class="warehouse-breadcrumb">
-        <?php createButton("Warehouse", "", false, true); ?>
+        <?php //createButton("Warehouse", "", false, true); ?>
     </div>
     <div class="warehouses-header">
         <div class="warehouses-title">
             <h1>Warehouses</h1>
             </div>
             <div class="row">
+                <?//php createButton("Order Suppliers", "shopping-cart", false)?>
+                <?php createButton("Receive Orders", "notebook-pen", false)?>
                 <?php createButton("Import CSV", "import", false)?>
                 <?php createButton("Add Warehouse", "plus", true)?>
             </div>
         </div>
-    <div class="warehouses-toolbar">
-        <?php createSearchbar("Search warehouses")?>
-        <?php createDropdown($categories, "filter") ?>
-    </div>
+    <!-- <div class="warehouses-toolbar">
+        <?php //createSearchbar("Search warehouses")?>
+        <?php //createDropdown($categories, "filter") ?>
+    </div> -->
     <div class="list-scroll">
         <div class="warehouses-list">
             <div class="table warehouse-table">

@@ -1,47 +1,59 @@
 import { navigateTo } from './router.js';
 import { showForm, hideForm } from './utils.js';
 import { config } from './config.js';
+import { showSnackbar } from './components/snackbar.js';
 
+// forms
 document.querySelector('.container').addEventListener('click', (e) => {
   if (e.target.matches('.nav-item')) {
     document.querySelector('.nav-item.active').classList.remove('active');
     e.target.classList.add('active');
   }
 
-  if (e.target.matches('.add-product-btn')) {
-    const form = document.querySelector('.product__add-form');
-    const overlay = document.querySelector('.add-overlay');
-    showForm(form, overlay);
+  if (e.target.matches('.btn[form-button], .btn-cancel')) {
+    const formSelector = e.target.dataset.form;
+    const overlaySelector = e.target.dataset.overlay;
+
+    if (!formSelector && !overlaySelector) {
+      return;
+    }
+
+    const form = document.querySelector(formSelector);
+    const overlay = document.querySelector(overlaySelector);
+
+    if (!form && !overlay) {
+      return;
+    }
+
+    if (e.target.matches('.btn[form-button]')) {
+      showForm(form, overlay);
+    } else if (e.target.matches('.btn-cancel')) {
+      hideForm(form, overlay);
+    }
   }
 
-  if (e.target.matches('.btn-cancel.product')) {
-    const form = document.querySelector('.product__add-form');
-    const overlay = document.querySelector('.add-overlay');
-    hideForm(form, overlay);
+  if (e.target.matches('.new-purchase-btn')) {
+    showSnackbar('Error', 'Not yet implemented', 2500);
   }
 
-  if (e.target.matches('.link-product-btn')) {
-    const form = document.querySelector('.link-product-form');
-    const overlay = document.querySelector('.link-product-overlay');
-    showForm(form, overlay);
+  if (e.target.matches('.import-csv-btn')) {
+    showSnackbar('Error', 'Not yet implemented', 2500);
   }
 
-  if (e.target.matches('.btn-cancel.link')) {
-    const form = document.querySelector('.link-product-form');
-    const overlay = document.querySelector('.link-product-overlay');
-    hideForm(form, overlay);
+  if (e.target.matches('.transfer-stock-btn')) {
+    showSnackbar('Error', 'Not yet implemented', 2500);
   }
 
-  if (e.target.matches('.create-rack-btn')) {
-    const form = document.querySelector('.warehouse-add-rack-form');
-    const overlay = document.querySelector('.add-rack-overlay');
-    showForm(form, overlay);
+  if (e.target.matches('.receive-orders-btn')) {
+    showSnackbar('Error', 'Not yet implemented', 2500);
   }
 
-  if (e.target.matches('.btn-cancel.rack')) {
-    const form = document.querySelector('.warehouse-add-rack-form');
-    const overlay = document.querySelector('.add-rack-overlay');
-    hideForm(form, overlay);
+  if (e.target.matches('.order-suppliers-btn')) {
+    showSnackbar('Error', 'Not yet implemented', 2500);
+  }
+
+  if (e.target.matches('.input-sales-btn')) {
+    showSnackbar('Error', 'Not yet implemented', 2500);
   }
 
   if (e.target.matches('.rack-delete')) {

@@ -1,4 +1,3 @@
-import { initProductsPage } from './products.js';
 import { config } from './config.js';
 
 function initRouter() {
@@ -48,7 +47,7 @@ async function loadPageContent(content, params = {}) {
     document.querySelector('.content').innerHTML = '';
     document.querySelector('.content').innerHTML = data;
 
-    loadResources(content);
+    lucide.createIcons();
   } catch (error) {
     console.log(error);
     document.querySelector('.content').innerHTML =
@@ -63,24 +62,6 @@ function renderNotFound() {
 export function navigateTo(path) {
   window.history.pushState({}, '', path);
   handleRoute();
-}
-
-function loadResources(content) {
-  lucide.createIcons();
-  switch (content) {
-    case 'products':
-      initProductsPage();
-      break;
-    case 'warehouses':
-      // initWarehousesPage();
-      break;
-    case 'warehouse-detail':
-      // initWarehouseDetailPage();
-      break;
-    case 'rack-detail':
-      // initRackDetailPage();
-      break;
-  }
 }
 
 document.querySelector('.container').addEventListener('click', (e) => {
