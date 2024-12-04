@@ -14,7 +14,6 @@ $books = $result->fetch_all(MYSQLI_ASSOC);
 
 <div class="products">
     <div class="warehouse-breadcrumb">
-        <?php //createButton("Products", "", false, true); ?>
     </div>
     <div class="products-header">
         <div class="products-title">
@@ -26,16 +25,12 @@ $books = $result->fetch_all(MYSQLI_ASSOC);
             <?php createButton("Add Product", "plus", true, dataForm:".product-add-form", dataOverlay:".product-add-overlay")?>
         </div>
     </div>
-    <!-- <div class="products-toolbar">
-        <?php //createSearchbar("Search products")?>
-        <?php //createDropdown($categories, "filter") ?>
-    </div> -->
     <div class="list-scroll">
         <div class="products-list">
         <div class="table"> 
                 <div class="table-header">
                     <div class="table-header-item" primary-item>Rack Name</div>
-                    <div class="table-header-item">Total Sales</div>
+                    <div class="table-header-item">Units Sold</div>
                     <div class="table-header-item">Price</div>
                     <div class="table-header-item" actions>Actions</div>
                 </div>
@@ -53,14 +48,8 @@ $books = $result->fetch_all(MYSQLI_ASSOC);
                         <div class="table-row-item">$<?php echo $book['price'] ?></div>
                         <div class="table-row-item" actions>
                             <div class="table-actions">
-                                <button class="btn-icon border rack-expand" aria-label="view">
-                                    <i data-lucide="expand"></i>
-                                </button>
-                                <button class="btn-icon border rack-edit" aria-label="edit">
+                                <button class="btn-icon border product-edit" aria-label="edit">
                                     <i data-lucide="edit"></i>
-                                </button>
-                                <button class="btn-icon border rack-delete" aria-label="delete">
-                                    <i data-lucide="trash-2"></i>
                                 </button>
                             </div>
                         </div>

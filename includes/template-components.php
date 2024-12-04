@@ -162,6 +162,34 @@ function createSimpleProductRow($product) {
     HTML;
 }
 
+function createProductRowWithQuantity($product) {
+
+    $id = $product["id"];
+    $image = $product["image"];
+    $name = $product["name"];
+    $author = $product["author"];
+    $quantity = $product["quantity"];
+
+    echo
+    <<<HTML
+    <div class="table-row product-card space-between" data-id="$id">
+        <div class="table-row-item unflex" primary-item>
+            <div class="wrapper row">
+                <img src="$image">
+                <div class="flow">
+                    <span class="name">$name</span>
+                    <span class="author">$author</span>
+                </div>
+            </div>
+        </div>
+        <div class="table-row-item">$quantity</div>
+        <div class="table-row-item unflex">
+            <input type="checkbox" data-id="$id" name="product-checkbox-$id" value="$id">
+        </div>
+    </div>
+    HTML;
+}
+
 function createWarehouseTableRow($warehouse) {
 
     $id = $warehouse["id"];

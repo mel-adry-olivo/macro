@@ -47,3 +47,10 @@ function getNotLinkedBooks($warehouseId) {
 
 
 
+function getWarehouseRacks($warehouseId) {
+    global $conn;
+    $sql = "SELECT * FROM racks WHERE warehouse_id = $warehouseId";
+    $result = $conn->query($sql);
+    $racks = $result->fetch_all(MYSQLI_ASSOC);
+    return $racks;
+}

@@ -31,7 +31,7 @@ $initalBooks = getNotLinkedBooks( $warehouseId);
                 </div>
                 <div class="table-body">
                     <?php if(!empty($initalBooks)) : ?>
-                        <?php foreach($initalBooks as $book) { createProductTableRow($book); } ?>
+                        <?php foreach($initalBooks as $book) { createSimpleProductRow($book); } ?>
                     <?php else : ?>
                         <div class="table-body-item">All products already linked</div>
                     <?php endif; ?>

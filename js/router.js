@@ -101,5 +101,9 @@ document.querySelector('.container').addEventListener('click', (e) => {
   }
 });
 
-document.querySelector('.nav-item[data-content="dashboard"]').click();
+const dashboardNavItem = document.querySelector('.nav-item[data-content="dashboard"]');
+if (dashboardNavItem) {
+  dashboardNavItem.click();
+}
+
 initRouter();

@@ -16,7 +16,7 @@ $products = getRackBooksById($warehouseId, $rackId);
 
 ?>
 
-<div class="warehouses warehouses-detail" data-id="<?php echo $rack['id'] ?>">
+<div class="warehouses warehouses-detail rack" data-id="<?php echo $rack['id'] ?>">
     <div class="warehouse-breadcrumb">
            <?php createButton("Back", "move-left", false, true); ?>
     </div>
@@ -41,6 +41,7 @@ $products = getRackBooksById($warehouseId, $rackId);
                     <div class="table-header-item">Author</div>
                     <div class="table-header-item">Price</div>
                     <div class="table-header-item">Stock Quantity</div>
+                    <div class="table-header-item" actions>Actions</div>
                 </div>
                 <div class="table-body">
                 <?php foreach($products as $product) { ?>
@@ -49,6 +50,11 @@ $products = getRackBooksById($warehouseId, $rackId);
                             <div class="table-row-item"><?php echo $product['author'] ?></div>
                             <div class="table-row-item"><?php echo $product['price'] ?></div>
                             <div class="table-row-item"><?php echo $product['quantity'] ?></div>
+                            <div class="table-row-item" actions>
+                                <div class="table-actions">
+                                    <button class="btn-icon border rack-product-edit"><i data-lucide="edit"></i></button>
+                                </div>
+                            </div>
                         </div>
                     <?php } ?>
                 </div>
