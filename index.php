@@ -18,6 +18,7 @@
       <?php require './includes/header.php' ?>
       <main class="content"><!-- content will go here--></main>
       <div class="snackbar-container"></div>
+      <div class="page-overlay"></div>
     </div>
   </body>
 </html>

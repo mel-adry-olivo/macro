@@ -10,6 +10,8 @@ const routes = {
   '/macro/warehouses/:id': (id) => loadPageContent('warehouse-detail', { id }),
   '/macro/warehouses/:id/:rack': (id, rack) => loadPageContent('rack-detail', { id, rack }),
   '/macro/products': () => loadPageContent('products'),
+  '/macro/inbound': () => loadPageContent('inbound'),
+  '/macro/outbound': () => loadPageContent('outbound'),
   '/macro/orders': () => loadPageContent('orders'),
   '/macro/settings': () => loadPageContent('settings'),
   '/macro/suppliers': () => loadPageContent('suppliers'),
@@ -50,8 +52,7 @@ async function loadPageContent(content, params = {}) {
     lucide.createIcons();
   } catch (error) {
     console.log(error);
-    document.querySelector('.content').innerHTML =
-      '<div class="error">An error occurred. Please try again later.</div>';
+    document.querySelector('.content').innerHTML = '<div class="error">An error occurred. Please try again later.</div>';
   }
 }
 
@@ -69,6 +70,12 @@ document.querySelector('.container').addEventListener('click', (e) => {
     switch (e.target.dataset.content) {
       case 'dashboard':
         navigateTo('/macro/dashboard');
+        break;
+      case 'inbound':
+        navigateTo('/macro/inbound');
+        break;
+      case 'outbound':
+        navigateTo('/macro/outbound');
         break;
       case 'orders':
         navigateTo('/macro/orders');

@@ -1,5 +1,5 @@
 import { navigateTo } from './router.js';
-import { showForm, hideForm } from './utils.js';
+import { showForm, hideForm, newShowForm } from './utils.js';
 import { config } from './config.js';
 import { showSnackbar } from './components/snackbar.js';
 
@@ -11,28 +11,33 @@ document.querySelector('.container').addEventListener('click', (e) => {
     e.target.classList.add('active');
   }
 
-  // * Form Open Buttons & Close Buttons
-  if (e.target.matches('.btn[form-button], .btn-cancel')) {
-    const formSelector = e.target.dataset.form;
-    const overlaySelector = e.target.dataset.overlay;
-
-    if (!formSelector && !overlaySelector) {
-      return;
-    }
-
-    const form = document.querySelector(formSelector);
-    const overlay = document.querySelector(overlaySelector);
-
-    if (!form && !overlay) {
-      return;
-    }
-
-    if (e.target.matches('.btn[form-button]')) {
-      showForm(form, overlay);
-    } else if (e.target.matches('.btn-cancel')) {
-      hideForm(form, overlay);
-    }
+  if (e.target.matches('[btn-form]')) {
+    newShowForm(e.target.dataset.form);
   }
+
+  if (e.target.matches('.form-button[submit]')) {
+    e.preventDefault();
+
+    const searchQuery = document.querySelector('.form-text-input[placeholder="You can search here"]').value;
+    const quantityReceived = document.querySelector('.form-text-input[placeholder="Enter quantity received"]').value;
+    const searchSelection = document.querySelector('.form-search-selection');
+
+    if (searchSelection) {
+      Array.from(searchSelection.children).forEach((item) => {
+        console.log(item.textContent);
+      });
+    }
+
+    const data = {
+      searchQuery,
+      quantityReceived,
+      searchSelection,
+    };
+
+    console.log(data);
+  }
+
+  //********************************************* */
 
   // TODO: Import CSV
   if (e.target.matches('.import-csv-btn')) {
@@ -40,37 +45,21 @@ document.querySelector('.container').addEventListener('click', (e) => {
     showSnackbar('Function', message, 2500);
   }
 
-  // TODO: Receive Orders
-  if (e.target.matches('.receive-orders-btn')) {
-    const message =
-      'This will show form where you can receive stock orders to show stock increase.';
-    showSnackbar('Function', message, 2500);
-  }
-
-  // TODO: Input Sales
-  if (e.target.matches('.input-sales-btn')) {
-    const message = 'This will show form where you can input sales to show stock decrease.';
-    showSnackbar('Function', message, 2500);
-  }
-
   // TODO: Rack Product Edit
   if (e.target.matches('.rack-product-edit')) {
-    const message =
-      'This will show edit form where you can edit stocks & transfer product to another rack.';
+    const message = 'This will show edit form where you can edit stocks & transfer product to another rack.';
     showSnackbar('Function', message, 2500);
   }
 
   // TODO: Rack Edit
   if (e.target.matches('.rack-edit')) {
-    const message =
-      'This will show edit form where you can edit rack data like name, max capacity.';
+    const message = 'This will show edit form where you can edit rack data like name, max capacity.';
     showSnackbar('Function', message, 2500);
   }
 
   // TODO: Warehouse Edit
   if (e.target.matches('.warehouse-edit')) {
-    const message =
-      'This will show edit form where you can edit warehouse data like name and address.';
+    const message = 'This will show edit form where you can edit warehouse data like name and address.';
     showSnackbar('Function', message, 2500);
   }
 
@@ -82,8 +71,7 @@ document.querySelector('.container').addEventListener('click', (e) => {
 
   // TODO: Product Edit
   if (e.target.matches('.product-edit')) {
-    const message =
-      'This will show edit form where you can edit product data like name, price, and availability.';
+    const message = 'This will show edit form where you can edit product data like name, price, and availability.';
     showSnackbar('Function', message, 2500);
   }
 
@@ -110,9 +98,7 @@ document.querySelector('.container').addEventListener('change', async (e) => {
   if (e.target.matches('.link-product-form .dropdown-select')) {
     const selectedValue = e.target.value;
     const warehouseId = document.querySelector('.warehouses-detail').dataset.id;
-    const response = await fetch(
-      config.linkedProductApiUrl + selectedValue + '&warehouse_id=' + warehouseId,
-    );
+    const response = await fetch(config.linkedProductApiUrl + selectedValue + '&warehouse_id=' + warehouseId);
     const data = await response.text();
     const container = e.target.closest('.link-product-form').querySelector('.table-body');
     container.innerHTML = data;

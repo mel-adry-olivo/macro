@@ -10,7 +10,7 @@ function createNearThresholdProduct($product) {
 
     echo 
     <<< HTML
-    <div class="near-threshold-card">
+    <div class="card">
         <div class="text-wrapper">
             <span class="product-id">#PID00$productId</span>
             <span class="product-name">$productName</span>
@@ -19,6 +19,7 @@ function createNearThresholdProduct($product) {
     </div>
     HTML;
 }
+
 
 function createNotificationCard($product) {
     
@@ -33,6 +34,21 @@ function createSearchbar($placeholder = "Search") {
         </div>
         <input type="text" placeholder="$placeholder">
     </div>
+    HTML;
+}
+
+function createFormButton($text, $icon = "", $filled = false, $noborder = false, $dataForm = '') {
+    $iconHtml = $icon ? "<i data-lucide='$icon'></i>" : "";
+    $filled = $filled ? "btn-primary" : "";
+    $noborder = $noborder ? "btn-no-border" : "";
+    $class = strtolower(str_replace(" ", "-", $text)) . "-btn";
+
+    echo
+    <<<HTML
+    <button class="btn $noborder $filled $class" data-form="$dataForm" btn-form>
+        $iconHtml
+        $text
+    </button>
     HTML;
 }
 
@@ -91,7 +107,8 @@ function createDropdownWithLabel($label, $options, $class = "") {
 function createDropdownOptions($options) {
     $html = "";
     foreach ($options as $option) {
-        $html .= "<option value='$option'>$option</option>";
+        $lowerOption = strtolower($option);
+        $html .= "<option value='$lowerOption'>$option</option>";
     }
     return $html;
 }
@@ -283,3 +300,122 @@ function createRadioGroup($array, $name, $legend, $first = true) {
     </fieldset>
     HTML;
 }
+
+function createFormSearchBox($label = "Search Box", $placeholder = "You can search here") {
+    echo
+    <<<HTML
+        <div class="form-group">
+            <span class="form-group-label">$label</span>
+                <div class="form-search-box">
+                    <i data-lucide="search"></i>
+                    <input type="text" class="form-text-input" placeholder="$placeholder" search/>
+                <div class="form-search-results"></div>
+            </div>
+        </div>
+    HTML;
+}
+
+function createFormSearchBoxWithSelection($label = "Search Box", $placeholder = "You can search here") {
+    echo
+    <<<HTML
+        <div class="form-layout-row">
+            <div class="form-group">
+            <span class="form-group-label">Search Box</span>
+            <div class="form-search-box">
+                <i data-lucide="search"></i>
+                <input type="text" class="form-text-input" placeholder="You can search here" search/>
+                <div class="form-search-results"></div>
+            </div>
+            </div>
+        </div>
+        
+        <div class="form-layout-row">
+            <div class="form-group">
+                <span class="form-group-label">Search Selection</span>
+            <div class="list-scroll">
+                <div class="form-search-selection"></div>
+            </div>
+            </div>
+        </div>
+    HTML;
+}
+
+function createFormTextInput($label = "Text Input", $placeholder = "You can type here") {
+    echo
+    <<<HTML
+        <div class="form-group">
+            <span class="form-group-label">$label</span>
+            <input type="text" class="form-text-input" placeholder="$placeholder"/>
+        </div>
+    HTML;
+}
+
+function createFormNumberInput($label = "Number Input", $placeholder = "You can only type numbers here", $allowCommas = false) {
+
+    if ($allowCommas) {
+        echo
+        <<<HTML
+            <div class="form-group">
+                <span class="form-group-label">$label</span>
+                <input type="text" class="form-text-input" placeholder="$placeholder" numbers allow-comma/>
+            </div>
+        HTML;
+        return;
+    }
+    
+    echo
+    <<<HTML
+        <div class="form-group">
+            <span class="form-group-label">$label</span>
+            <input type="text" class="form-text-input" placeholder="$placeholder" numbers/>
+        </div>
+    HTML;
+}
+
+function createFormButtonGroup($submitLabel = "Submit", $cancelLabel = "Cancel", $space = true) {
+
+    if ($space) {
+        $spacer = '&nbsp;'; 
+    } else {
+        $spacer = '';
+    }
+    echo
+    <<<HTML
+        <div class="form-group">
+            <span class="form-group-label">$spacer</span>
+            <button class="btn btn-primary form-button" outlined cancel>
+                <i data-lucide="x"></i>
+                $cancelLabel
+            </button>
+        </div>
+        <div class="form-group">
+            <span class="form-group-label">$spacer</span>
+            <button class="btn btn-primary form-button" submit>
+                <i data-lucide="check"></i>
+                $submitLabel
+            </button>
+        </div>
+    HTML;
+}
+
+function createFormDropdown($label = "Dropdown", $options = []) {
+    
+    $optionsHtml = "";
+    foreach ($options as $option) {
+        $optionsHtml .= "<option value='$option'>$option</option>";
+    }
+
+    echo
+    <<<HTML
+    <div class="form-group">
+        <span class="form-group-label">$label</span>
+        <div class="form-select-wrapper">
+            <select class="form-select-input">
+            $optionsHtml
+            </select>
+            <i data-lucide="chevron-down"></i>
+        </div>
+    </div>
+    HTML;
+}
+

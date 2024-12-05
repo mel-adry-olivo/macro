@@ -5,6 +5,7 @@ RESET STYLES
 //////////////////////////////////////////////////*/
 
 :root {
+  --clr-skeleton-dark: hsl(0, 0%, 85%);
   --clr-skeleton: hsl(0, 0%, 90%);
   --clr-text: hsl(0, 0%, 24%);
   --clr-text-secondary: hsl(0, 0%, 48%);
@@ -94,7 +95,7 @@ GLOBAL STYLES
   inset: 0;
   height: 100%;
   width: 100%;
-  z-index: 99;
+  z-index: 50;
   background-color: hsla(0, 0%, 0%, 0.2);
   backdrop-filter: blur(1px);
   visibility: hidden;
@@ -114,8 +115,6 @@ GLOBAL STYLES
   width: 100%;
   height: 100%;
   gap: var(--space-base);
-  max-width: 1440px;
-  max-height: 900px;
   border-radius: 2rem;
   padding: var(--space-base);
   border: var(--base-border);
@@ -244,9 +243,11 @@ PAGE LAYOUT STYLES
 
 .products,
 .warehouses,
-.suppliers {
+.suppliers,
+.inbound,
+.outbound {
   display: grid;
-  grid-template-rows: 2rem 5rem /*4.5rem*/ 1fr;
+  grid-template-rows: 5rem /*4.5rem*/ 1fr;
   gap: 1rem;
   height: 100%;
 }
@@ -263,7 +264,6 @@ PAGE LAYOUT STYLES
   overflow-y: auto;
   scrollbar-width: thin;
   background-color: transparent;
-  padding-bottom: var(--space-base);
 
   &::-webkit-scrollbar {
     width: 0.5rem;
@@ -342,7 +342,7 @@ DASHBOARD STYLES
   grid-template-rows: auto 1fr;
 }
 
-.near-threshold-card {
+.card {
   border: var(--base-border);
   border-radius: 0.5rem;
   padding: var(--space-sm);
@@ -406,6 +406,50 @@ ORDERS STYLES
 
 .orders-list {
   grid-row-start: 2;
+}
+
+/* ////////////////////////////////////////////////
+INBOUND STYLES
+//////////////////////////////////////////////////*/
+
+.inbound-header {
+  display: flex;
+  justify-content: space-between;
+  background-color: transparent;
+}
+
+.inbound-title {
+  display: flex;
+  align-items: center;
+}
+
+.inbound-toolbar {
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: space-between;
+  background-color: transparent;
+}
+
+/* ////////////////////////////////////////////////
+OUTBOUND STYLES
+//////////////////////////////////////////////////*/
+
+.outbound-header {
+  display: flex;
+  justify-content: space-between;
+  background-color: transparent;
+}
+
+.outbound-title {
+  display: flex;
+  align-items: center;
+}
+
+.outbound-toolbar {
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: space-between;
+  background-color: transparent;
 }
 
 /* ////////////////////////////////////////////////
@@ -501,12 +545,6 @@ WAREHOUSES STYLES
   color: var(--clr-text-secondary);
 }
 
-.warehouse-breadcrumb {
-  height: auto;
-  padding: var(--space-xs);
-  background-color: transparent;
-}
-
 .link-product-form .table-header {
   padding-inline: var(--space-base);
   padding-left: 0;
@@ -518,5 +556,194 @@ WAREHOUSES STYLES
 }
 
 /* ////////////////////////////////////////////////
-SUPPLIERS STYLES
+FORM STYLES
 //////////////////////////////////////////////////*/
+
+.form-wrapper {
+  color: var(--clr-text-secondary);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  z-index: 999;
+  gap: var(--space-xs);
+  width: min(100%, 800px);
+  border-radius: 1rem;
+  padding: var(--space-base);
+  transition: var(--tailwind-transition);
+  background-color: var(--clr-skeleton);
+
+  &.show {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.form-title {
+  padding: 0;
+  margin-bottom: var(--space-sm);
+}
+
+.form-layout-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.form-layout-row {
+  display: flex;
+  gap: var(--space-xs);
+
+  & > * {
+    flex: 1;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.form-group-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+input.form-text-input,
+.form-search-box,
+.form-select-wrapper,
+.form-search-selection,
+.form-image-chooser {
+  padding: var(--space-xs);
+  border: var(--base-border);
+  display: inline-flex;
+  height: 2.75rem;
+  background-color: transparent;
+  border-radius: 0.5rem;
+  width: 100%;
+}
+
+input.form-text-input {
+  font-size: 0.85rem;
+
+  &::placeholder {
+    color: var(--clr-text-secondary);
+    font-size: 0.8rem;
+    opacity: 0.6;
+  }
+}
+
+input[type='text'].form-text-input[search] {
+  border: none;
+}
+
+select.form-select-input {
+  cursor: pointer;
+}
+
+button.form-button {
+  height: 2.75rem;
+  border-radius: 0.5rem;
+}
+
+button.form-button[outlined] {
+  border: var(--base-border);
+  background-color: transparent;
+  color: var(--clr-text-secondary);
+}
+
+input[type='file'].form-image-input {
+  display: none;
+}
+
+.form-select-wrapper,
+.form-search-box,
+.form-image-chooser {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+
+  & svg {
+    height: 1.25rem;
+    width: 1.25rem;
+    color: var(--clr-text-secondary);
+  }
+}
+
+.form-image-chooser {
+  gap: var(--space-xs);
+
+  & label {
+    font-size: 0.76rem;
+    font-weight: 500;
+    opacity: 0.6;
+    width: 100%;
+    cursor: pointer;
+  }
+
+  & svg {
+    height: 1.15rem;
+    width: 1.15rem;
+    color: var(--clr-text-secondary);
+  }
+}
+
+.form-select-wrapper {
+  & svg {
+    position: absolute;
+    right: var(--space-xs);
+    transition: transform 0.2s var(--tailwind-easing);
+  }
+
+  &.selected svg {
+    transform: rotate(180deg);
+  }
+}
+
+.form-search-box > .form-search-results {
+  position: absolute;
+  display: none;
+  left: 0;
+  right: 0;
+  top: 120%;
+  border-radius: 0.5rem;
+  background-color: var(--clr-skeleton-dark);
+  z-index: 1000;
+}
+
+.form-search-selection {
+  padding: 0;
+  display: flex;
+  height: 7rem;
+  max-height: 7rem;
+  flex-direction: column;
+}
+
+.form-search-results-item,
+.form-search-selection-item {
+  padding: var(--space-sm);
+  border-bottom: var(--base-border);
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  cursor: pointer;
+  width: 100%;
+}
+
+.form-search-results-item:last-child,
+.form-search-selection-item:last-child {
+  border-bottom: none;
+}
+
+.remove-button svg {
+  height: 0.8rem;
+  width: 0.8rem;
+}

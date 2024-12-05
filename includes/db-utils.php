@@ -1,5 +1,13 @@
 <?php 
 
+function getProducts() {
+    global $conn;
+    $sql = "SELECT * FROM books";
+    $result = $conn->query($sql);
+    $products = $result->fetch_all(MYSQLI_ASSOC);
+
+    return $products;
+}
 
 function getRackBooksByName ($warehouseId, $rackName) {
     global $conn;

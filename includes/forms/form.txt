@@ -1,0 +1,73 @@
+form inputs needed:
+    1. search box - dropdown showing results 
+    2. text input
+    3. text input - number
+    4. select 
+    5. button
+    6. file upload
+
+
+inbound:
+    1. receive new stock form
+        product name [search box]
+        quantity received [text input - numbers]
+        cancel [button]
+        confirm receipt [button]
+
+    2. process returns
+        product name [search box]
+        quantity returned [text input - numbers]
+        return reason [dropdown - damaged, defective, wrong product]
+        cancel [button]
+        process return [button]
+
+    3. create purchase order
+        product name [search bar]
+        quantity to order [text input - numbers]
+        cancel [button]
+        confirm order [button]
+
+outbound: 
+    4. sales order 
+        customer name   
+        product name [search box]
+        quantity sold [text input - numbers]
+        cancel [button]
+        confirm sale [button]
+
+    5. ship orders
+        order id [text input]
+        shipping address [text input]
+        tracking number [text input] (automatic?)
+        shipping method [dropdown - standard, express]
+        cancel [button]
+        confirm shipment [button]
+
+    6. write off
+        product name [search box]
+        quantity to write off [input text - numbers]
+        reason for write off [dropdown - expired, damaged]
+        cancel [button]
+        confirm write off [button]
+
+
+products:
+    7. add product 
+        product image [file upload]
+        product name [text input]   
+        category [text input]
+        price [text input - numbers]
+        stock quantity [text input - numbers]
+        reorder level [text input - numbers]
+        supplier name [text input]
+        supplier address [text input]
+        cancel [button]
+        confirm [button]
+
+warehouses:
+    8. add warehouse
+        warehouse name [text input]
+        location [text input]
+        capacity [text input - number]
+        cancel [button]
+        confirm [button]

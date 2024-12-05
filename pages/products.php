@@ -13,16 +13,13 @@ $books = $result->fetch_all(MYSQLI_ASSOC);
 
 
 <div class="products">
-    <div class="warehouse-breadcrumb">
-    </div>
     <div class="products-header">
         <div class="products-title">
             <h1>Products</h1>
         </div>
         <div class="row">
-            <?php createButton("Input Sales", "dollar-sign", false)?>
             <?php createButton("Import CSV", "import", false)?>
-            <?php createButton("Add Product", "plus", true, dataForm:".product-add-form", dataOverlay:".product-add-overlay")?>
+            <?php createFormButton("Add Product", "plus", true, false, 'add-product')?>
         </div>
     </div>
     <div class="list-scroll">
@@ -60,5 +57,3 @@ $books = $result->fetch_all(MYSQLI_ASSOC);
         </div>
     </div>
 </div>
-<div class="page-overlay add-overlay"></div>
-<?php require '../includes/products/product-add-form.php'; ?>
