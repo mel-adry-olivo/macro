@@ -6,12 +6,12 @@ require '../includes/template-components.php';
 
 $sql = "SELECT * FROM products";
 $result = $conn->query($sql);
-$books = $result->fetch_all(MYSQLI_ASSOC);
+$products = $result->fetch_all(MYSQLI_ASSOC);
 
 $now = date_format(new DateTime('now'), 'd-m-Y');
-$availableProducts = count($books);
+$availableProducts = count($products);
 $totalStockValue = 0;
-foreach($books as $book) {
+foreach($products as $book) {
     $totalStockValue += $book['price'];
 }
 

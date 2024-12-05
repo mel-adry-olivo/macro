@@ -29,9 +29,13 @@ $outboundTransactions = getOutboundTransactions() ?? [];
             </div>
             <div class="list-scroll">
                 <div class="table-body">
-                    <?php foreach ($outboundTransactions as $transaction) { ?>
-                        <?php createOutboundTransactionCard($transaction) ?>
-                    <?php } ?>
+                    <?php if (!empty($outboundTransactions)) : ?>
+                        <?php foreach ($outboundTransactions as $transaction) { ?>
+                            <?php createOutboundTransactionCard($transaction) ?>
+                        <?php } ?>
+                    <?php else : ?>
+                        <div class="table-body-item no-data">No outbound transactions</div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

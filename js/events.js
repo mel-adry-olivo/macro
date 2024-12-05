@@ -9,6 +9,8 @@ import {
   submitSalesOrderData,
   getWarehouseData,
   submitWarehouseData,
+  getTransferStockData,
+  submitTransferStockData,
 } from '../includes/forms/form-handler.js';
 
 // forms
@@ -45,6 +47,12 @@ document.querySelector('.container').addEventListener('click', (e) => {
       submitWarehouseData(data);
       hideOverlay();
     }
+
+    if (title === 'Transfer Stock') {
+      const data = getTransferStockData();
+      submitTransferStockData(data);
+      hideOverlay();
+    }
   }
 
   //********************************************* */
@@ -52,18 +60,6 @@ document.querySelector('.container').addEventListener('click', (e) => {
   // TODO: Import CSV
   if (e.target.matches('.import-csv-btn')) {
     const message = 'This will allow you to import products from a CSV file.';
-    showSnackbar('Function', message, 2500);
-  }
-
-  // TODO: Rack Product Edit
-  if (e.target.matches('.rack-product-edit')) {
-    const message = 'This will show edit form where you can edit stocks & transfer product to another rack.';
-    showSnackbar('Function', message, 2500);
-  }
-
-  // TODO: Rack Edit
-  if (e.target.matches('.rack-edit')) {
-    const message = 'This will show edit form where you can edit rack data like name, max capacity.';
     showSnackbar('Function', message, 2500);
   }
 

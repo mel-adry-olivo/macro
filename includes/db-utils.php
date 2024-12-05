@@ -147,7 +147,7 @@ function logOutbound($warehouse, $operation, $quantity, $productNames, $now) {
 
 function getInboundTransactions() {
     global $conn;
-    $sql = "SELECT * FROM inbound_transactions";
+    $sql = "SELECT * FROM inbound_transactions ORDER BY timestamp DESC";
     $result = $conn->query($sql);
     $transactions = $result->fetch_all(MYSQLI_ASSOC);
     return $transactions;
@@ -156,7 +156,7 @@ function getInboundTransactions() {
 
 function getOutboundTransactions() {
     global $conn;
-    $sql = "SELECT * FROM outbound_transactions";
+    $sql = "SELECT * FROM outbound_transactions ORDER BY timestamp DESC";
     $result = $conn->query($sql);
     $transactions = $result->fetch_all(MYSQLI_ASSOC);
     return $transactions;

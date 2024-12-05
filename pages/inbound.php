@@ -29,9 +29,13 @@ $inboundTransactions = getInboundTransactions() ?? [];
             </div>
             <div class="list-scroll">
                 <div class="table-body">
-                    <?php foreach ($inboundTransactions as $transaction) { ?>
-                        <?php createInboundTransactionCard($transaction) ?>
-                    <?php } ?>
+                    <?php if (!empty($inboundTransactions)) : ?>
+                        <?php foreach ($inboundTransactions as $transaction) { ?>
+                            <?php createInboundTransactionCard($transaction) ?>
+                        <?php } ?>
+                    <?php else : ?>
+                        <div class="table-body-item no-data">No inbound transactions</div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

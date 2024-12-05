@@ -214,19 +214,13 @@ function createProductTableRow2($product) {
                 <span class="name">$name</span>
             </div>
         </div>
-        <div class="table-row-item">$stock</div>
-        <div class="table-row-item">$rackName</div>
+        <div class="table-row-item" quantity>$stock</div>
+        <div class="table-row-item" >$rackName</div>
         <div class="table-row-item">₱$price</div>
         <div class="table-row-item" actions>
             <div class="table-actions">
-                <button class="btn-icon border" aria-label="view">
-                    <i data-lucide="expand"></i>
-                </button>
                 <button class="btn-icon border" aria-label="edit">
                     <i data-lucide="edit"></i>
-                </button>
-                <button class="btn-icon border" aria-label="delete">
-                    <i data-lucide="trash-2"></i>
                 </button>
             </div>
         </div>
@@ -425,11 +419,14 @@ function createFormSearchBoxWithSelection($label = "Search Box", $placeholder = 
 }
 
 function createFormTextInput($label = "Text Input", $placeholder = "You can type here") {
+
+    $identifier = str_replace(' ', '-', strtolower($label));
+
     echo
     <<<HTML
         <div class="form-group">
             <span class="form-group-label">$label</span>
-            <input type="text" class="form-text-input" placeholder="$placeholder"/>
+            <input type="text" class="form-text-input" placeholder="$placeholder" data-identifier="$identifier"/>
         </div>
     HTML;
 }

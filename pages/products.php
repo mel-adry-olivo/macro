@@ -27,7 +27,7 @@ $products = $result->fetch_all(MYSQLI_ASSOC);
                 <div class="table-header">
                     <div class="table-header-item" primary-item>Rack Name</div>
                     <div class="table-header-item">Category</div>
-                    <div class="table-header-item">ReorderLevel</div>
+                    <div class="table-header-item">Reorder Level</div>
                     <div class="table-header-item">Price</div>
                     <div class="table-header-item">Supplier Name</div>
                     <div class="table-header-item">Supplier Addr.</div>
@@ -51,6 +51,9 @@ $products = $result->fetch_all(MYSQLI_ASSOC);
                             <div class="table-actions">
                                 <button class="btn-icon border product-edit" aria-label="edit">
                                     <i data-lucide="edit"></i>
+                                </button>
+                                <button class="btn-icon border product-delete" aria-label="delete">
+                                    <i data-lucide="trash-2"></i>
                                 </button>
                             </div>
                         </div>

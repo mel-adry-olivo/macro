@@ -26,6 +26,7 @@ $warehouses = $result->fetch_all(MYSQLI_ASSOC);
                 <div class="table-header">
                     <div class="table-header-item" primary-item>Name</div>
                     <div class="table-header-item">Address</div>
+                    <div class="table-header-item">Capacity</div>
                     <div class="table-header-item" actions>Actions</div>
                 </div>
                 <div class="table-body">

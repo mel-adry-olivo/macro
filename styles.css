@@ -766,6 +766,7 @@ INBOUND, OUTBOUND STYLES
 //////////////////////////////////////////////////*/
 
 .inbound-content,
-.outbound-content {
+.outbound-content,
+.warehouses-detail-content {
   background-color: transparent;
 }

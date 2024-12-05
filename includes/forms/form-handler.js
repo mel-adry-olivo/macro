@@ -62,35 +62,6 @@ export async function submitStockReceiveData(stockData) {
     }
   }
 }
-async function logStockReceiveData(stockData) {
-  const warehouseName = stockData.warehouse.trim();
-  const operation = 'Stock Receive';
-  const productNames = stockData.selection.map((name) => name.trim()).join(', ');
-  const totalQuantity = stockData.quantity.reduce((total, quantity) => total + quantity, 0);
-
-  const data = {
-    warehouse: warehouseName,
-    operation,
-    quantity: totalQuantity,
-    productNames,
-  };
-
-  const response = await fetch('/macro/api/log-inbound.php', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  });
-
-  if (!response.ok) {
-    throw new Error(response.statusText);
-  }
-
-  const result = await response.text();
-  document.querySelector('.inbound-content .table-body').innerHTML += result;
-  showSnackbar('Success', 'Log entry created successfully!', 2500);
-}
 
 // * SALES ORDER
 export function getSalesOrderData() {
@@ -157,6 +128,165 @@ export async function submitSalesOrderData(salesOrderData) {
   }
 }
 
+// * ADD WAREHOUSE
+export function getWarehouseData() {
+  const warehouseName = document.querySelector('.form-text-input[placeholder="Enter warehouse name"]').value;
+  const warehouseAddress = document.querySelector('.form-text-input[placeholder="Enter warehouse address"]').value;
+  const warehouseCapacity = document.querySelector('.form-text-input[numbers]').value;
+
+  if (!warehouseName || !warehouseAddress || !warehouseCapacity) {
+    showSnackbar('Error', 'Please fill in all required fields', 2500);
+    return;
+  }
+
+  const data = {
+    name: warehouseName,
+    address: warehouseAddress,
+    capacity: warehouseCapacity,
+  };
+
+  return data;
+}
+export async function submitWarehouseData(warehouseData) {
+  if (warehouseData) {
+    try {
+      const response = await fetch('/macro/api/warehouse.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(warehouseData),
+      });
+
+      const result = await response.text();
+
+      if (response.ok) {
+        showSnackbar('Success', 'Warehouse created successfully!', 2500);
+        const warehouses = document.querySelector('.warehouses .table-body');
+        warehouses.innerHTML += result;
+      } else {
+        showSnackbar('Error', result.error || 'An error occurred.', 2500);
+      }
+    } catch (error) {
+      showSnackbar('Error', 'Failed to connect to the server.', 2500);
+    }
+  }
+}
+
+// * TRANSFER STOCK
+export function getTransferStockData() {
+  const currentWarehouse = document.querySelector('.warehouses-title').textContent.trim();
+  const warehouseName = document.querySelector('.form-select-input').value.trim();
+
+  if (warehouseName == currentWarehouse) {
+    showSnackbar('Error', 'Please select a different warehouse', 2500);
+    return;
+  }
+
+  const quantityReceived = document.querySelector('.form-text-input[numbers]').value;
+  const searchSelection = document.querySelector('.form-search-selection');
+  let selection = [];
+  let items = 0;
+
+  if (searchSelection) {
+    Array.from(searchSelection.children).forEach((item) => {
+      selection.push(item.textContent);
+    });
+
+    items = selection.length;
+  }
+
+  if (items === 0) {
+    showSnackbar('Error', 'Please select at least one item', 2500);
+    return;
+  }
+
+  const quantityArray = quantityReceived.split(',').map(Number).filter(Boolean);
+
+  if (quantityArray.length !== items) {
+    showSnackbar('Error', 'Quantity and selection count must match!', 2500);
+    return;
+  }
+
+  const data = {
+    warehouseSource: currentWarehouse,
+    warehouseDestination: warehouseName,
+    selection,
+    quantity: quantityArray,
+  };
+
+  // sample data = {"warehouse":"Default Warehouse","selection":["1984 ","To Kill a Mockingbird "],"quantity":[20,30]}
+  return data;
+}
+
+// * LOGGING
+
+export async function submitTransferStockData(transferStockData) {
+  if (transferStockData) {
+    try {
+      const response = await fetch('/macro/api/transfer-stock.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(transferStockData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        showSnackbar('Success', 'Warehouse created successfully!', 2500);
+        await logOutboundTransfer(transferStockData);
+        await logInboundTransfer(transferStockData);
+
+        const productCard = document.querySelector(`.product-card[data-id="${result.id}"`);
+
+        productCard.querySelector('[quantity]').textContent = result.quantity;
+      } else {
+        showSnackbar('Error', result.error || 'An error occurred.', 2500);
+      }
+    } catch (error) {
+      showSnackbar('Error', 'Failed to connect to the server.', 2500);
+    }
+  }
+}
+async function logStockReceiveData(stockData) {
+  const warehouseName = stockData.warehouse.trim();
+  const operation = 'Stock Receive';
+  const productNames = stockData.selection.map((name) => name.trim()).join(', ');
+  const totalQuantity = stockData.quantity.reduce((total, quantity) => total + quantity, 0);
+
+  const data = {
+    warehouse: warehouseName,
+    operation,
+    quantity: totalQuantity,
+    productNames,
+  };
+
+  const response = await fetch('/macro/api/log-inbound.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+
+  const result = await response.text();
+
+  const tableBody = document.querySelector('.inbound-content .table-body');
+  const noData = tableBody.querySelector('.no-data');
+
+  if (noData) {
+    noData.remove();
+  }
+
+  tableBody.insertAdjacentHTML('afterbegin', result);
+  showSnackbar('Success', 'Log entry created successfully!', 2500);
+}
 async function logSalesOrderData(salesOrderData) {
   const warehouse = salesOrderData.warehouse.trim();
   const operation = 'Sales Order';
@@ -186,58 +316,61 @@ async function logSalesOrderData(salesOrderData) {
     const result = await response.text();
 
     if (response.ok) {
-      document.querySelector('.outbound-content .table-body').innerHTML += result;
-      showSnackbar('Success', 'Outbound log entry created successfully!', 2500);
+      const tableBody = document.querySelector('.outbound-content .table-body');
+      const noData = tableBody.querySelector('.no-data');
+
+      if (noData) {
+        noData.remove();
+      }
+
+      tableBody.insertAdjacentHTML('afterbegin', result);
+      showSnackbar('Success', 'Log entry created successfully!', 2500);
     }
   } catch (error) {
     console.error('Error logging outbound transaction:', error);
     showSnackbar('Error', 'Failed to log the outbound transaction.', 2500);
   }
 }
-
-// * ADD WAREHOUSE
-
-export function getWarehouseData() {
-  const warehouseName = document.querySelector('.form-text-input[placeholder="Enter warehouse name"]').value;
-  const warehouseAddress = document.querySelector('.form-text-input[placeholder="Enter warehouse address"]').value;
-  const warehouseCapacity = document.querySelector('.form-text-input[numbers]').value;
-
-  if (!warehouseName || !warehouseAddress || !warehouseCapacity) {
-    showSnackbar('Error', 'Please fill in all required fields', 2500);
-    return;
-  }
-
-  const data = {
-    name: warehouseName,
-    address: warehouseAddress,
-    capacity: warehouseCapacity,
+async function logOutboundTransfer(data) {
+  const logData = {
+    warehouse: data.warehouseSource,
+    operation: 'Stock Transfer Out',
+    products: data.selection.map((name) => name.trim()).join(', '),
+    quantity: data.quantity.reduce((total, qty) => total + qty, 0),
   };
 
-  return data;
+  try {
+    const response = await fetch('/macro/api/log-outbound.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(logData),
+    });
+  } catch (error) {
+    console.error('In logOutboundTransfer:', error);
+    showSnackbar('Error', 'Failed to log outbound transfer.', 2500);
+  }
 }
+async function logInboundTransfer(data) {
+  const logData = {
+    warehouse: data.warehouseDestination,
+    operation: 'Stock Transfer In',
+    productNames: data.selection.map((name) => name.trim()).join(', '),
+    quantity: data.quantity.reduce((total, qty) => total + qty, 0),
+  };
 
-export async function submitWarehouseData(warehouseData) {
-  if (warehouseData) {
-    try {
-      const response = await fetch('/macro/api/warehouse.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(warehouseData),
-      });
-
-      const result = await response.text();
-
-      if (response.ok) {
-        showSnackbar('Success', 'Warehouse created successfully!', 2500);
-        const warehouses = document.querySelector('.warehouses .table-body');
-        warehouses.innerHTML += result;
-      } else {
-        showSnackbar('Error', result.error || 'An error occurred.', 2500);
-      }
-    } catch (error) {
-      showSnackbar('Error', 'Failed to connect to the server.', 2500);
-    }
+  try {
+    const response = await fetch('/macro/api/log-inbound.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(logData),
+    });
+  } catch (error) {
+    console.error('Error logging inbound transaction:', error);
+    console.error('In logInboundTransfer:', error);
+    showSnackbar('Error', 'Failed to log inbound transfer.', 2500);
   }
 }
