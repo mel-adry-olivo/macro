@@ -15,7 +15,7 @@ require '../template-components.php';
         </div>
         <div class="form-layout-row">
             <?php createFormNumberInput("Capacity", "Enter warehouse capacity")?>
-            <?php createFormButtonGroup("Add Product", "Cancel")?>
+            <?php createFormButtonGroup("Add Warehouse", "Cancel")?>
         </div>
     </div>
 </div>

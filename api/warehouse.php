@@ -11,8 +11,10 @@ $address = $data["address"] ?? [];
 $capacity = $data["capacity"] ?? [];
 
 addWarehouse($name, $address, $capacity);
+$warehouseId  = getWarehouseIdByName($name);
 
-$warehouseRow = createWarehouseTableRow(['name' => $name, 'address' => $address, 'max_unit_capacity' => $capacity]);
+
+$warehouseRow = createWarehouseTableRow(['id' => $warehouseId, 'name' => $name, 'address' => $address, 'max_unit_capacity' => $capacity]);
 
 echo $warehouseRow;
 exit();

@@ -6,7 +6,7 @@ require '../includes/template-components.php';
 
 $warehouseId = $_GET['id'] ?? '';
 
-$warehouse = getWarehouse($warehouseId);
+$warehouse = getWarehouse($warehouseId) ?? [];
 $warehouseProducts = getWarehouseProducts($warehouseId) ?? [];
 
 

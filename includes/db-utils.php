@@ -18,6 +18,7 @@ function getWarehouses() {
     return $warehouses;
 }
 
+
 function getWarehouseIdByName($name) {
     global $conn;
     $sql = "SELECT * FROM warehouses WHERE name = '$name'";

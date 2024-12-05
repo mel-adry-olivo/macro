@@ -291,13 +291,14 @@ function createProductRowWithQuantity($product) {
 
 function createWarehouseTableRow($warehouse) {
 
+    $id = $warehouse["id"];
     $name = $warehouse["name"];
     $address = $warehouse["address"];
     $capacity = $warehouse["max_unit_capacity"];
 
     echo
     <<<HTML
-    <div class="table-row warehouse-card">
+    <div class="table-row warehouse-card" data-id="$id">
         <div class="table-row-item" primary-item>$name</div>
         <div class="table-row-item">$address</div>
         <div class="table-row-item">$capacity</div>
