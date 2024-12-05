@@ -2,7 +2,14 @@ import { navigateTo } from './router.js';
 import { showForm, hideForm, newShowForm, hideOverlay } from './utils.js';
 import { config } from './config.js';
 import { showSnackbar } from './components/snackbar.js';
-import { getReceiveStockData, submitStockReceiveData, getSalesOrderData, submitSalesOrderData } from '../includes/forms/form-handler.js';
+import {
+  getReceiveStockData,
+  submitStockReceiveData,
+  getSalesOrderData,
+  submitSalesOrderData,
+  getWarehouseData,
+  submitWarehouseData,
+} from '../includes/forms/form-handler.js';
 
 // forms
 document.querySelector('.container').addEventListener('click', (e) => {
@@ -30,6 +37,12 @@ document.querySelector('.container').addEventListener('click', (e) => {
     if (title === 'Sales Order') {
       const data = getSalesOrderData();
       submitSalesOrderData(data);
+      hideOverlay();
+    }
+
+    if (title === 'Add Warehouse') {
+      const data = getWarehouseData();
+      submitWarehouseData(data);
       hideOverlay();
     }
   }

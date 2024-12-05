@@ -13,7 +13,8 @@ CREATE TABLE products (
 CREATE TABLE warehouses (
     id INT AUTO_INCREMENT PRIMARY KEY,  
     name VARCHAR(255) NOT NULL,         
-    address VARCHAR(255) NOT NULL 
+    address VARCHAR(255) NOT NULL,
+    max_unit_capacity INT NOT NULL
 );
 
 CREATE TABLE racks (
@@ -47,7 +48,7 @@ CREATE TABLE inbound_transactions (
 
 CREATE TABLE outbound_transactions (
     id INT AUTO_INCREMENT PRIMARY KEY,      
-    customer_name VARCHAR(255) NOT NULL,  
+    warehouse VARCHAR(255) NOT NULL,  
     operation VARCHAR(100) NOT NULL,      
     quantity INT NOT NULL,                
     products VARCHAR(255) NOT NULL,        

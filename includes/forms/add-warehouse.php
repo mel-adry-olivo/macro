@@ -11,7 +11,7 @@ require '../template-components.php';
             <?php createFormTextInput("Warehouse Name", "Enter warehouse name") ?>
         </div>
         <div class="form-layout-row">
-            <?php createFormTextInput("Supplier Address", "Enter supplier address")?>
+            <?php createFormTextInput("Warehouse Address", "Enter warehouse address")?>
         </div>
         <div class="form-layout-row">
             <?php createFormNumberInput("Capacity", "Enter warehouse capacity")?>

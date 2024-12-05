@@ -6,16 +6,16 @@ require '../includes/db-utils.php';
 
 $data = json_decode(file_get_contents("php://input"), true);
 
-$customerName = $data["customerName"] ?? null;
+$warehouse = $data["warehouse"] ?? null;
 $operation = $data["operation"] ?? null;    
 $quantity = $data["quantity"] ?? null;
-$productNames = $data["productNames"] ?? null;
+$productNames = $data["products"] ?? null;
 $now = date("Y-m-d H:i:s");
 
-logOutbound($customerName, $operation, $quantity, $productNames, $now);
+logOutbound($warehouse, $operation, $quantity, $productNames, $now);
 
 $transaction = [
-    "customer_name" => $customerName,
+    "warehouse" => $warehouse,
     "operation" => $operation,
     "products" => $productNames,
     "quantity" => $quantity,

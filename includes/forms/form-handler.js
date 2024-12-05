@@ -158,13 +158,13 @@ export async function submitSalesOrderData(salesOrderData) {
 }
 
 async function logSalesOrderData(salesOrderData) {
-  const customerName = salesOrderData.customerName.trim();
+  const warehouse = salesOrderData.warehouse.trim();
   const operation = 'Sales Order';
   const productNames = salesOrderData.selection.map((name) => name.trim()).join(', ');
   const totalQuantity = salesOrderData.quantity.reduce((total, quantity) => total + quantity, 0);
 
   const data = {
-    customerName: customerName,
+    warehouse: warehouse,
     operation: operation,
     quantity: totalQuantity,
     products: productNames,
@@ -192,5 +192,52 @@ async function logSalesOrderData(salesOrderData) {
   } catch (error) {
     console.error('Error logging outbound transaction:', error);
     showSnackbar('Error', 'Failed to log the outbound transaction.', 2500);
+  }
+}
+
+// * ADD WAREHOUSE
+
+export function getWarehouseData() {
+  const warehouseName = document.querySelector('.form-text-input[placeholder="Enter warehouse name"]').value;
+  const warehouseAddress = document.querySelector('.form-text-input[placeholder="Enter warehouse address"]').value;
+  const warehouseCapacity = document.querySelector('.form-text-input[numbers]').value;
+
+  if (!warehouseName || !warehouseAddress || !warehouseCapacity) {
+    showSnackbar('Error', 'Please fill in all required fields', 2500);
+    return;
+  }
+
+  const data = {
+    name: warehouseName,
+    address: warehouseAddress,
+    capacity: warehouseCapacity,
+  };
+
+  return data;
+}
+
+export async function submitWarehouseData(warehouseData) {
+  if (warehouseData) {
+    try {
+      const response = await fetch('/macro/api/warehouse.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(warehouseData),
+      });
+
+      const result = await response.text();
+
+      if (response.ok) {
+        showSnackbar('Success', 'Warehouse created successfully!', 2500);
+        const warehouses = document.querySelector('.warehouses .table-body');
+        warehouses.innerHTML += result;
+      } else {
+        showSnackbar('Error', result.error || 'An error occurred.', 2500);
+      }
+    } catch (error) {
+      showSnackbar('Error', 'Failed to connect to the server.', 2500);
+    }
   }
 }

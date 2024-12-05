@@ -21,7 +21,7 @@ $outboundTransactions = getOutboundTransactions() ?? [];
     <div class="outbound-content">
         <div class="table outbound-table">
             <div class="table-header">
-                <div class="table-header-item">Customer Name</div>
+                <div class="table-header-item" primary-item>Warehouse</div>
                 <div class="table-header-item">Operation</div>
                 <div class="table-header-item">Products</div>
                 <div class="table-header-item">Total Quantity</div>
@@ -37,4 +37,3 @@ $outboundTransactions = getOutboundTransactions() ?? [];
         </div>
     </div>
 </div>
-<div class="page-overlay outbound-overlay"></div>

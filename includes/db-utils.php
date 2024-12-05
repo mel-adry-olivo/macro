@@ -96,6 +96,14 @@ function getWarehouse($warehouseId) {
     return $warehouse;
 }
 
+function addWarehouse($name, $address, $capacity) {
+    global $conn;
+    $sql = "INSERT INTO 
+        warehouses (name, address, max_unit_capacity) 
+        VALUES ('$name', '$address', $capacity)";
+    $conn->query($sql);
+}
+
 function getWarehouseNames() {
     global $conn;
     $sql = "SELECT * FROM warehouses";
@@ -127,11 +135,11 @@ function logInbound($warehouseName, $operation, $quantity, $productNames, $now) 
     $conn->query($sql);
 }
 
-function logOutbound($customerName, $operation, $quantity, $productNames, $now) {
+function logOutbound($warehouse, $operation, $quantity, $productNames, $now) {
     global $conn;
     $sql = "INSERT INTO 
-        outbound_transactions (customer_name, operation, quantity, products, timestamp) 
-        VALUES ('$customerName', '$operation', $quantity, '$productNames', '$now')";
+        outbound_transactions (warehouse, operation, quantity, products, timestamp) 
+        VALUES ('$warehouse', '$operation', $quantity, '$productNames', '$now')";
         
     $conn->query($sql);
 }

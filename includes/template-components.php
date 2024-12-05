@@ -164,7 +164,7 @@ function createInboundTransactionCard($transaction) {
     echo
     <<<HTML
     <div class="table-row">
-        <div class="table-row-item">$warehouse</div>
+        <div class="table-row-item" primary-item>$warehouse</div>
         <div class="table-row-item">$operation</div>
         <div class="table-row-item">$products</div>
         <div class="table-row-item">$quantity</div>
@@ -175,7 +175,7 @@ function createInboundTransactionCard($transaction) {
 
 function createOutboundTransactionCard($transaction) {
     
-    $customerName = $transaction["customer_name"];
+    $warehouse = $transaction["warehouse"];
     $operation = $transaction["operation"];
     $products = $transaction["products"];
     $quantity = $transaction["quantity"];
@@ -184,7 +184,7 @@ function createOutboundTransactionCard($transaction) {
     echo
     <<<HTML
     <div class="table-row">
-        <div class="table-row-item">$customerName</div>
+        <div class="table-row-item" primary-item>$warehouse</div>
         <div class="table-row-item">$operation</div>
         <div class="table-row-item">$products</div>
         <div class="table-row-item">$quantity</div>
@@ -291,15 +291,16 @@ function createProductRowWithQuantity($product) {
 
 function createWarehouseTableRow($warehouse) {
 
-    $id = $warehouse["id"];
     $name = $warehouse["name"];
     $address = $warehouse["address"];
+    $capacity = $warehouse["max_unit_capacity"];
 
     echo
     <<<HTML
-    <div class="table-row warehouse-card" data-id="$id">
+    <div class="table-row warehouse-card">
         <div class="table-row-item" primary-item>$name</div>
         <div class="table-row-item">$address</div>
+        <div class="table-row-item">$capacity</div>
         <div class="table-row-item" actions>
             <div class="table-actions">
                 <button class="btn-icon border warehouse-expand" aria-label="view">
