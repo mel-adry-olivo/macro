@@ -1,13 +1,14 @@
-CREATE TABLE books (
+CREATE TABLE products (
     id INT AUTO_INCREMENT PRIMARY KEY,
     image VARCHAR(255) NOT NULL,
-    author VARCHAR(100) NOT NULL,
     name VARCHAR(255) NOT NULL,
     category VARCHAR(100) NOT NULL,
     stock INT NOT NULL,
-    stock_threshold INT NULL,
-    price DECIMAL(10, 2) NOT NULL
-);
+    reorder_level INT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    supplier_name VARCHAR(100) NOT NULL,
+    supplier_address VARCHAR(255) NOT NULL
+)
 
 CREATE TABLE warehouses (
     id INT AUTO_INCREMENT PRIMARY KEY,  
@@ -24,57 +25,56 @@ CREATE TABLE racks (
     FOREIGN KEY (warehouse_id) REFERENCES warehouses(id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
-CREATE TABLE warehouse_book (
-    book_id INT NOT NULL,
+CREATE TABLE warehouse_product (
+    product_id INT NOT NULL,
     warehouse_id INT NOT NULL,
     rack_id INT NULL,                     
-    quantity INT NOT NULL,              
-    PRIMARY KEY (book_id, warehouse_id),
-    FOREIGN KEY (book_id) REFERENCES books(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+    stock_quantity INT NOT NULL,              
+    PRIMARY KEY (product_id, warehouse_id),
+    FOREIGN KEY (product_id) REFERENCES products(id) ON UPDATE CASCADE ON DELETE RESTRICT,
     FOREIGN KEY (warehouse_id) REFERENCES warehouses(id) ON UPDATE CASCADE ON DELETE RESTRICT,
     FOREIGN KEY (rack_id) REFERENCES racks(id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
-CREATE TABLE notifications (
+CREATE TABLE inbound_transactions (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    message VARCHAR(255) NOT NULL,
-    type VARCHAR(50) NOT NULL,           -- Type can be low_stock, new_order, etc.
-    status INT DEFAULT 0,                -- 0 = unread, 1 = read
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- Automatically set to the current time when created
+    warehouse VARCHAR(255) NOT NULL,
+    operation VARCHAR(100) NOT NULL,
+    quantity INT NOT NULL,
+    products VARCHAR(255) NOT NULL,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO books (image, author, name, category, stock, stock_threshold, price)
+CREATE TABLE outbound_transactions (
+    id INT AUTO_INCREMENT PRIMARY KEY,      
+    customer_name VARCHAR(255) NOT NULL,  
+    operation VARCHAR(100) NOT NULL,      
+    quantity INT NOT NULL,                
+    products VARCHAR(255) NOT NULL,        
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP  
+);
+
+
+CREATE TABLE sales_orders (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_name VARCHAR(255) NOT NULL,
+    warehouse VARCHAR(255) NOT NULL,
+    product_names TEXT NOT NULL, 
+    quantities TEXT NOT NULL,  
+    order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+
+
+INSERT INTO products (image, name, category, stock, reorder_level, price, supplier_name, supplier_address)
 VALUES
-    ("./assets/to-kill-a-mockingbird.jpg", "Harper Lee", "To Kill a Mockingbird", "Fiction", 50, 10, 18.99),
-    ("./assets/1984.jpg", "George Orwell", "1984", "Dystopian", 80, 15, 15.99),
-    ("./assets/the-great-gatsby.jpg", "F. Scott Fitzgerald", "The Great Gatsby", "Classic", 30, 5, 10.99),
-    ("./assets/pride-and-prejudice.png", "Jane Austen", "Pride and Prejudice", "Romance", 40, 8, 12.99),
-    ("./assets/the-hobbit.jpg", "J.R.R. Tolkien", "The Hobbit", "Fantasy", 60, 12, 25.99);
+    ("./assets/to-kill-a-mockingbird.jpg", "To Kill a Mockingbird", "Fiction", 50, 10, 18.99, "Default Supplier", "123 Default St, City, Country"),
+    ("./assets/1984.jpg", "1984", "Dystopian", 80, 15, 15.99, "Default Supplier", "123 Default St, City, Country"),
+    ("./assets/the-great-gatsby.jpg", "The Great Gatsby", "Classic", 30, 5, 10.99, "Default Supplier", "123 Default St, City, Country"),
+    ("./assets/pride-and-prejudice.png", "Pride and Prejudice", "Romance", 40, 8, 12.99, "Default Supplier", "123 Default St, City, Country"),
+    ("./assets/the-hobbit.jpg", "The Hobbit", "Fantasy", 60, 12, 25.99, "Default Supplier", "123 Default St, City, Country");
 
 INSERT INTO warehouses (name, address) 
 VALUES
-    ('Main Warehouse', '123 Jaro St, Iloilo City, Iloilo'),
-    ('South Depot', '456 Molo St, Iloilo City, Iloilo'),
-    ('North East Storage', '789 La Paz St, Iloilo City, Iloilo'),
-    ('West Hub', '101 Arevalo St, Iloilo City, Iloilo'),
-    ('Central Warehouse', '12 Delgado St, Iloilo City, Iloilo'),
-    ('Riverside Depot', '56 Villa St, Iloilo City, Iloilo'),
-    ('Iloilo Heights', '789 East Baluarte St, Iloilo City'),
-    ('Panay Depot', '34 Balantang St, Iloilo City, Iloilo'),
-    ('Mandurriao Hub', '22 N. Alegre St, Iloilo City, Iloilo'),
-    ('City Center Storage', '200 Bonifacio St, Iloilo City, Iloilo');
-
-
-INSERT INTO notifications (message, type)
-VALUES
-    ("Low stock: To Kill a Mockingbird (Stock: 10)", "low_stock"),
-    ("Low stock: 1984 (Stock: 15)", "low_stock"),
-    ("New order #10245", "new_order");
-
-INSERT INTO racks (warehouse_id, name, max_unit_capacity)
-VALUES 
-    (1, 'Rack 1', 100),
-    (1, 'Rack 2', 150),
-    (2, 'Rack 3', 200),
-    (3, 'Rack 4', 250),
-    (3, 'Rack 5', 300);
+    ('Default Warehouse', '123 Jaro St, Iloilo City, Iloilo');

@@ -38,21 +38,31 @@ $products = getRackBooksById($warehouseId, $rackId);
             <div class="table warehouse-table">
                 <div class="table-header">
                     <div class="table-header-item">Product Name</div>
-                    <div class="table-header-item">Author</div>
-                    <div class="table-header-item">Price</div>
+                    <div class="table-header-item">Category</div>
                     <div class="table-header-item">Stock Quantity</div>
+                    <div class="table-header-item">Rack</div>
+                    <div class="table-header-item">Price</div>
                     <div class="table-header-item" actions>Actions</div>
                 </div>
                 <div class="table-body">
-                <?php foreach($products as $product) { ?>
-                        <div class="table-row">
-                            <div class="table-row-item"><span class="name"><?php echo $product['name'] ?></span></div>
-                            <div class="table-row-item"><?php echo $product['author'] ?></div>
-                            <div class="table-row-item"><?php echo $product['price'] ?></div>
-                            <div class="table-row-item"><?php echo $product['quantity'] ?></div>
+                    <?php foreach($products as $product) { ?>
+                        <div class="table-row" data-id="<?php echo $product['product_id']; ?>">
+                            <div class="table-row-item">
+                                <img src="<?php echo $product['product_image']; ?>" alt="<?php echo $product['product_name']; ?>" class="product-image">
+                                <span class="name"><?php echo $product['product_name']; ?></span>
+                            </div>
+                            <div class="table-row-item"><?php echo $product['product_category']; ?></div>
+                            <div class="table-row-item"><?php echo $product['stock_quantity']; ?></div>
+                            <div class="table-row-item"><?php echo $product['rack_name'] ? $product['rack_name'] : 'Unassigned'; ?></div>
+                            <div class="table-row-item">₱<?php echo number_format($product['price'], 2); ?></div>
                             <div class="table-row-item" actions>
                                 <div class="table-actions">
-                                    <button class="btn-icon border rack-product-edit"><i data-lucide="edit"></i></button>
+                                    <button class="btn-icon border rack-product-edit" aria-label="edit">
+                                        <i data-lucide="edit"></i>
+                                    </button>
+                                    <button class="btn-icon border" aria-label="delete">
+                                        <i data-lucide="trash-2"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>

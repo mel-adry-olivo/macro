@@ -4,7 +4,7 @@ require '../includes/db-config.php';
 require '../includes/template-components.php';
 
 
-$sql = "SELECT * FROM books";
+$sql = "SELECT * FROM products";
 $result = $conn->query($sql);
 $books = $result->fetch_all(MYSQLI_ASSOC);
 
@@ -17,9 +17,9 @@ foreach($books as $book) {
 
 
 $thresholdSql = "
-    SELECT * FROM books 
-    WHERE stock > stock_threshold 
-    AND stock <= stock_threshold  + 10
+    SELECT * FROM products 
+    WHERE stock > reorder_level 
+    AND stock <= reorder_level  + 10
     LIMIT 3";
 $thresholdResult = $conn->query($thresholdSql);
 $thresholdBooks = $thresholdResult->fetch_all(MYSQLI_ASSOC);

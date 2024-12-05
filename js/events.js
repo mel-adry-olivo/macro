@@ -1,7 +1,8 @@
 import { navigateTo } from './router.js';
-import { showForm, hideForm, newShowForm } from './utils.js';
+import { showForm, hideForm, newShowForm, hideOverlay } from './utils.js';
 import { config } from './config.js';
 import { showSnackbar } from './components/snackbar.js';
+import { getReceiveStockData, submitStockReceiveData, getSalesOrderData, submitSalesOrderData } from '../includes/forms/form-handler.js';
 
 // forms
 document.querySelector('.container').addEventListener('click', (e) => {
@@ -17,24 +18,20 @@ document.querySelector('.container').addEventListener('click', (e) => {
 
   if (e.target.matches('.form-button[submit]')) {
     e.preventDefault();
+    const form = e.target.closest('.form-wrapper');
+    const title = form.querySelector('.form-title').textContent;
 
-    const searchQuery = document.querySelector('.form-text-input[placeholder="You can search here"]').value;
-    const quantityReceived = document.querySelector('.form-text-input[placeholder="Enter quantity received"]').value;
-    const searchSelection = document.querySelector('.form-search-selection');
-
-    if (searchSelection) {
-      Array.from(searchSelection.children).forEach((item) => {
-        console.log(item.textContent);
-      });
+    if (title === 'Receive Stock') {
+      const data = getReceiveStockData();
+      submitStockReceiveData(data);
+      hideOverlay();
     }
 
-    const data = {
-      searchQuery,
-      quantityReceived,
-      searchSelection,
-    };
-
-    console.log(data);
+    if (title === 'Sales Order') {
+      const data = getSalesOrderData();
+      submitSalesOrderData(data);
+      hideOverlay();
+    }
   }
 
   //********************************************* */

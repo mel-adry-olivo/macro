@@ -153,6 +153,88 @@ function createProductTableRow($product) {
     HTML;
 }
 
+function createInboundTransactionCard($transaction) {
+    
+    $warehouse = $transaction["warehouse"];
+    $operation = $transaction["operation"];
+    $products = $transaction["products"];
+    $quantity = $transaction["quantity"];
+    $timestamp = $transaction["timestamp"];
+
+    echo
+    <<<HTML
+    <div class="table-row">
+        <div class="table-row-item">$warehouse</div>
+        <div class="table-row-item">$operation</div>
+        <div class="table-row-item">$products</div>
+        <div class="table-row-item">$quantity</div>
+        <div class="table-row-item">$timestamp</div>
+    </div>
+    HTML;
+}
+
+function createOutboundTransactionCard($transaction) {
+    
+    $customerName = $transaction["customer_name"];
+    $operation = $transaction["operation"];
+    $products = $transaction["products"];
+    $quantity = $transaction["quantity"];
+    $timestamp = $transaction["timestamp"];
+
+    echo
+    <<<HTML
+    <div class="table-row">
+        <div class="table-row-item">$customerName</div>
+        <div class="table-row-item">$operation</div>
+        <div class="table-row-item">$products</div>
+        <div class="table-row-item">$quantity</div>
+        <div class="table-row-item">$timestamp</div>
+    </div>
+    HTML;
+}
+
+
+
+function createProductTableRow2($product) {
+
+    $id = $product["product_id"];
+    $image = $product["product_image"];
+    $name = $product["product_name"];
+    $category = $product["product_category"];
+    $stock = $product["stock_quantity"];
+    $rackName = $product["rack_id"] ?? 'Unassigned'; 
+    $price = $product["price"] ?? 'N/A';
+
+    echo
+    <<<HTML
+    <div class="table-row product-card" data-id="$id">
+        <div class="table-row-item" primary-item>
+            <img src="$image" alt="$name">
+            <div class="flow">
+                <span class="name">$name</span>
+            </div>
+        </div>
+        <div class="table-row-item">$stock</div>
+        <div class="table-row-item">$rackName</div>
+        <div class="table-row-item">₱$price</div>
+        <div class="table-row-item" actions>
+            <div class="table-actions">
+                <button class="btn-icon border" aria-label="view">
+                    <i data-lucide="expand"></i>
+                </button>
+                <button class="btn-icon border" aria-label="edit">
+                    <i data-lucide="edit"></i>
+                </button>
+                <button class="btn-icon border" aria-label="delete">
+                    <i data-lucide="trash-2"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    HTML;
+}
+
+
 function createSimpleProductRow($product) {
 
     $id = $product["id"];

@@ -1,7 +1,9 @@
 <?php
 
 require '../template-components.php';
-
+require '../db-config.php';
+require '../db-utils.php';
+$warehouses = getWarehouseNames();
 ?>
 
 <div class="form-wrapper">
@@ -9,6 +11,9 @@ require '../template-components.php';
     <div class="form-layout-main">
         <div class="form-layout-row">
             <?php createFormTextInput("Customer Name", "Enter customer name")?>
+        </div>
+        <div class="form-layout-row">
+            <?php createFormDropdown("Select Warehouse", $warehouses) ?>
         </div>
         <?php createFormSearchBoxWithSelection("Search Product"); ?>
         <div class="form-layout-row">   
