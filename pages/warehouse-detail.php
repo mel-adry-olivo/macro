@@ -16,7 +16,7 @@ $warehouseProducts = getWarehouseProducts($warehouseId) ?? [];
             <h1><?php echo $warehouse['name'] ?></h1>
         </div>
         <div class="row">
-            <?php createButton("Add Rack", "edit", false)?>
+            <?php //createButton("Add Rack", "edit", false)?>
             <?php createFormButton("Adjust Stock", "plus", false, false, "adjust-stock")?>
             <?php createFormButton("Transfer Stock", "arrow-left-right", true, false, "transfer-stock"); ?> 
         </div>

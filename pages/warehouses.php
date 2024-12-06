@@ -14,7 +14,6 @@ $warehouses = getAllWarehouses();
             <h1>Warehouses</h1>
             </div>
             <div class="row">
-                <?php createButton("Import CSV", "import", false)?>
                 <?php createFormButton("Add Warehouse", "plus", true, false, 'add-warehouse')?>
             </div>
         </div>

@@ -70,16 +70,15 @@ document.querySelector('.container').addEventListener('click', (e) => {
 
   //********************************************* */
 
-  // TODO: Warehouse Edit
-  if (e.target.matches('.warehouse-edit')) {
-    const message = 'This will show edit form where you can edit warehouse data like name and address.';
-    showSnackbar('Function', message, 2500);
-  }
-
   // TODO: Warehouse Delete
   if (e.target.matches('.warehouse-delete')) {
-    const message = 'This will delete warehouse and all racks inside it.';
-    showSnackbar('Function', message, 2500);
+    const warehouseId = e.target.closest('.warehouse-card').dataset.id;
+
+    if (confirm('Are you sure you want to delete this warehouse?')) {
+      fetch('/macro/api/delete-warehouse.php?warehouseId=' + warehouseId, { method: 'POST' });
+      e.target.closest('.warehouse-card').remove();
+      showSnackbar('Function', 'Warehouse deleted successfully!', 2500);
+    }
   }
 
   // TODO: Product Edit

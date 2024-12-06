@@ -720,9 +720,11 @@ input[type='file'].form-image-input {
   left: 0;
   right: 0;
   top: 120%;
+  overflow-y: scroll;
   border-radius: 0.5rem;
   background-color: var(--clr-skeleton-dark);
   z-index: 1000;
+  max-height: 15rem;
 }
 
 .form-search-selection {

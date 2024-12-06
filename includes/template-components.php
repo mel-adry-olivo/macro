@@ -313,9 +313,7 @@ function createWarehouseTableRow($warehouse) {
                 <button class="btn-icon border warehouse-expand" aria-label="view">
                     <i data-lucide="expand"></i>
                 </button>
-                <button class="btn-icon border warehouse-edit" aria-label="edit">
-                    <i data-lucide="edit"></i>
-                </button>
+
                 <button class="btn-icon border warehouse-delete" aria-label="delete">
                     <i data-lucide="trash-2"></i>
                 </button>
@@ -422,9 +420,7 @@ function createFormSearchBoxWithSelection($label = "Search Box", $placeholder = 
         <div class="form-layout-row">
             <div class="form-group">
                 <span class="form-group-label">Search Selection</span>
-            <div class="list-scroll">
                 <div class="form-search-selection"></div>
-            </div>
             </div>
         </div>
     HTML;

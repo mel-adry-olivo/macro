@@ -118,6 +118,18 @@ function getWarehouse($warehouseId) {
     return $warehouse;
 }
 
+function deleteWarehouse($warehouseId) {
+    global $conn;
+    $sql = "DELETE FROM warehouses WHERE id = $warehouseId";
+    $conn->query($sql);
+}
+
+function deleteWarehouseProducts($warehouseId) {
+    global $conn;
+    $sql = "DELETE FROM warehouse_product WHERE warehouse_id = $warehouseId";
+    $conn->query($sql);
+}
+
 function getAllWarehouses() {
     global $conn;
     $sql = "
