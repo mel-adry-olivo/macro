@@ -28,7 +28,7 @@ $warehouseProducts = getWarehouseProducts($warehouseId) ?? [];
                     <div class="table-header">
                         <div class="table-header-item" primary-item>Name</div>
                         <div class="table-header-item">Stock Quantity</div>
-                        <div class="table-header-item">Rack #</div>
+                        <!-- <div class="table-header-item">Rack #</div> -->
                         <div class="table-header-item">Price</div>
                     </div>
                     <div class="table-body">

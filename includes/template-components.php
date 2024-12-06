@@ -69,7 +69,7 @@ function createFileUpload($text, $icon = "", $filled = false, $noborder = false,
     HTML;
 }
 
-function createButton($text, $icon = "", $filled = false, $noborder = false, $dataForm = '', $dataOverlay='', ) {
+function createButton($text, $icon = "", $filled = false, $noborder = false, $dataForm = '', $dataOverlay='' ) {
     $iconHtml = $icon ? "<i data-lucide='$icon'></i>" : "";
     $filled = $filled ? "btn-primary" : "";
     $noborder = $noborder ? "btn-no-border" : "";
@@ -232,7 +232,7 @@ function createProductTableRow2($product) {
             </div>
         </div>
         <div class="table-row-item" quantity data-name="stock">$stock</div>
-        <div class="table-row-item" data-name="rack">$rackName</div>
+        <!-- <div class="table-row-item" data-name="rack">$rackName</div> -->
         <div class="table-row-item" data-name="price">₱$price</div>
     </div>
     HTML;
@@ -298,7 +298,7 @@ function createWarehouseTableRow($warehouse) {
     $id = $warehouse["id"];
     $name = $warehouse["name"];
     $address = $warehouse["address"];
-    $totalStocks = $warehouse["total_stock"];
+    $totalStocks = $warehouse["total_stock"] ?? 0;
     $capacity = $warehouse["max_unit_capacity"];
 
     echo
@@ -313,7 +313,6 @@ function createWarehouseTableRow($warehouse) {
                 <button class="btn-icon border warehouse-expand" aria-label="view">
                     <i data-lucide="expand"></i>
                 </button>
-
                 <button class="btn-icon border warehouse-delete" aria-label="delete">
                     <i data-lucide="trash-2"></i>
                 </button>

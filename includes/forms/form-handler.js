@@ -164,6 +164,7 @@ export async function submitWarehouseData(warehouseData) {
         showSnackbar('Success', 'Warehouse created successfully!', 2500);
         const warehouses = document.querySelector('.warehouses .table-body');
         warehouses.innerHTML += result;
+        lucide.createIcons();
       } else {
         showSnackbar('Error', result.error || 'An error occurred.', 2500);
       }

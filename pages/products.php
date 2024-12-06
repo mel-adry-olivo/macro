@@ -27,11 +27,9 @@ $products = $result->fetch_all(MYSQLI_ASSOC);
                 <div class="table-header">
                     <div class="table-header-item" primary-item>Rack Name</div>
                     <div class="table-header-item">Category</div>
-                    <div class="table-header-item">Reorder Level</div>
                     <div class="table-header-item">Price</div>
                     <div class="table-header-item">Supplier Name</div>
                     <div class="table-header-item">Supplier Addr.</div>
-                    <div class="table-header-item" actions>Actions</div>
                 </div>
                 <div class="table-body">
                     <?php foreach($products as $product) :?>
@@ -43,20 +41,9 @@ $products = $result->fetch_all(MYSQLI_ASSOC);
                             </div>
                         </div> 
                         <div class="table-row-item"><?php echo $product['category'] ?></div>
-                        <div class="table-row-item"><?php echo $product['reorder_level'] ?></div>
                         <div class="table-row-item">₱<?php echo $product['price'] ?></div>
                         <div class="table-row-item"><?php echo $product['supplier_name'] ?></div>
                         <div class="table-row-item"><?php echo $product['supplier_address'] ?></div>
-                        <div class="table-row-item" actions>
-                            <div class="table-actions">
-                                <button class="btn-icon border product-edit" aria-label="edit">
-                                    <i data-lucide="edit"></i>
-                                </button>
-                                <button class="btn-icon border product-delete" aria-label="delete">
-                                    <i data-lucide="trash-2"></i>
-                                </button>
-                            </div>
-                        </div>
                     </div>
                     <?php endforeach; ?>
                 </div>
