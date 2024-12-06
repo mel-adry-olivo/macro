@@ -1,45 +1,11 @@
-Inventory Management System
+- product import csv, edit
+- warehouse delete, edit, import csv
+- warehouse product stock adjust
+- racking
 
-- Login ----------------------------------------------------------------
-    -> 
 
-- Dashboard (readonly if non-admin)
-    -> Total number of available products --------------------------------
-    -> Pending Orders -------------
-    -> Total stock value of products --------------------------------
-    -> Total sales in the last 24 hours 
-    -> Stock movements (200 items have been transferred in the last 24 hours) 
-    -> products nearing threshold
-
-    -> Low stock alerts (notification style) -------------------------------- 
-
-- Products (readonly if non-admin) 
-    -> CRUD Products --------------------------------
-    -> Categorize Products --------------------------------
-    -> Monitor Data
-        -> Category
-        -> Stock levels per warehouse  --------------------------------
-            -> Number of products sold per warehouse --------------------------------
-        -> Total number of products ----------------------------------------------------------------
-        -> Price ----------------------------------------------------------------
-    - Add product button / import product data by csv button (design)
-    - Export product report  (design)
-
-- warehouse (readonly if non-admin) (update stock level if warehouse staff) 
-    -> CRUD warehouse ----------------------------------------------------------------
-    -> Record movemnts of products between warehouses
-    -> Track pending transfers 
-    -> Stock levels per warehouse ----------------------------------------------------------------
-
-- Orders (place order if sales staff)
-    -> New Purchase Button ------
-    -> Current order list (w/ status) --------
-    -> Order Form ->  Select products to order -> Place Order (invoice? receipt?) -> Delivery shipping method; ----------
-    -> Order history (design)
-
-- Suppliers (readonly if non-admin)
-    -> CRUD Suppliers List ----------------------------------------------------------------
-    -> Add supplier -> link products for the supplier -------   
-        -> details, address
-    -> track order record 
-    -> track supplier performance
+Dashboard   
+    - total sales calc
+    - recent stock movements
+    - pending orders
+    - recent updates

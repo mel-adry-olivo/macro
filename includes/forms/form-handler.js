@@ -219,7 +219,73 @@ export function getTransferStockData() {
   return data;
 }
 
-// * LOGGING
+// * EDIT WAREHOUSE PRODUCT
+export function getAdjustStockData(card) {
+  const currentWarehouse = document.querySelector('.warehouses-title').textContent.trim();
+  const quantityReceived = document.querySelector('.form-text-input[numbers]').value;
+  const searchSelection = document.querySelector('.form-search-selection');
+  let selection = [];
+  let items = 0;
+
+  if (searchSelection) {
+    Array.from(searchSelection.children).forEach((item) => {
+      selection.push(item.textContent);
+    });
+
+    items = selection.length;
+  }
+
+  if (items === 0) {
+    showSnackbar('Error', 'Please select at least one item', 2500);
+    return;
+  }
+
+  const quantityArray = quantityReceived.split(',').map(Number).filter(Boolean);
+
+  if (quantityArray.length !== items) {
+    showSnackbar('Error', 'Quantity and selection count must match!', 2500);
+    return;
+  }
+
+  const data = {
+    warehouse: currentWarehouse,
+    selection,
+    quantity: quantityArray,
+  };
+
+  // sample data = {"warehouse":"Default Warehouse","selection":["1984 ","To Kill a Mockingbird "],"quantity":[20,30]}
+  return data;
+}
+export async function submitAdjustStockData(adjustStockData) {
+  if (adjustStockData) {
+    try {
+      const response = await fetch('/macro/api/adjust-stock.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(adjustStockData),
+      });
+
+      const result = await response.json();
+
+      console.log(adjustStockData);
+      if (response.ok) {
+        if (result.adjustmentType === 'inbound') {
+          await logInboundAdjustment(adjustStockData, result.adjustmentChange);
+        } else if (result.adjustmentType === 'outbound') {
+          await logOutboundAdjustment(adjustStockData, result.adjustmentChange);
+        }
+
+        showSnackbar('Success', 'Product updated successfully!', 2500);
+      } else {
+        showSnackbar('Error', result.error || 'An error occurred.', 2500);
+      }
+    } catch (error) {
+      showSnackbar('Error', 'Failed to connect to the server.', 2500);
+    }
+  }
+}
 
 export async function submitTransferStockData(transferStockData) {
   if (transferStockData) {
@@ -248,6 +314,60 @@ export async function submitTransferStockData(transferStockData) {
     } catch (error) {
       showSnackbar('Error', 'Failed to connect to the server.', 2500);
     }
+  }
+}
+
+// * LOGGING
+async function logInboundAdjustment(adjustStockData, change) {
+  const warehouseName = adjustStockData.warehouse.trim();
+  const operation = 'Stock Adjustment';
+  const productNames = adjustStockData.selection.map((name) => name.trim()).join(', ');
+
+  const logData = {
+    warehouse: warehouseName,
+    operation: operation,
+    productNames: productNames,
+    quantity: change,
+  };
+
+  try {
+    const response = await fetch('/macro/api/log-inbound.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(logData),
+    });
+  } catch (error) {
+    console.error('Error logging inbound transaction:', error);
+    console.error('In logInboundTransfer:', error);
+    showSnackbar('Error', 'Failed to log inbound transfer.', 2500);
+  }
+}
+async function logOutboundAdjustment(adjustStockData, change) {
+  const warehouseName = adjustStockData.warehouse.trim();
+  const operation = 'Stock Adjustment';
+  const productNames = adjustStockData.selection.map((name) => name.trim()).join(', ');
+
+  const logData = {
+    warehouse: warehouseName,
+    operation: operation,
+    products: productNames,
+    quantity: change,
+  };
+
+  try {
+    const response = await fetch('/macro/api/log-outbound.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(logData),
+    });
+  } catch (error) {
+    console.error('Error logging inbound transaction:', error);
+    console.error('In logInboundTransfer:', error);
+    showSnackbar('Error', 'Failed to log inbound transfer.', 2500);
   }
 }
 async function logStockReceiveData(stockData) {

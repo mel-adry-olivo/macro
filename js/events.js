@@ -11,6 +11,8 @@ import {
   submitWarehouseData,
   getTransferStockData,
   submitTransferStockData,
+  getAdjustStockData,
+  submitAdjustStockData,
 } from '../includes/forms/form-handler.js';
 
 // forms
@@ -51,6 +53,13 @@ document.querySelector('.container').addEventListener('click', (e) => {
     if (title === 'Transfer Stock') {
       const data = getTransferStockData();
       submitTransferStockData(data);
+      hideOverlay();
+    }
+
+    if (title === 'Adjust Stock') {
+      const data = getAdjustStockData();
+      submitAdjustStockData(data);
+      navigateTo(window.location.pathname);
       hideOverlay();
     }
   }

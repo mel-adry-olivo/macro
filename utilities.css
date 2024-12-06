@@ -718,7 +718,3 @@ select {
 .stock-transfer-form .table-body {
   max-height: 200px;
 }
-
-.product-card > * {
-  pointer-events: none;
-}

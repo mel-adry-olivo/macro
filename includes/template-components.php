@@ -211,19 +211,12 @@ function createProductTableRow2($product) {
         <div class="table-row-item" primary-item>
             <img src="$image" alt="$name">
             <div class="flow">
-                <span class="name">$name</span>
+                <span class="name" data-name="name">$name</span>
             </div>
         </div>
-        <div class="table-row-item" quantity>$stock</div>
-        <div class="table-row-item" >$rackName</div>
-        <div class="table-row-item">₱$price</div>
-        <div class="table-row-item" actions>
-            <div class="table-actions">
-                <button class="btn-icon border" aria-label="edit">
-                    <i data-lucide="edit"></i>
-                </button>
-            </div>
-        </div>
+        <div class="table-row-item" quantity data-name="stock">$stock</div>
+        <div class="table-row-item" data-name="rack">$rackName</div>
+        <div class="table-row-item" data-name="price">₱$price</div>
     </div>
     HTML;
 }

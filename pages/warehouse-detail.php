@@ -17,6 +17,7 @@ $warehouseProducts = getWarehouseProducts($warehouseId) ?? [];
         </div>
         <div class="row">
             <?php createButton("Add Rack", "edit", false)?>
+            <?php createFormButton("Adjust Stock", "plus", false, false, "adjust-stock")?>
             <?php createFormButton("Transfer Stock", "arrow-left-right", true, false, "transfer-stock"); ?> 
         </div>
     </div>
@@ -29,7 +30,6 @@ $warehouseProducts = getWarehouseProducts($warehouseId) ?? [];
                         <div class="table-header-item">Stock Quantity</div>
                         <div class="table-header-item">Rack #</div>
                         <div class="table-header-item">Price</div>
-                        <div class="table-header-item" actions>Actions</div>
                     </div>
                     <div class="table-body">
                         <?php if (!empty($warehouseProducts)): ?>
