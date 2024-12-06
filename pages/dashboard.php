@@ -1,28 +1,15 @@
 <?php 
 
 require '../includes/db-config.php';
+require '../includes/db-utils.php';
 require '../includes/template-components.php';
 
 
-$sql = "SELECT * FROM products";
-$result = $conn->query($sql);
-$products = $result->fetch_all(MYSQLI_ASSOC);
-
-$now = date_format(new DateTime('now'), 'd-m-Y');
+$products = getProducts();
 $availableProducts = count($products);
-$totalStockValue = 0;
-foreach($products as $book) {
-    $totalStockValue += $book['price'];
-}
+$totalStock = getTotalStockValue();
+$transactions = getRandomTransaction();
 
-
-$thresholdSql = "
-    SELECT * FROM products 
-    WHERE stock > reorder_level 
-    AND stock <= reorder_level  + 10
-    LIMIT 3";
-$thresholdResult = $conn->query($thresholdSql);
-$thresholdBooks = $thresholdResult->fetch_all(MYSQLI_ASSOC);
 
 ?>
 
@@ -32,14 +19,10 @@ $thresholdBooks = $thresholdResult->fetch_all(MYSQLI_ASSOC);
         <h1><?php echo $availableProducts ?></h1>
         <p>Last Updated: 27 Nov 2024</p>
     </div>
-    <div class="dashboard-card-2">
-        <h2>Total Sales</h2>
-        <h1>-</h1>
-        <p>Monthly Goal: $200,000</p>
-    </div>
+
     <div class="dashboard-card-3">
         <h2>Total Stock Value</h2>
-        <h1>₱<?php echo number_format($totalStockValue, 0, '.', ',') ?></h1>
+        <h1>₱<?php echo number_format($totalStock, 0, '.', ',') ?></h1>
         <p>+2% since last month</p>
     </div>
     <div class="dashboard-card-4">
@@ -55,17 +38,16 @@ $thresholdBooks = $thresholdResult->fetch_all(MYSQLI_ASSOC);
     <div class="dashboard-card-6">
         <h2>Recent Updates</h2>
         <ul>
-            <li>Low stock: Product D</li>
+            <!-- <li>Low stock: Product D</li>
             <li>New Order: #10245</li>
-            <li>Stock Update Scheduled</li>
+            <li>Stock Update Scheduled</li> -->
         </ul>
     </div>
     <div class="dashboard-card-7">
-        <h2>Products Near Threshold</h2>
+        <h2>Products To Reorder</h2>
         <div class="threshold-container">
-            <?php foreach($thresholdBooks as $book) : ?>
-                <?php createNearThresholdProduct($book); ?>
-            <?php endforeach; ?>
+            <?php //foreach($thresholdBooks as $book) : ?>
+            <?php //endforeach; ?>
         </div>
     </div>
 </div>

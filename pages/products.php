@@ -18,7 +18,7 @@ $products = $result->fetch_all(MYSQLI_ASSOC);
             <h1>Products</h1>
         </div>
         <div class="row">
-            <?php createButton("Import CSV", "import", false)?>
+            <?php createFileUpload("Import CSV", "import", false)?>
         </div>
     </div>
     <div class="list-scroll">

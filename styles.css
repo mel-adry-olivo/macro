@@ -250,6 +250,7 @@ PAGE LAYOUT STYLES
   grid-template-rows: 5rem /*4.5rem*/ 1fr;
   gap: 1rem;
   height: 100%;
+  position: relative;
 }
 
 .warehouses.rack {
@@ -312,6 +313,12 @@ DASHBOARD STYLES
 .dashboard p {
   font-size: var(--text-xs);
   opacity: 0.6;
+}
+
+.dashboard > .dashboard-card-1 {
+  grid-column: span 2 / span 2;
+  grid-column-start: 1;
+  grid-row-start: 1;
 }
 
 .dashboard > .dashboard-card-3 {
@@ -759,11 +766,23 @@ input[type='file'].form-image-input {
   border-radius: 0.5rem;
 }
 
+.import-csv-btn {
+  font-size: 0.8rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
 /* ////////////////////////////////////////////////
 
 INBOUND, OUTBOUND STYLES
 
 //////////////////////////////////////////////////*/
+
+.inbound-header,
+.outbound-header,
+.warehouses-detail-header {
+  background-color: whitesmoke;
+}
 
 .inbound-content,
 .outbound-content,

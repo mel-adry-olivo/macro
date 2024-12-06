@@ -70,11 +70,11 @@ CREATE TABLE sales_orders (
 
 INSERT INTO products (image, name, category, stock, reorder_level, price, supplier_name, supplier_address)
 VALUES
-    ("./assets/to-kill-a-mockingbird.jpg", "To Kill a Mockingbird", "Fiction", 50, 10, 18.99, "Default Supplier", "123 Default St, City, Country"),
-    ("./assets/1984.jpg", "1984", "Dystopian", 80, 15, 15.99, "Default Supplier", "123 Default St, City, Country"),
-    ("./assets/the-great-gatsby.jpg", "The Great Gatsby", "Classic", 30, 5, 10.99, "Default Supplier", "123 Default St, City, Country"),
-    ("./assets/pride-and-prejudice.png", "Pride and Prejudice", "Romance", 40, 8, 12.99, "Default Supplier", "123 Default St, City, Country"),
-    ("./assets/the-hobbit.jpg", "The Hobbit", "Fantasy", 60, 12, 25.99, "Default Supplier", "123 Default St, City, Country");
+    ("/macro/assets/to-kill-a-mockingbird.jpg", "To Kill a Mockingbird", "Fiction", 50, 10, 18.99, "Default Supplier", "123 Default St, City, Country"),
+    ("/macro/assets/1984.jpg", "1984", "Dystopian", 80, 15, 15.99, "Default Supplier", "123 Default St, City, Country"),
+    ("/macro/assets/the-great-gatsby.jpg", "The Great Gatsby", "Classic", 30, 5, 10.99, "Default Supplier", "123 Default St, City, Country"),
+    ("/macro/assets/pride-and-prejudice.png", "Pride and Prejudice", "Romance", 40, 8, 12.99, "Default Supplier", "123 Default St, City, Country"),
+    ("/macro/assets/the-hobbit.jpg", "The Hobbit", "Fantasy", 60, 12, 25.99, "Default Supplier", "123 Default St, City, Country");
 
 INSERT INTO warehouses (name, address) 
 VALUES

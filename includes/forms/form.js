@@ -1,6 +1,5 @@
 import { fetchProducts } from '../../js/api.js';
 import { showSnackbar } from '../../js/components/snackbar.js';
-import { hideOverlay } from '../../js/utils.js';
 
 const selectInputs = document.querySelectorAll('.form-select-input');
 
@@ -19,10 +18,6 @@ selectInputs.forEach((input) => {
 });
 
 document.addEventListener('click', (e) => {
-  if (e.target.matches('.form-button[cancel]')) {
-    hideOverlay();
-  }
-
   if (e.target.matches('.form-text-input[numbers][allow-comma]')) {
     showSnackbar('Tip', 'Put commas if multiple products', 2500);
   }

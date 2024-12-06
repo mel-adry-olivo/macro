@@ -108,7 +108,7 @@ document.querySelector('.container').addEventListener('click', (e) => {
   }
 });
 
-const dashboardNavItem = document.querySelector('.nav-item[data-content="dashboard"]');
+const dashboardNavItem = document.querySelector('.nav-item[data-content="inbound"]');
 if (dashboardNavItem) {
   dashboardNavItem.click();
 }

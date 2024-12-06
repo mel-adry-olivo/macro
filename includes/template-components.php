@@ -21,6 +21,7 @@ function createNearThresholdProduct($product) {
 }
 
 
+
 function createNotificationCard($product) {
     
 }
@@ -49,6 +50,22 @@ function createFormButton($text, $icon = "", $filled = false, $noborder = false,
         $iconHtml
         $text
     </button>
+    HTML;
+}
+
+function createFileUpload($text, $icon = "", $filled = false, $noborder = false, $dataForm = '') {
+    $iconHtml = $icon ? "<i data-lucide='$icon'></i>" : "";
+    $filled = $filled ? "btn-primary" : "";
+    $noborder = $noborder ? "btn-no-border" : "";
+    $class = strtolower(str_replace(" ", "-", $text)) . "-btn";
+
+    echo
+    <<<HTML
+    <label class="btn $noborder $filled $class" for="product-csv">
+        $iconHtml
+        $text
+        <input type="file" accept=".csv" hidden id="product-csv"/>
+    </label>
     HTML;
 }
 
@@ -281,6 +298,7 @@ function createWarehouseTableRow($warehouse) {
     $id = $warehouse["id"];
     $name = $warehouse["name"];
     $address = $warehouse["address"];
+    $totalStocks = $warehouse["total_stock"];
     $capacity = $warehouse["max_unit_capacity"];
 
     echo
@@ -288,6 +306,7 @@ function createWarehouseTableRow($warehouse) {
     <div class="table-row warehouse-card" data-id="$id">
         <div class="table-row-item" primary-item>$name</div>
         <div class="table-row-item">$address</div>
+        <div class="table-row-item">$totalStocks</div>
         <div class="table-row-item">$capacity</div>
         <div class="table-row-item" actions>
             <div class="table-actions">

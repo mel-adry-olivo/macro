@@ -13,14 +13,19 @@ import {
   submitTransferStockData,
   getAdjustStockData,
   submitAdjustStockData,
+  importCsv,
 } from '../includes/forms/form-handler.js';
 
 // forms
 document.querySelector('.container').addEventListener('click', (e) => {
-  //* Nav Active
   if (e.target.matches('.nav-item')) {
     document.querySelector('.nav-item.active').classList.remove('active');
     e.target.classList.add('active');
+  }
+
+  if (e.target.matches('.form-button[cancel]')) {
+    e.preventDefault();
+    hideOverlay();
   }
 
   if (e.target.matches('[btn-form]')) {
@@ -59,18 +64,11 @@ document.querySelector('.container').addEventListener('click', (e) => {
     if (title === 'Adjust Stock') {
       const data = getAdjustStockData();
       submitAdjustStockData(data);
-      navigateTo(window.location.pathname);
       hideOverlay();
     }
   }
 
   //********************************************* */
-
-  // TODO: Import CSV
-  if (e.target.matches('.import-csv-btn')) {
-    const message = 'This will allow you to import products from a CSV file.';
-    showSnackbar('Function', message, 2500);
-  }
 
   // TODO: Warehouse Edit
   if (e.target.matches('.warehouse-edit')) {
@@ -135,78 +133,8 @@ document.querySelector('.container').addEventListener('change', async (e) => {
     reader.readAsDataURL(file);
   }
 
-  // * Stock Transfer Dropdown Origin
-  if (e.target.matches('.dropdown-origin .dropdown-select')) {
-    const rackId = e.target.value;
-    const warehouseId = document.querySelector('.warehouses-detail').dataset.id;
-    const response = await fetch(config.rackBooksApiUrl + rackId + '&warehouseId=' + warehouseId);
-    const data = await response.text();
-    const container = e.target.closest('.stock-transfer-form').querySelector('.table-body');
-    container.innerHTML = data;
-  }
-});
-
-document.querySelector('.container').addEventListener('change', async (e) => {
-  const linkProductForm = e.target.closest('.link-product-form');
-  const stockTransferForm = e.target.closest('.stock-transfer-form');
-
-  if (linkProductForm) {
-    const tableBody = linkProductForm.querySelector('.table-body');
-
-    if (e.target.matches('.select-all-checkbox')) {
-      const isChecked = e.target.checked;
-      tableBody.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
-        checkbox.checked = isChecked;
-      });
-    }
-  }
-
-  if (stockTransferForm) {
-    const stTableBody = stockTransferForm.querySelector('.table-body');
-
-    if (e.target.matches('.select-all-checkbox')) {
-      const isChecked = e.target.checked;
-      stTableBody.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
-        checkbox.checked = isChecked;
-      });
-      console.log('select all checkbox');
-    }
-  }
-});
-
-document.querySelector('.container').addEventListener('submit', async (e) => {
-  e.preventDefault();
-
-  //* Link Product Form
-  if (e.target.matches('.link-product-form')) {
-    const checkedProducts = document.querySelectorAll('.table-body input[type="checkbox"]:checked');
-    const bookIds = Array.from(checkedProducts).map((checkbox) => checkbox.value);
-    const rackName = e.target.querySelector('.dropdown-select').value;
-    const warehouse_id = document.querySelector('.warehouses-detail').dataset.id;
-    const overlay = document.querySelector('.link-product-overlay');
-
-    const response = await fetch(config.rackApiUrl + '?action=link', {
-      method: 'POST',
-      body: JSON.stringify({ bookIds, rackName, warehouse_id }),
-    });
-
-    const data = await response.json();
-    navigateTo('/macro/warehouses/' + warehouse_id + '/' + data.rackId);
-    hideForm(e.target, overlay);
-  }
-
-  //* Add Rack Form
-  if (e.target.matches('.warehouse-add-rack-form')) {
-    const overlay = document.querySelector('.add-rack-overlay');
-    const formData = new FormData(e.target);
-    const response = await fetch(config.rackApiUrl + '?action=create', {
-      method: 'POST',
-      body: JSON.stringify(Object.fromEntries(formData)),
-    });
-    const data = await response.text();
-    const container = document.querySelector('.table-body');
-    container.insertAdjacentHTML('beforeend', data);
-    hideForm(e.target, overlay);
-    lucide.createIcons();
+  // TODO: Import CSV
+  if (e.target.matches('#product-csv')) {
+    importCsv();
   }
 });

@@ -1,3 +1,4 @@
+import { productsMapper, insertProductsToDatabase } from '/macro/js/csv-parser.js';
 import { showSnackbar } from '/macro/js/components/snackbar.js';
 
 // * STOCK RECEIVE
@@ -57,7 +58,6 @@ export async function submitStockReceiveData(stockData) {
         showSnackbar('Error', result.error || 'An error occurred.', 2500);
       }
     } catch (error) {
-      console.log(error);
       showSnackbar('Error', 'Failed to connect to the server.', 2500);
     }
   }
@@ -269,13 +269,29 @@ export async function submitAdjustStockData(adjustStockData) {
 
       const result = await response.json();
 
-      console.log(adjustStockData);
       if (response.ok) {
-        if (result.adjustmentType === 'inbound') {
-          await logInboundAdjustment(adjustStockData, result.adjustmentChange);
-        } else if (result.adjustmentType === 'outbound') {
-          await logOutboundAdjustment(adjustStockData, result.adjustmentChange);
-        }
+        result.adjustments.forEach(async (adjustment) => {
+          const productId = adjustment.productId;
+          const adjustmentType = adjustment.adjustmentType;
+          const adjustmentChange = adjustment.adjustmentChange;
+
+          const productElement = document.querySelector(`.product-card[data-id="${productId}"]`);
+          if (productElement) {
+            const currentQuantityElement = productElement.querySelector('[quantity]');
+            let currentQuantity = parseInt(currentQuantityElement.innerText, 10);
+            let newQuantity;
+
+            if (adjustmentType === 'inbound') {
+              newQuantity = currentQuantity + adjustmentChange;
+              await logInboundAdjustment(adjustStockData, adjustment.productName, adjustmentChange);
+            } else if (adjustmentType === 'outbound') {
+              newQuantity = currentQuantity - adjustmentChange;
+              await logOutboundAdjustment(adjustStockData, adjustment.productName, adjustmentChange);
+            }
+
+            currentQuantityElement.innerText = newQuantity;
+          }
+        });
 
         showSnackbar('Success', 'Product updated successfully!', 2500);
       } else {
@@ -318,15 +334,14 @@ export async function submitTransferStockData(transferStockData) {
 }
 
 // * LOGGING
-async function logInboundAdjustment(adjustStockData, change) {
+async function logInboundAdjustment(adjustStockData, name, change) {
   const warehouseName = adjustStockData.warehouse.trim();
   const operation = 'Stock Adjustment';
-  const productNames = adjustStockData.selection.map((name) => name.trim()).join(', ');
 
   const logData = {
     warehouse: warehouseName,
     operation: operation,
-    productNames: productNames,
+    productNames: name,
     quantity: change,
   };
 
@@ -344,15 +359,14 @@ async function logInboundAdjustment(adjustStockData, change) {
     showSnackbar('Error', 'Failed to log inbound transfer.', 2500);
   }
 }
-async function logOutboundAdjustment(adjustStockData, change) {
+async function logOutboundAdjustment(adjustStockData, name, change) {
   const warehouseName = adjustStockData.warehouse.trim();
   const operation = 'Stock Adjustment';
-  const productNames = adjustStockData.selection.map((name) => name.trim()).join(', ');
 
   const logData = {
     warehouse: warehouseName,
     operation: operation,
-    products: productNames,
+    products: name,
     quantity: change,
   };
 
@@ -493,4 +507,42 @@ async function logInboundTransfer(data) {
     console.error('In logInboundTransfer:', error);
     showSnackbar('Error', 'Failed to log inbound transfer.', 2500);
   }
+}
+
+export function importCsv() {
+  const fileInput = document.getElementById('product-csv');
+  const file = fileInput.files[0];
+
+  if (!file) {
+    alert('Please select a file.');
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = async function (event) {
+    const csvData = event.target.result;
+    const parsedData = parseCSV(csvData);
+    const products = productsMapper(parsedData);
+
+    await insertProductsToDatabase(products);
+  };
+
+  reader.onerror = function (event) {
+    alert('Error reading file: ' + event.target.error);
+  };
+
+  reader.readAsText(file);
+}
+
+function parseCSV(csvData) {
+  const rows = csvData.split('\n');
+  const result = [];
+
+  for (let i = 0; i < rows.length; i++) {
+    const columns = rows[i].split(',');
+    result.push(columns);
+  }
+
+  return result;
 }

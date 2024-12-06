@@ -12,6 +12,7 @@ $quantity = $data["quantity"] ?? null;
 $productNames = $data["productNames"] ?? null;
 $now = date("Y-m-d H:i:s");
 
+
 logInbound($warehouseName, $operation, $quantity, $productNames, $now);
 
 $transaction = [

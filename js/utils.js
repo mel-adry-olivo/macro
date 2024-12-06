@@ -42,7 +42,6 @@ export async function showOverlay() {
 }
 
 export async function hideOverlay() {
-  console.log('hide overlay');
   const overlay = document.querySelector('.page-overlay');
   toggleVisibility(overlay, false);
 }

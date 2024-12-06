@@ -1,12 +1,10 @@
 <?php 
 
 require '../includes/db-config.php';
+require '../includes/db-utils.php';
 require '../includes/template-components.php';
 
-$categories = ['All'];
-$sql = "SELECT * FROM warehouses LIMIT 5";
-$result = $conn->query($sql);
-$warehouses = $result->fetch_all(MYSQLI_ASSOC);
+$warehouses = getAllWarehouses();
 
 ?>
 
@@ -26,6 +24,7 @@ $warehouses = $result->fetch_all(MYSQLI_ASSOC);
                 <div class="table-header">
                     <div class="table-header-item" primary-item>Name</div>
                     <div class="table-header-item">Address</div>
+                    <div class="table-header-item">Total Stocks</div>
                     <div class="table-header-item">Capacity</div>
                     <div class="table-header-item" actions>Actions</div>
                 </div>

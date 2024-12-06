@@ -1,5 +1,26 @@
 <?php 
 
+function addProducts($product) {
+    global $conn;
+    $image = $product['image'];
+    $name = $product['name'];
+    $category = $product['category'];
+    $stock = $product['stock'];
+    $reorder_level = $product['reorder_level'];
+    $price = $product['price'];
+    $supplier_name = $product['supplier_name'];
+    $supplier_address = $product['supplier_address'];
+
+    $query = "INSERT INTO products (image, name, category, stock, reorder_level, price, supplier_name, supplier_address) 
+                VALUES ('$image', '$name', '$category', $stock, $reorder_level, $price, '$supplier_name', '$supplier_address')";
+
+    if ($conn->query($query) === TRUE) {
+        // Success
+    } else {
+        // Error
+    }
+}
+
 function getProducts() {
     global $conn;
     $sql = "SELECT * FROM products";
@@ -97,6 +118,25 @@ function getWarehouse($warehouseId) {
     return $warehouse;
 }
 
+function getAllWarehouses() {
+    global $conn;
+    $sql = "
+    SELECT 
+        w.*,
+        SUM(wp.stock_quantity) AS total_stock
+    FROM 
+        warehouses w
+    LEFT JOIN 
+        warehouse_product wp ON w.id = wp.warehouse_id
+    GROUP BY 
+        w.id, w.name, w.address
+    ";
+    $result = $conn->query($sql);
+    $warehouses = $result->fetch_all(MYSQLI_ASSOC);
+
+    return $warehouses;
+}
+
 function addWarehouse($name, $address, $capacity) {
     global $conn;
     $sql = "INSERT INTO 
@@ -160,4 +200,41 @@ function getOutboundTransactions() {
     $result = $conn->query($sql);
     $transactions = $result->fetch_all(MYSQLI_ASSOC);
     return $transactions;
+}
+
+function getTotalStockValue() {
+    global $conn;
+    $sql = "
+    SELECT 
+        p.id AS product_id,
+        p.name AS product_name,
+        SUM(wp.stock_quantity) AS total_stock,
+        p.price AS unit_price,
+        SUM(wp.stock_quantity * p.price) AS total_stock_value
+    FROM 
+        warehouse_product wp
+    JOIN 
+        products p ON wp.product_id = p.id
+    GROUP BY 
+        p.id, p.name, p.price";
+    $result = $conn->query($sql);
+    $total = $result->fetch_assoc();
+    return $total['total_stock_value'];
+}
+
+function getRandomTransaction() {
+    global $conn;
+    
+    $sql = "
+    SELECT * FROM 
+    (SELECT 'inbound' AS type, id, warehouse, operation, quantity, products, timestamp FROM inbound_transactions
+     UNION ALL 
+     SELECT 'outbound' AS type, id, warehouse, operation, quantity, products, timestamp FROM outbound_transactions) AS combined
+    ORDER BY RAND() LIMIT 4;"; 
+
+    $result = $conn->query($sql);
+    if ($result) {
+        $transaction = $result->fetch_all(MYSQLI_ASSOC);
+        return $transaction ? $transaction : null;
+    } 
 }
