@@ -14,8 +14,6 @@ $outboundTransactions = getOutboundTransactions() ?? [];
         </div>
         <div class="row">
             <?php createFormButton("Sales Order", "shopping-basket", false, false, 'sales-order')?>
-            <?php //createFormButton("Ship Orders", "import", false, false, 'ship-orders')?>
-            <?php //createFormButton("Write Off", "minus", true, false, 'write-off')?>
         </div>
     </div>
     <div class="outbound-content">

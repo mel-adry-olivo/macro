@@ -2,35 +2,6 @@ export function toggleVisibility(element, show = true) {
   element.classList.toggle('show', show);
 }
 
-export function showForm(form, overlay) {
-  toggleVisibility(form);
-  toggleVisibility(overlay);
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay && form.classList.contains('show')) {
-      hideForm(form, overlay);
-    }
-  });
-}
-
-export function hideForm(form, overlay) {
-  form.reset();
-
-  const imageContainer = form.querySelector('.image-container');
-  let imgElement = undefined;
-
-  if (imageContainer) {
-    imgElement = imageContainer.querySelector('img');
-  }
-
-  if (imgElement) {
-    imgElement.remove();
-    imageContainer.style.display = 'none';
-  }
-
-  toggleVisibility(form, false);
-  toggleVisibility(overlay, false);
-}
-
 export async function showOverlay() {
   const overlay = document.querySelector('.page-overlay');
   overlay.addEventListener('click', (e) => {
@@ -46,7 +17,7 @@ export async function hideOverlay() {
   toggleVisibility(overlay, false);
 }
 
-export async function newShowForm(form) {
+export async function showForm(form) {
   const overlay = document.querySelector('.page-overlay');
 
   const response = await fetch('/macro/includes/forms/' + form + '.php');

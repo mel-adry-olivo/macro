@@ -14,11 +14,7 @@ function addProducts($product) {
     $query = "INSERT INTO products (image, name, category, stock, reorder_level, price, supplier_name, supplier_address) 
                 VALUES ('$image', '$name', '$category', $stock, $reorder_level, $price, '$supplier_name', '$supplier_address')";
 
-    if ($conn->query($query) === TRUE) {
-        // Success
-    } else {
-        // Error
-    }
+    $conn->query($query);
 }
 
 function getProducts() {
@@ -172,13 +168,6 @@ function getWarehouseNames() {
 }
 
 
-function getWarehouseRacks($warehouseId) {
-    global $conn;
-    $sql = "SELECT * FROM racks WHERE warehouse_id = $warehouseId";
-    $result = $conn->query($sql);
-    $racks = $result->fetch_all(MYSQLI_ASSOC);
-    return $racks;
-}
 
 function logInbound($warehouseName, $operation, $quantity, $productNames, $now) {
     global $conn;
@@ -206,6 +195,7 @@ function getInboundTransactions() {
 }
 
 
+
 function getOutboundTransactions() {
     global $conn;
     $sql = "SELECT * FROM outbound_transactions ORDER BY timestamp DESC";
@@ -214,39 +204,4 @@ function getOutboundTransactions() {
     return $transactions;
 }
 
-function getTotalStockValue() {
-    global $conn;
-    $sql = "
-    SELECT 
-        p.id AS product_id,
-        p.name AS product_name,
-        SUM(wp.stock_quantity) AS total_stock,
-        p.price AS unit_price,
-        SUM(wp.stock_quantity * p.price) AS total_stock_value
-    FROM 
-        warehouse_product wp
-    JOIN 
-        products p ON wp.product_id = p.id
-    GROUP BY 
-        p.id, p.name, p.price";
-    $result = $conn->query($sql);
-    $total = $result->fetch_assoc();
-    return $total['total_stock_value'];
-}
 
-function getRandomTransaction() {
-    global $conn;
-    
-    $sql = "
-    SELECT * FROM 
-    (SELECT 'inbound' AS type, id, warehouse, operation, quantity, products, timestamp FROM inbound_transactions
-     UNION ALL 
-     SELECT 'outbound' AS type, id, warehouse, operation, quantity, products, timestamp FROM outbound_transactions) AS combined
-    ORDER BY RAND() LIMIT 4;"; 
-
-    $result = $conn->query($sql);
-    if ($result) {
-        $transaction = $result->fetch_all(MYSQLI_ASSOC);
-        return $transaction ? $transaction : null;
-    } 
-}

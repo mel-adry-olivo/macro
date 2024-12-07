@@ -1,7 +1,7 @@
 export function productsMapper(productData) {
   return productData
-    .slice(1) // Skip the header row
-    .filter((row) => row.length > 1) // Filter out any empty rows
+    .slice(1)
+    .filter((row) => row.length > 1)
     .map((row) => ({
       image: row[0].replace(/"/g, ''),
       name: row[1].replace(/"/g, ''),
@@ -21,7 +21,7 @@ export async function insertProductsToDatabase(products) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ products }), // Send products as JSON
+      body: JSON.stringify({ products }),
     });
 
     const result = await response.json();

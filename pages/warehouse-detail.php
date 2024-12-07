@@ -1,11 +1,9 @@
 <?php 
 require '../includes/db-config.php';
 require '../includes/db-utils.php';
-
 require '../includes/template-components.php';
 
 $warehouseId = $_GET['id'] ?? '';
-
 $warehouse = getWarehouse($warehouseId) ?? [];
 $warehouseProducts = getWarehouseProducts($warehouseId) ?? [];
 
@@ -16,7 +14,6 @@ $warehouseProducts = getWarehouseProducts($warehouseId) ?? [];
             <h1><?php echo $warehouse['name'] ?></h1>
         </div>
         <div class="row">
-            <?php //createButton("Add Rack", "edit", false)?>
             <?php createFormButton("Adjust Stock", "plus", false, false, "adjust-stock")?>
             <?php createFormButton("Transfer Stock", "arrow-left-right", true, false, "transfer-stock"); ?> 
         </div>
@@ -34,7 +31,7 @@ $warehouseProducts = getWarehouseProducts($warehouseId) ?? [];
                     <div class="table-body">
                         <?php if (!empty($warehouseProducts)): ?>
                             <?php foreach ($warehouseProducts as $product): ?>
-                                <?php createProductTableRow2($product)?>
+                                <?php createProductTableRow($product)?>
                             <?php endforeach; ?>
                         <?php else: ?>
                             <p>No products assigned to this warehouse.</p>
