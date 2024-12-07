@@ -8,14 +8,6 @@ function initRouter() {
 const routes = {
   '/macro/:page': (page) => loadPageContent(page),
   '/macro/warehouses/:id': (id) => loadPageContent('warehouse-detail', { id }),
-  '/macro/warehouses/:id/:rack': (id, rack) => loadPageContent('rack-detail', { id, rack }),
-  '/macro/products': () => loadPageContent('products'),
-  '/macro/inbound': () => loadPageContent('inbound'),
-  '/macro/outbound': () => loadPageContent('outbound'),
-  '/macro/orders': () => loadPageContent('orders'),
-  '/macro/settings': () => loadPageContent('settings'),
-  '/macro/suppliers': () => loadPageContent('suppliers'),
-  '/macro/404': () => renderNotFound(),
 };
 
 function handleRoute() {
@@ -31,8 +23,6 @@ function handleRoute() {
       return;
     }
   }
-
-  renderNotFound();
 }
 
 async function loadPageContent(content, params = {}) {
@@ -56,10 +46,6 @@ async function loadPageContent(content, params = {}) {
   }
 }
 
-function renderNotFound() {
-  document.querySelector('.content').innerHTML = '<h1>Page Not Found</h1>';
-}
-
 export function navigateTo(path) {
   window.history.pushState({}, '', path);
   handleRoute();
@@ -68,26 +54,17 @@ export function navigateTo(path) {
 document.querySelector('.container').addEventListener('click', (e) => {
   if (e.target.matches('.nav-item')) {
     switch (e.target.dataset.content) {
-      case 'dashboard':
-        navigateTo('/macro/dashboard');
-        break;
       case 'inbound':
         navigateTo('/macro/inbound');
         break;
       case 'outbound':
         navigateTo('/macro/outbound');
         break;
-      case 'orders':
-        navigateTo('/macro/orders');
-        break;
       case 'products':
         navigateTo('/macro/products');
         break;
       case 'warehouses':
         navigateTo('/macro/warehouses');
-        break;
-      case 'suppliers':
-        navigateTo('/macro/suppliers');
         break;
     }
   }
@@ -96,21 +73,11 @@ document.querySelector('.container').addEventListener('click', (e) => {
     const warehouseId = e.target.closest('.warehouse-card').dataset.id;
     navigateTo(`/macro/warehouses/${warehouseId}`);
   }
-
-  if (e.target.matches('.rack-expand[aria-label="view"]')) {
-    const warehouseId = e.target.closest('.warehouses-detail').dataset.id;
-    const rackId = e.target.closest('.rack-card').dataset.id;
-    navigateTo(`/macro/warehouses/${warehouseId}/${rackId}`);
-  }
-
-  if (e.target.matches('.back-btn')) {
-    window.history.back();
-  }
 });
 
-const dashboardNavItem = document.querySelector('.nav-item[data-content="inbound"]');
-if (dashboardNavItem) {
-  dashboardNavItem.click();
+const defaultNav = document.querySelector('.nav-item[data-content="inbound"]');
+if (defaultNav) {
+  defaultNav.click();
 }
 
 initRouter();

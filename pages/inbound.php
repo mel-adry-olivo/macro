@@ -14,8 +14,6 @@ $inboundTransactions = getInboundTransactions() ?? [];
         </div>
         <div class="row">
             <?php createFormButton("Receive New Stock", "package", false, false, 'receive-stock')?>
-            <?php //createFormButton("Process Return", "undo-2", false , false, 'process-return') ?>
-            <?php // createFormButton("Create Purchase Order", "calendar-arrow-up", true, false, 'purchase-order')?>
         </div>
     </div>
     <div class="inbound-content">

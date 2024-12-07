@@ -1,4 +1,3 @@
-import { fetchProducts } from '../../js/api.js';
 import { showSnackbar } from '../../js/components/snackbar.js';
 
 const selectInputs = document.querySelectorAll('.form-select-input');
@@ -78,3 +77,9 @@ document.addEventListener('input', async (e) => {
     searchResults.style.display = searchTerm && filteredProducts.length > 0 ? 'block' : 'none';
   }
 });
+
+export async function fetchProducts() {
+  const response = await fetch('/macro/api/products.php');
+  const data = await response.json();
+  return data;
+}

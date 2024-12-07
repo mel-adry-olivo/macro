@@ -10,8 +10,6 @@ $result = $conn->query($sql);
 $products = $result->fetch_all(MYSQLI_ASSOC);
 
 ?>
-
-
 <div class="products">
     <div class="products-header">
         <div class="products-title">

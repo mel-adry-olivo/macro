@@ -1,5 +1,5 @@
 import { navigateTo } from './router.js';
-import { showForm, hideForm, newShowForm, hideOverlay } from './utils.js';
+import { showForm, hideOverlay } from './utils.js';
 import { config } from './config.js';
 import { showSnackbar } from './components/snackbar.js';
 import {
@@ -29,7 +29,7 @@ document.querySelector('.container').addEventListener('click', (e) => {
   }
 
   if (e.target.matches('[btn-form]')) {
-    newShowForm(e.target.dataset.form);
+    showForm(e.target.dataset.form);
   }
 
   if (e.target.matches('.form-button[submit]')) {
@@ -106,32 +106,6 @@ document.querySelector('.container').addEventListener('click', (e) => {
 });
 
 document.querySelector('.container').addEventListener('change', async (e) => {
-  // * Linked Product Form Dropdown
-  if (e.target.matches('.link-product-form .dropdown-select')) {
-    const selectedValue = e.target.value;
-    const warehouseId = document.querySelector('.warehouses-detail').dataset.id;
-    const response = await fetch(config.linkedProductApiUrl + selectedValue + '&warehouse_id=' + warehouseId);
-    const data = await response.text();
-    const container = e.target.closest('.link-product-form').querySelector('.table-body');
-    container.innerHTML = data;
-  }
-
-  // * Add Product Form Image Chooser
-  if (e.target.matches('.image-chooser')) {
-    const imageContainer = document.querySelector('.image-container');
-    const file = e.target.files[0];
-    const reader = new FileReader();
-
-    reader.onload = () => {
-      const image = new Image();
-      image.src = reader.result;
-      imageContainer.innerHTML = '';
-      imageContainer.appendChild(image);
-      imageContainer.style.display = 'block';
-    };
-    reader.readAsDataURL(file);
-  }
-
   // TODO: Import CSV
   if (e.target.matches('#product-csv')) {
     importCsv();

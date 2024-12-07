@@ -65,9 +65,6 @@ CREATE TABLE sales_orders (
     order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-
-
-
 INSERT INTO products (image, name, category, stock, reorder_level, price, supplier_name, supplier_address)
 VALUES
     ("/macro/assets/to-kill-a-mockingbird.jpg", "To Kill a Mockingbird", "Fiction", 50, 10, 18.99, "Default Supplier", "123 Default St, City, Country"),

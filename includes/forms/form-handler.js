@@ -1,7 +1,6 @@
 import { productsMapper, insertProductsToDatabase } from '/macro/js/csv-parser.js';
 import { showSnackbar } from '/macro/js/components/snackbar.js';
 
-// * STOCK RECEIVE
 export function getReceiveStockData() {
   const warehouseName = document.querySelector('.form-select-input').value;
   const quantityReceived = document.querySelector('.form-text-input[numbers]').value;
@@ -63,7 +62,6 @@ export async function submitStockReceiveData(stockData) {
   }
 }
 
-// * SALES ORDER
 export function getSalesOrderData() {
   const warehouseName = document.querySelector('.form-select-input').value;
   const customerName = document.querySelector('.form-text-input[placeholder="Enter customer name"]').value;
@@ -99,7 +97,6 @@ export function getSalesOrderData() {
     quantity: quantityArray,
   };
 
-  // sample data = {"customerName":"Mel Adry","selection":["1984 "],"quantity":[2]}
   return data;
 }
 
@@ -128,7 +125,6 @@ export async function submitSalesOrderData(salesOrderData) {
   }
 }
 
-// * ADD WAREHOUSE
 export function getWarehouseData() {
   const warehouseName = document.querySelector('.form-text-input[placeholder="Enter warehouse name"]').value;
   const warehouseAddress = document.querySelector('.form-text-input[placeholder="Enter warehouse address"]').value;
@@ -173,7 +169,6 @@ export async function submitWarehouseData(warehouseData) {
   }
 }
 
-// * TRANSFER STOCK
 export function getTransferStockData() {
   const currentWarehouse = document.querySelector('.warehouses-title').textContent.trim();
   const warehouseName = document.querySelector('.form-select-input').value.trim();
@@ -215,11 +210,9 @@ export function getTransferStockData() {
     quantity: quantityArray,
   };
 
-  // sample data = {"warehouse":"Default Warehouse","selection":["1984 ","To Kill a Mockingbird "],"quantity":[20,30]}
   return data;
 }
 
-// * EDIT WAREHOUSE PRODUCT
 export function getAdjustStockData(card) {
   const currentWarehouse = document.querySelector('.warehouses-title').textContent.trim();
   const quantityReceived = document.querySelector('.form-text-input[numbers]').value;
@@ -253,7 +246,6 @@ export function getAdjustStockData(card) {
     quantity: quantityArray,
   };
 
-  // sample data = {"warehouse":"Default Warehouse","selection":["1984 ","To Kill a Mockingbird "],"quantity":[20,30]}
   return data;
 }
 export async function submitAdjustStockData(adjustStockData) {
@@ -333,7 +325,6 @@ export async function submitTransferStockData(transferStockData) {
   }
 }
 
-// * LOGGING
 async function logInboundAdjustment(adjustStockData, name, change) {
   const warehouseName = adjustStockData.warehouse.trim();
   const operation = 'Stock Adjustment';
